@@ -23,6 +23,10 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "GoalSquare.h"
+#include <random>
 
 class Game
 {
@@ -37,44 +41,25 @@ private:
 	/********************************/
 	/*  User Functions              */
 	void DrawAimShape(int x, int y, Color c);
-	void DrawBox(int x, int y, Color c);
-	void BoundaryCheckForBox(int& x, int& y);
-	void ControlObject(int& x, int& y);
-	void ControlPlayer2(int& x, int& y);
-	void DrawRectangle(int x0, int y0, int x1, int y1, Color c);
-	void DrawGameFrame(int x0, int y0, int x1, int y1, Color c);
-
-	void CheckInFrame(int& x, int& y);
-	void MovingObject(int& x, int& y, int& dx, int& dy);
-	void BallBouncing(int& x, int& y, int& dx, int& dy);
+	
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	int x_coord = 400;
-	int y_coord = 300;
+	std::random_device rd;
+	std::mt19937 rng;
+	std::uniform_int_distribution<int> xDist;
+	std::uniform_int_distribution<int> yDist;	
 
-	int x_ball = 420;
-	int y_ball = 320;
-	int x_ball2 = 300;
-	int y_ball2 = 200;
-
-	int x_player1 = 80;
-	int y_player1 = 250;
-	int x_player2 = 710;
-	int y_player2 = 250;
-
-	int dx = 3;
-	int dy = 5;
-	int dx_ball = 5;
-	int dy_ball = 5;
-	int dx_ball2 = -5;
-	int dy_ball2 = 5;
-
-	bool isBallHitSth = false;
-
+	Player player;
+	static constexpr int size = 10;
+	Enemy* enemies[size];
+	GoalSquare square;
+	bool game_over = false;
+	int counter = 0;
+	
 	Color c = { 0,255,0 };
 	/********************************/
 	
