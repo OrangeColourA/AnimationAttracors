@@ -48,7 +48,7 @@ void Enemy::Moving()
 
 void Enemy::Draw()
 {
-	gfx.DrawRectangle(x, y, x + width, y + width, c);
+	gfx.DrawCircle(x + width/2, y + width/2, width/2, c);
 }
 
 bool Enemy::Player_Hited(Player& p)

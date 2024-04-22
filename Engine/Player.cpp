@@ -12,7 +12,7 @@ Player::Player(int x, int y, Graphics& g, MainWindow& w) :
 
 void Player::Draw()
 {
-	gfx.DrawRectangle(x, y, x + width, y + width, c);
+	gfx.DrawCircle(x + width / 2, y + width / 2, width/2 , c);
 }
 
 void Player::Moving()

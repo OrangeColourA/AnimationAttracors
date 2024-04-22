@@ -90,6 +90,8 @@ void Game::ComposeFrame()
 		gfx.DrawRectangle(40, 25, 40 + counter * 25, 35, { 0,0,204 });
 		game_over = true;
 	}
+	//gfx.DrawCircle(300, 300, 150, { 0,255,0 });
+	
 }
 
 
