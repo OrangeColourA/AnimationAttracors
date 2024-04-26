@@ -48,28 +48,19 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	x_pos = wnd.mouse.GetPosX();
-	y_pos = wnd.mouse.GetPosY();
+	
 	
 }
 
 void Game::ComposeFrame()
 {
 	//int x, y;
-
+	Vec2D v = { 200, 250 };
 	if (wnd.mouse.LeftIsPressed())
 	{
-		gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
-		
+		gfx.DrawLine( v , (Vec2D)wnd.mouse.GetPos(), { 78, 153, 0 });
 	}
-	//gfx.DrawLine(250, 200, 450, 300, { 150, 2, 0 });
-	//gfx.DrawLine(250, 200, 300, 450, { 2, 153, 0 });
-	//gfx.DrawLine(250, 200, 250, 500, { 7, 3, 250 });
-	/*
-	gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
-	gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
-	gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
-	*/
+	
 }
 
 

@@ -26,6 +26,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "GoalSquare.h"
+#include "Vec2D.h"
 #include <random>
 
 class Game
@@ -40,7 +41,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	void DrawAimShape(int x, int y, Color c);
+	//void DrawAimShape(int x, int y, Color c);
 	
 	/********************************/
 private:
@@ -60,9 +61,7 @@ private:
 	bool game_over = false;
 	int counter = 0;
 	
-	bool mouse_pressed = false;
-	int x_pos;
-	int y_pos;
+	
 	Color c = { 0,255,0 };
 	/********************************/
 	

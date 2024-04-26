@@ -5,6 +5,17 @@ Vec2D::Vec2D(float x_new, float y_new)
 	x = x_new;
 	y = y_new;
 }
+Vec2D::Vec2D(std::pair<int, int> p)
+{
+	x = p.first;
+	y = p.second;
+}
+Vec2D::Vec2D(std::pair<float, float> p)
+{
+	x = p.first;
+	y = p.second;
+}
+
 float Vec2D::get_x()
 {
 	return x;

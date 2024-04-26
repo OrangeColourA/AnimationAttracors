@@ -22,6 +22,7 @@
 #include <d3d11.h>
 #include <wrl.h>
 #include "ChiliException.h"
+#include "Vec2D.h"
 #include "Colors.h"
 
 class Graphics
@@ -56,9 +57,15 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+
 	void DrawRectangle(int x0, int y0, int x1, int x2, Color c);
+
 	void DrawLine(int x0, int y0, int x1, int x2, Color c);
+	void DrawLine(Vec2D& v0, Vec2D& v1, Color c);
+
 	void DrawCircle(int x0, int y0, int rad, Color c);
+
+
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
