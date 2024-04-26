@@ -441,7 +441,7 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 
 	if (abs(sloap) < 1.0f)
 	{
-		int p_k = 2 * delta_y - delta_x;
+		int p_k = 2 * delta_y * dy - delta_x * dx;
 
 
 		while (x_pos != (int)v1.get_x())
@@ -469,7 +469,7 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 	}
 	else
 	{
-		int p_k = 2 * delta_x - delta_y;
+		int p_k = 2 * delta_x * dx - delta_y * dy;
 
 
 		while (y_pos != (int)v1.get_y())

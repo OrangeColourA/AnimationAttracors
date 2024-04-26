@@ -58,8 +58,17 @@ void Game::ComposeFrame()
 	Vec2D v = { 200, 250 };
 	Vec2D v2 = { 300, 250 };
 	Vec2D v3 = { 200, 350 };
-	std::vector<Vec2D> triangle = Shape::Make(100,200,5);
-	gfx.DrawPolyline(triangle, { 255,10,10 });
+
+	std::vector<Vec2D> star = Shape::Make(100,200,5);
+	std::vector<Vec2D> triangle = { v,v2,v3 };
+	gfx.DrawPolyline(star, { 255,10,10 });
+	gfx.DrawPolyline(triangle, { 169,40,0 });
+	for (auto& verts : star)
+	{
+
+	}
+
+
 	if (wnd.mouse.LeftIsPressed())
 	{
 		gfx.DrawLine( v , (Vec2D)wnd.mouse.GetPos(), { 78, 153, 0 });
