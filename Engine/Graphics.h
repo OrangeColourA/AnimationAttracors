@@ -24,6 +24,7 @@
 #include "ChiliException.h"
 #include "Vec2D.h"
 #include "Colors.h"
+#include "Shape.h"
 
 class Graphics
 {
@@ -62,6 +63,7 @@ public:
 
 	void DrawLine(int x0, int y0, int x1, int x2, Color c);
 	void DrawLine(Vec2D& v0, Vec2D& v1, Color c);
+	void DrawPolyline(std::vector<Vec2D>& verts, Color c);
 
 	void DrawCircle(int x0, int y0, int rad, Color c);
 

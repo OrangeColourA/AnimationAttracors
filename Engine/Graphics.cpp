@@ -485,6 +485,15 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 
 }
 
+void Graphics::DrawPolyline(std::vector<Vec2D>& verts, Color c)
+{
+	for (auto i = verts.begin(); i != std::prev(verts.end()); i++)
+	{
+		DrawLine(*i, *std::next(i), c);
+	}
+	DrawLine(verts.front(), verts.back(), c);
+}
+
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )

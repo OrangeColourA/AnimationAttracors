@@ -56,10 +56,16 @@ void Game::ComposeFrame()
 {
 	//int x, y;
 	Vec2D v = { 200, 250 };
+	Vec2D v2 = { 300, 250 };
+	Vec2D v3 = { 200, 350 };
+	std::vector<Vec2D> triangle = { v, v2, v3 };
+	gfx.DrawPolyline(triangle, { 255,10,10 });
 	if (wnd.mouse.LeftIsPressed())
 	{
 		gfx.DrawLine( v , (Vec2D)wnd.mouse.GetPos(), { 78, 153, 0 });
 	}
+
+
 	
 }
 
