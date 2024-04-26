@@ -57,7 +57,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 	void DrawRectangle(int x0, int y0, int x1, int x2, Color c);
-	//void DrawLine(int)
+	void DrawLine(int x0, int y0, int x1, int x2, Color c);
 	void DrawCircle(int x0, int y0, int rad, Color c);
 	~Graphics();
 private:

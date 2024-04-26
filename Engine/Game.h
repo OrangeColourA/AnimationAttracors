@@ -60,6 +60,9 @@ private:
 	bool game_over = false;
 	int counter = 0;
 	
+	bool mouse_pressed = false;
+	int x_pos;
+	int y_pos;
 	Color c = { 0,255,0 };
 	/********************************/
 	

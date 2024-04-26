@@ -48,50 +48,28 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (!game_over)
-	{
-		for (auto& enemy : enemies)
-		{
-			game_over = game_over || enemy->Player_Hited(player);
-		}
-
-		for (auto& enemy : enemies)
-		{
-			enemy->Moving();
-		}
-		if (square.Got_Reached(player))
-		{
-			square.Change_location(xDist(rng), yDist(rng));
-			counter++;
-		}
-		
-		square.Pulsation();
-		player.Moving();
-	}
-
+	x_pos = wnd.mouse.GetPosX();
+	y_pos = wnd.mouse.GetPosY();
+	
 }
 
 void Game::ComposeFrame()
 {
-	//gfx.DrawRectangle(1, 1, gfx.ScreenWidth - 1, gfx.ScreenHeight - 1, { 76,153,0 });
+	//int x, y;
 
-	for (auto& enemy : enemies)
+	if (wnd.mouse.LeftIsPressed())
 	{
-		enemy->Draw();
+		gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
+		
 	}
-	player.Draw();
-	square.Draw();
-	if (40 + counter * 25 <= gfx.ScreenWidth - 40)
-	{
-		gfx.DrawRectangle(40, 25, 40 + counter * 25, 35, { 0,0,204 });
-	}
-	else
-	{
-		gfx.DrawRectangle(40, 25, 40 + counter * 25, 35, { 0,0,204 });
-		game_over = true;
-	}
-	//gfx.DrawCircle(300, 300, 150, { 0,255,0 });
-	
+	//gfx.DrawLine(250, 200, 450, 300, { 150, 2, 0 });
+	//gfx.DrawLine(250, 200, 300, 450, { 2, 153, 0 });
+	//gfx.DrawLine(250, 200, 250, 500, { 7, 3, 250 });
+	/*
+	gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
+	gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
+	gfx.DrawLine(250, 200, x_pos, y_pos, { 78, 153, 0 });
+	*/
 }
 
 
@@ -99,25 +77,4 @@ void Game::ComposeFrame()
 
 
 
-
-void Game::DrawAimShape(int x, int y, Color c)
-{
-	gfx.PutPixel(x, y, c);
-
-	gfx.PutPixel(x - 5, y, c);
-	gfx.PutPixel(x - 4, y, c);
-	gfx.PutPixel(x - 3, y, c);
-
-	gfx.PutPixel(x + 3, y, c);
-	gfx.PutPixel(x + 4, y, c);
-	gfx.PutPixel(x + 5, y, c);
-
-	gfx.PutPixel(x, y + 5, c);
-	gfx.PutPixel(x, y + 4, c);
-	gfx.PutPixel(x, y + 3, c);
-
-	gfx.PutPixel(x, y - 5, c);
-	gfx.PutPixel(x, y - 4, c);
-	gfx.PutPixel(x, y - 3, c);
-}
 

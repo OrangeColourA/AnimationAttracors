@@ -22,9 +22,11 @@
 #include "Graphics.h"
 #include "DXErr.h"
 #include "ChiliException.h"
+#include "Vec2D.h"
 #include <assert.h>
 #include <string>
 #include <array>
+
 
 // Ignore the intellisense error "cannot open source file" for .shh files.
 // They will be created during the build sequence before the preprocessor runs.
@@ -339,6 +341,76 @@ void Graphics::DrawRectangle(int x0, int y0, int x1, int y1, Color c)
 			PutPixel(x, y, c);
 		}
 	}
+}
+
+void Graphics::DrawLine(int x0, int y0, int x1, int y1, Color c)
+{
+	
+	int delta_x = (x1 - x0);
+	int delta_y = (y1 - y0);
+	
+	int dx = 1;
+	int dy = 1;
+
+	if (delta_y < 0)
+	{
+		dy = -1;
+	}
+	if (delta_x < 0)
+	{
+		dx = -1;
+	}
+
+	float sloap = (float)delta_y / (float)delta_x;
+
+	int x_pos = x0;
+	int y_pos = y0;
+
+
+	if (abs(sloap) < 1.0f)
+	{
+		int p_k = 2 * delta_y - delta_x;
+		
+
+		while (x_pos != x1)
+		{
+			PutPixel(x_pos, y_pos, c);
+
+			if (p_k < 0)
+			{
+				p_k = p_k + 2 * delta_y * dy;
+			}
+			else
+			{
+				p_k = p_k + 2 * delta_y * dy - 2 * delta_x * dx;
+				y_pos += dy;
+			}
+			x_pos += dx;
+		}
+	}
+	else
+	{
+		int p_k = 2 * delta_x - delta_y;
+		
+
+		while (y_pos != y1)
+		{
+			PutPixel(x_pos, y_pos, c);
+
+			if (p_k < 0)
+			{
+				p_k = p_k + 2 * delta_x * dx;
+			}
+			else
+			{
+				p_k = p_k + 2 * delta_x * dx - 2 * delta_y * dy;
+				x_pos += dx;
+			}
+			y_pos += dy;
+		}
+
+	}
+
 }
 
 
