@@ -446,7 +446,14 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 
 		while (x_pos != (int)v1.get_x())
 		{
-			PutPixel(x_pos, y_pos, c);
+
+			if (x_pos >= 0 &&
+				x_pos < int(Graphics::ScreenWidth) &&
+				y_pos >= 0 &&
+				y_pos < int(Graphics::ScreenHeight))
+			{
+				PutPixel(x_pos, y_pos, c);
+			}
 
 			if (p_k < 0)
 			{
@@ -467,7 +474,14 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 
 		while (y_pos != (int)v1.get_y())
 		{
-			PutPixel(x_pos, y_pos, c);
+
+			if (x_pos >= 0 &&
+				x_pos < int(Graphics::ScreenWidth) &&
+				y_pos >= 0 &&
+				y_pos < int(Graphics::ScreenHeight))
+			{
+				PutPixel(x_pos, y_pos, c);
+			}
 
 			if (p_k < 0)
 			{

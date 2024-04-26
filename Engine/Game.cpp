@@ -58,7 +58,7 @@ void Game::ComposeFrame()
 	Vec2D v = { 200, 250 };
 	Vec2D v2 = { 300, 250 };
 	Vec2D v3 = { 200, 350 };
-	std::vector<Vec2D> triangle = { v, v2, v3 };
+	std::vector<Vec2D> triangle = Shape::Make(100,200,5);
 	gfx.DrawPolyline(triangle, { 255,10,10 });
 	if (wnd.mouse.LeftIsPressed())
 	{
