@@ -28,6 +28,7 @@
 #include "GoalSquare.h"
 #include "Vec2D.h"
 #include "CoordinateTransformer.h"
+#include "Entity.h"
 #include <random>
 
 
@@ -58,6 +59,7 @@ private:
 
 	
 	CoordinateTransformer ct;
+	Entity et1;
 	
 	Color c = { 0,255,0 };
 	/********************************/

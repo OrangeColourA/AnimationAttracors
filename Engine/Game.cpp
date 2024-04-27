@@ -28,9 +28,10 @@ Game::Game( MainWindow& wnd )
 	rng( rd() ),
 	xDist( 5, 750 ),
 	yDist( 5, 550 ),
-	ct( gfx )
+	ct( gfx ),
+	et1(Shape::Make(80, 200, 5))
 {
-	
+	//et1 = new Entity({});
 
 }
 
@@ -44,7 +45,24 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	
+
+	const float speed = 3.0f;
+	if (wnd.kbd.KeyIsPressed(VK_UP))
+	{
+		et1.TranslateBy({ 0.0f, speed });
+	}
+	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		et1.TranslateBy({ 0.0f, -speed });
+	}
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		et1.TranslateBy({ -speed, 0.0f });
+	}
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		et1.TranslateBy({ speed, 0.0f });
+	}
 	
 }
 
@@ -55,12 +73,12 @@ void Game::ComposeFrame()
 	Vec2D v2 = { 300, 250 };
 	Vec2D v3 = { 200, 350 };
 
-	std::vector<Vec2D> star = Shape::Make(80,200,5);
+	//std::vector<Vec2D> star = Shape::Make(80,200,5);
 	std::vector<Vec2D> triangle = { v,v2,v3 };
-	gfx.DrawPolyline(star, { 255,10,10 });
+	//gfx.DrawPolyline(star, { 255,10,10 });
 	gfx.DrawPolyline(triangle, { 169,40,0 });
 	
-	ct.DrawPolyline(star, { 25,250,10 });
+	ct.DrawPolyline(et1.GetPolyline(), {25,250,10});
 
 	if (wnd.mouse.LeftIsPressed())
 	{

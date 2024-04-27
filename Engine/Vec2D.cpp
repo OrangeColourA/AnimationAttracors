@@ -1,5 +1,10 @@
 #include "Vec2D.h"
 #include <cmath>
+Vec2D::Vec2D():
+	x(0.0f),
+	y(0.0f)
+{
+}
 Vec2D::Vec2D(float x_new, float y_new)
 {
 	x = x_new;

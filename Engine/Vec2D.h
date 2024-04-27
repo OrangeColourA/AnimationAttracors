@@ -8,6 +8,7 @@ public:
 	float y;
 
 public:
+	Vec2D();
 	Vec2D(float x_new, float y_new);
 	Vec2D(std::pair<int, int> p);
 	Vec2D(std::pair<float, float> p);

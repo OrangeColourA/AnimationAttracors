@@ -141,6 +141,7 @@
     <ClInclude Include="Colors.h" />
     <ClInclude Include="DXErr.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GoalSquare.h" />
     <ClInclude Include="Graphics.h" />
