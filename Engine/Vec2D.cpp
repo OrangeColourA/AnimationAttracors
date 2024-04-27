@@ -37,3 +37,9 @@ float Vec2D::length()
 {
 	return sqrt(x * x + y * y);
 }
+
+void Vec2D::operator+=(Vec2D add)
+{
+	x = x + add.get_x();
+	y = y + add.get_y();
+}

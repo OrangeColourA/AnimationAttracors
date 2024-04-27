@@ -3,7 +3,7 @@
 
 class Vec2D
 {
-private:
+public:
 	float x;
 	float y;
 
@@ -15,5 +15,6 @@ public:
 	float get_y();
 	void norm();
 	float length();
+	void operator+=( Vec2D ) ;
 
 };

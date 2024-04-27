@@ -27,7 +27,9 @@
 #include "Enemy.h"
 #include "GoalSquare.h"
 #include "Vec2D.h"
+#include "CoordinateTransformer.h"
 #include <random>
+
 
 class Game
 {
@@ -54,13 +56,8 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;	
 
-	Player player;
-	static constexpr int size = 10;
-	Enemy* enemies[size];
-	GoalSquare square;
-	bool game_over = false;
-	int counter = 0;
 	
+	CoordinateTransformer ct;
 	
 	Color c = { 0,255,0 };
 	/********************************/

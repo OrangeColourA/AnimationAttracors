@@ -28,13 +28,9 @@ Game::Game( MainWindow& wnd )
 	rng( rd() ),
 	xDist( 5, 750 ),
 	yDist( 5, 550 ),
-	player( xDist(rng), yDist(rng), gfx, wnd ),
-	square( xDist(rng), yDist(rng), gfx )
+	ct( gfx )
 {
-	for (int i = 0; i < size; i++)
-	{
-		enemies[i] = new Enemy(xDist(rng), yDist(rng), xDist(rng), gfx);
-	}
+	
 
 }
 
@@ -59,15 +55,12 @@ void Game::ComposeFrame()
 	Vec2D v2 = { 300, 250 };
 	Vec2D v3 = { 200, 350 };
 
-	std::vector<Vec2D> star = Shape::Make(100,200,5);
+	std::vector<Vec2D> star = Shape::Make(80,200,5);
 	std::vector<Vec2D> triangle = { v,v2,v3 };
 	gfx.DrawPolyline(star, { 255,10,10 });
 	gfx.DrawPolyline(triangle, { 169,40,0 });
-	for (auto& verts : star)
-	{
-
-	}
-
+	
+	ct.DrawPolyline(star, { 25,250,10 });
 
 	if (wnd.mouse.LeftIsPressed())
 	{
