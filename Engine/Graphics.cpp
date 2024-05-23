@@ -417,7 +417,6 @@ void Graphics::DrawLine(int x0, int y0, int x1, int y1, Color c)
 
 void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 {
-
 	int delta_x = ((int)v1.get_x() - (int)v0.get_x());
 	int delta_y = ((int)v1.get_y() - (int)v0.get_y());
 
@@ -438,15 +437,12 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 	int x_pos = (int)v0.get_x();
 	int y_pos = (int)v0.get_y();
 
-
 	if (abs(sloap) < 1.0f)
 	{
 		int p_k = 2 * delta_y*dy - delta_x*dx;
 
-
 		while (x_pos != (int)v1.get_x())
 		{
-
 			if (x_pos >= 0 &&
 				x_pos < int(Graphics::ScreenWidth) &&
 				y_pos >= 0 &&
@@ -464,17 +460,16 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 				p_k = p_k + 2 * delta_y * dy - 2 * delta_x * dx;
 				y_pos += dy;
 			}
+
 			x_pos += dx;
 		}
 	}
 	else
 	{
-		int p_k = 2 * delta_x*dx- delta_y*dy;
-
+		int p_k = 2 * delta_x*dx - delta_y*dy;
 
 		while (y_pos != (int)v1.get_y())
 		{
-
 			if (x_pos >= 0 &&
 				x_pos < int(Graphics::ScreenWidth) &&
 				y_pos >= 0 &&
@@ -492,11 +487,10 @@ void Graphics::DrawLine(Vec2D& v0, Vec2D& v1, Color c)
 				p_k = p_k + 2 * delta_x * dx - 2 * delta_y * dy;
 				x_pos += dx;
 			}
+
 			y_pos += dy;
 		}
-
 	}
-
 }
 
 void Graphics::DrawPolyline(std::vector<Vec2D>& verts, Color c)
@@ -507,6 +501,28 @@ void Graphics::DrawPolyline(std::vector<Vec2D>& verts, Color c)
 	}
 	DrawLine(verts.front(), verts.back(), c);
 }
+void Graphics::DrawOpenPolyline(std::vector<Vec2D>& verts, Color c)
+{
+	for (auto i = verts.begin(); i != std::prev(verts.end()); i++)
+	{
+		if ((i->get_x() >= 0 &&
+			i->get_x() < int(Graphics::ScreenWidth) &&
+			i->get_y() >= 0 &&
+			i->get_y() < int(Graphics::ScreenHeight) ) ||
+			(
+			std::next(i)->get_x() >= 0 &&
+			std::next(i)->get_x() < int(Graphics::ScreenWidth) &&
+			std::next(i)->get_y() >= 0 &&
+			std::next(i)->get_y() < int(Graphics::ScreenHeight)
+			)
+			)
+		{
+			DrawLine(*i, *std::next(i), c);
+		}
+	}
+	//DrawLine(verts.front(), verts.back(), c);
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception

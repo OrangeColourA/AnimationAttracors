@@ -17,5 +17,6 @@ public:
 	void norm();
 	float length();
 	void operator+=( Vec2D ) ;
+	void operator*=(float);
 
 };

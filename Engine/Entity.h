@@ -21,6 +21,13 @@ public:
 	{
 		position += offset;
 	}
+	void ScaleBy(const float scale)
+	{
+		for (auto& v : model)
+		{
+			v *= scale;
+		}
+	}
 	std::vector<Vec2D> GetPolyline() const
 	{
 		auto poly = model;

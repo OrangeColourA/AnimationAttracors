@@ -25,6 +25,17 @@ public:
 		return star;
 
 	}
+	static std::vector<Vec2D> MakePlot(std::vector<float> x, std::vector<float> y)
+	{
+		std::vector<Vec2D> plot;
+		plot.reserve(x.size());
+
+		for (size_t i = 0; i < x.size(); i++)
+		{
+			plot.emplace_back(x[i], y[i]);
+		}
+		return plot;
+	}
 };
 
 

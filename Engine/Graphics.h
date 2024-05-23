@@ -65,6 +65,8 @@ public:
 	void DrawLine(Vec2D& v0, Vec2D& v1, Color c);
 	void DrawPolyline(std::vector<Vec2D>& verts, Color c);
 
+	void DrawOpenPolyline(std::vector<Vec2D>& verts, Color c);
+
 	void DrawCircle(int x0, int y0, int rad, Color c);
 
 

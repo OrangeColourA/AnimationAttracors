@@ -22,6 +22,18 @@ public:
 		
 		gfx.DrawPolyline(model, c);
 	}
+	void DrawOpenPolyline(std::vector<Vec2D>& model, Color c)
+	{
+		Vec2D to_center = { float(gfx.ScreenWidth / 2), float(gfx.ScreenHeight / 2) };
+
+		for (auto& verts : model)
+		{
+			verts.y *= -1.0f;
+			verts += to_center;
+		}
+
+		gfx.DrawOpenPolyline(model, c);
+	}
 
 private:
 	Graphics& gfx;

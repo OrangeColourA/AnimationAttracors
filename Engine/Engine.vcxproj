@@ -147,6 +147,7 @@
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="RK4Math.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
@@ -154,7 +155,6 @@
     <ClInclude Include="Vec2D.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CoordinateTransformer.cpp" />
     <ClCompile Include="CoordinateTransformer.h" />
     <ClCompile Include="DXErr.cpp" />
     <ClCompile Include="Enemy.cpp" />

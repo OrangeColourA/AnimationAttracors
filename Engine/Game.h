@@ -59,7 +59,7 @@ private:
 
 	
 	CoordinateTransformer ct;
-	Entity et1;
+	Entity* et1;
 	
 	Color c = { 0,255,0 };
 	/********************************/

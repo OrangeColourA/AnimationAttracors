@@ -45,6 +45,12 @@ float Vec2D::length()
 
 void Vec2D::operator+=(Vec2D add)
 {
-	x = x + add.get_x();
-	y = y + add.get_y();
+	x += add.get_x();
+	y += add.get_y();
+}
+
+void Vec2D::operator*=(float f)
+{
+	x *= f;
+	y *= f;
 }
