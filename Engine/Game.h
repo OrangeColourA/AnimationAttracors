@@ -29,6 +29,7 @@
 #include "Vec2D.h"
 #include "CoordinateTransformer.h"
 #include "Entity.h"
+#include <complex>
 #include <random>
 
 
@@ -57,6 +58,8 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;	
 
+	bool calculated = false;
+	std::vector<std::vector< std::complex<float> > > sing_points;
 	
 	CoordinateTransformer ct;
 	Entity* et1;
