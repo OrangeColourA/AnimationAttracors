@@ -31,7 +31,7 @@
 #include "Entity.h"
 #include <complex>
 #include <random>
-
+#include "Camera.h"
 
 class Game
 {
@@ -58,12 +58,16 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;	
 
-	bool calculated = false;
+	bool switch_control = true;
+	bool shift_clicked = false;
 	std::vector<std::vector< std::complex<float> > > sing_points;
 	
 	CoordinateTransformer ct;
 	Entity* et1;
-	
+	Entity* Sing_Points;
+
+	Camera cam;
+
 	Color c = { 0,255,0 };
 	/********************************/
 	

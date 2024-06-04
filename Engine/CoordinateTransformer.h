@@ -35,6 +35,22 @@ public:
 		gfx.DrawOpenPolyline(model, c);
 	}
 
+	void DrawScatterPlot(std::vector<Vec2D>& model, Color c)
+	{
+		Vec2D to_center = { float(gfx.ScreenWidth / 2 ), float(gfx.ScreenHeight / 2) };
+
+		for (auto& verts : model)
+		{
+			verts.y *= -10.0f;
+			verts += to_center;
+		}
+
+		for (auto& verts : model)
+		{
+			gfx.DrawCircle(verts.get_x(), verts.get_y(), 5, c);
+		}
+	}
+
 private:
 	Graphics& gfx;
 };

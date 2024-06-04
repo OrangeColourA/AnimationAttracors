@@ -250,7 +250,13 @@ void Graphics::DrawCircle(int x0, int y0, int rad, Color c)
 		{
 			if ((x - x0) * (x - x0) + (y - y0) * (y - y0) < rad * rad)
 			{
-				PutPixel(x, y, c);
+				if ((x >= 0 &&
+					x < int(Graphics::ScreenWidth) &&
+					y >= 0 &&
+					y < int(Graphics::ScreenHeight)))
+				{
+					PutPixel(x, y, c);
+				}
 			}
 		}
 	}

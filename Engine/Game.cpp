@@ -29,10 +29,10 @@ Game::Game(MainWindow& wnd)
 	rng(rd()),
 	xDist(5, 750),
 	yDist(5, 550),
-	ct(gfx)
+	ct(gfx),
+	cam(ct)
 	//et1(Shape::Make(80, 200, 5))
 {
-
 	std::vector<float> t;
 	std::vector< std::vector<float> > x;
 	float t0 = 0.0f;
@@ -42,20 +42,24 @@ Game::Game(MainWindow& wnd)
 	std::vector<float> x_0, x_1;
 	x = rk4({ 0.0f, 1.0f, 0.0f }, t0, tf, dt);
 	
-	
-
 	for (auto& c : x)
 	{
-		x_0.push_back(c[1]);
+		x_0.push_back(c[0]);
 		x_1.push_back(c[2]);
 	}
 
-	
-	if (!calculated)
-	{
 	sing_points = find_singular_points({ 0.17f, 0.17f, 0.49f });
-	calculated = true;
+
+	std::vector<float> t_real, t_imag;
+
+	for (auto& t : sing_points)
+	{
+		t_real.push_back(t[3].real());
+		t_imag.push_back(t[3].imag());
 	}
+
+	Sing_Points = new Entity(Shape::MakePlot(t_real, t_imag));
+
 	et1 = new Entity(Shape::MakePlot(x_0, x_1));
 
 }
@@ -72,40 +76,86 @@ void Game::UpdateModel()
 {
 
 	const float speed = 10.0f;
+	const float speed_2 = 10.0f;
 	const float scale1 = 0.9f;
 	const float scale2 = 1.1f;
-	if (wnd.kbd.KeyIsPressed(VK_UP))
+
+	if (!shift_clicked)
 	{
-		et1->TranslateBy({ 0.0f, speed });
+		if ( wnd.kbd.KeyIsPressed(VK_SHIFT) )
+		{
+			switch_control = !switch_control;
+			shift_clicked = true;
+		}
+
 	}
-	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	else
 	{
-		et1->TranslateBy({ 0.0f, -speed });
+		shift_clicked = false;
 	}
-	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+
+	if (switch_control)
 	{
-		et1->TranslateBy({ -speed, 0.0f });
+		if (wnd.kbd.KeyIsPressed(VK_UP))
+		{
+			cam.MoveBy({ 0.0f, speed });
+		}
+		if (wnd.kbd.KeyIsPressed(VK_DOWN))
+		{
+			cam.MoveBy({ 0.0f, -speed });
+		}
+		if (wnd.kbd.KeyIsPressed(VK_LEFT))
+		{
+			cam.MoveBy({ -speed, 0.0f });
+		}
+		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+		{
+			cam.MoveBy({ speed, 0.0f });
+		}
+
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			//et1->ScaleBy(scale1);
+			cam.SetScale(cam.GetScale() * scale1);
+		}
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL))
+		{
+			//et1->ScaleBy(scale2);
+			cam.SetScale(cam.GetScale() * scale2);
+		}
 	}
-	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	else
 	{
-		et1->TranslateBy({ speed, 0.0f });
-	}
-	
-	if (wnd.kbd.KeyIsPressed(VK_SPACE))
-	{
-		et1->ScaleBy(scale1);
-	}
-	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
-	{
-		et1->ScaleBy(scale2);
+		if (wnd.kbd.KeyIsPressed(VK_UP))
+		{
+			cam.MoveBy({ 0.0f, speed });
+		}
+		if (wnd.kbd.KeyIsPressed(VK_DOWN))
+		{
+			cam.MoveBy({ 0.0f, -speed });
+		}
+		if (wnd.kbd.KeyIsPressed(VK_LEFT))
+		{
+			cam.MoveBy({ -speed, 0.0f });
+		}
+		if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+		{
+			cam.MoveBy({ speed, 0.0f });
+		}
+
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			cam.SetScale(cam.GetScale() * scale1);
+		}
+		if (wnd.kbd.KeyIsPressed(VK_CONTROL))
+		{
+			cam.SetScale(cam.GetScale() * scale2);
+		}
 	}
 }
 
 void Game::ComposeFrame()
 {
-	
-
-
 	//int x, y;
 	Vec2D v = { 200, 250 };
 	Vec2D v2 = { 300, 250 };
@@ -115,12 +165,19 @@ void Game::ComposeFrame()
 	std::vector<Vec2D> triangle = { v,v2,v3 };
 	//gfx.DrawPolyline(star, { 255,10,10 });
 	//gfx.DrawPolyline(triangle, { 169,40,0 });
-	
-	ct.DrawOpenPolyline(et1->GetPolyline(), {25,250,10});
+	gfx.DrawRectangle(20, 20, Graphics::ScreenWidth - 20, Graphics::ScreenHeight - 20, { 255,255,255 });
+	if (switch_control)
+	{
+		cam.DrawOpenPolyline(et1->GetPolyline(), { 0,240,0 });
+	}
+	else
+	{
+		cam.DrawScatterPlot(Sing_Points->GetPolyline(), { 250,0,0 });
+	}
 
 	if (wnd.mouse.LeftIsPressed())
 	{
-		gfx.DrawLine( v , (Vec2D)wnd.mouse.GetPos(), { 78, 153, 0 });
+		gfx.DrawLine( v , (Vec2D)wnd.mouse.GetPos(), { 78, 153, 0 } );
 	}
 
 

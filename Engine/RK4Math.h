@@ -8,19 +8,10 @@
 
 std::vector<float> ODE_model(std::vector<float> x)
 {
-	
-	//for imaging
 	constexpr float sigma = 10.0f;
 	constexpr float rho = 28.0f;
 	constexpr float beta = 2.66666667f;
 	constexpr float m = 1.0f;
-	
-	/*
-	constexpr float sigma = 0.2f;
-	constexpr float rho = 0.5f;
-	constexpr float beta = 0.06f;
-	constexpr float m = 0.003f;
-	*/
 
 	std::vector<float> x_dot = { -sigma * x[0] + sigma * x[1],
 								 rho * x[0] - m * x[1] - x[0] * x[2],
@@ -174,12 +165,13 @@ std::vector< std::vector< std::complex<float> > > find_singular_points(std::vect
 	// сначала получим значения для t = 1000
 
 	float ds = 0.01f;
-	const float PI = acos(-1.0);
+	float PI = acos(-1.0f);
 	float phi = 0.0f;
 	std::complex<float> t_0 (0.0f,0.0f);
-	std::complex<float> t_f (1050.0f, 0.0f);
+	std::complex<float> t_f (1036.0f, 0.0f);
 	const size_t N = init_values.size();
 	std::complex<float> dt(ds * cos(phi), ds * sin(phi));
+	std::complex<float> dt_1_0 = dt;
 
 	std::vector< std::complex<float> > temp; // для вычислений
 
@@ -205,11 +197,23 @@ std::vector< std::vector< std::complex<float> > > find_singular_points(std::vect
 
 	std::vector<std::vector< std::complex<float> >> res;  // для результата
 	
-	std::complex<float> t_f(1200.0f, 0.0f);
-	std::complex<float> dT(20.0f, 0.0f);
+	t_f = { 2000.0f, 0.0f };
+	std::complex<float> T(37.0f, 0.0f);
+
+	std::vector<std::complex<float> > prev_step_values;
+	std::complex<float> prev_t;
 
 	while (t_0.real() < t_f.real())
 	{
+		prev_step_values = temp;	// решение в t = 1050
+		prev_t = t_0;				// t = 1050
+
+		F = { 0.0f,0.0f };
+		Q = { 0.0f,0.0f };
+
+		phi = PI / 2;
+		dt = { ds * cos(phi), ds * sin(phi) };
+
 		while (F.real() < 100000.0f)
 		{
 			temp = rk4_step_complex(temp, dt);
@@ -219,9 +223,21 @@ std::vector< std::vector< std::complex<float> > > find_singular_points(std::vect
 			dt = { ds * cos(phi), ds * sin(phi) };
 			t_0 += dt;
 		}
-		temp.push_back(t_0);
-		res.push_back(temp);
+		res.push_back(temp);		
+		res.back().push_back(t_0);
 
+		t_0 = prev_t;
+		temp = prev_step_values;
+		
+
+		while (t_0.real() < (prev_t + T).real())
+		{
+			temp = rk4_step_complex(temp, dt_1_0); // в итоге получим начальные условия в точке t = t + T в temp
+			t_0 += dt_1_0;
+		}
+
+		//code
+		
 	}
 	return res;
 
