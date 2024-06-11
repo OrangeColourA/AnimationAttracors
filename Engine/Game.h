@@ -23,15 +23,15 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include "Graphics.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "GoalSquare.h"
 #include "Vec2D.h"
-#include "CoordinateTransformer.h"
-#include "Entity.h"
+
+//#include "Element.h"
+//
+//#include "Circles.h"
+
 #include <complex>
 #include <random>
-#include "Camera.h"
+
 
 class Game
 {
@@ -45,7 +45,6 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	//void DrawAimShape(int x, int y, Color c);
 	
 	/********************************/
 private:
@@ -56,17 +55,15 @@ private:
 	std::random_device rd;
 	std::mt19937 rng;
 	std::uniform_int_distribution<int> xDist;
-	std::uniform_int_distribution<int> yDist;	
-
-	bool switch_control = true;
-	bool shift_clicked = false;
-	std::vector<std::vector< std::complex<float> > > sing_points;
+	std::uniform_real_distribution<float> yDist;
 	
-	CoordinateTransformer ct;
-	Entity* et1;
-	Entity* Sing_Points;
-
-	Camera cam;
+	float t = 0.0f;
+	Vec2D pos = { Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2 + 250.0f };
+	std::vector< std::vector<float> > Solution;
+	std::vector<float> current_value = { 1.0f, 0.0f, 1.0f };
+	std::vector<Vec2D> model;
+	
+	bool start = false;
 
 	Color c = { 0,255,0 };
 	/********************************/

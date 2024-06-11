@@ -12,8 +12,8 @@ Vec2D::Vec2D(float x_new, float y_new)
 }
 Vec2D::Vec2D(std::pair<int, int> p)
 {
-	x = p.first;
-	y = p.second;
+	x = static_cast<float>(p.first);
+	y = static_cast<float>(p.second);
 }
 Vec2D::Vec2D(std::pair<float, float> p)
 {
@@ -59,4 +59,12 @@ void Vec2D::operator*=(float f)
 {
 	x *= f;
 	y *= f;
+}
+
+Vec2D Vec2D::operator+(Vec2D add)
+{
+	x += add.get_x();
+	y += add.get_y();
+
+	return Vec2D(x, y);
 }

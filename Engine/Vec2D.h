@@ -19,5 +19,6 @@ public:
 	void operator+=( Vec2D ) ;
 	void operator-=(Vec2D);
 	void operator*=(float);
+	Vec2D operator+(Vec2D);
 
 };

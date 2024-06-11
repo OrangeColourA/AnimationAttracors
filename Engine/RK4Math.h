@@ -16,16 +16,61 @@ std::vector<float> ODE_model(std::vector<float> x)
 	std::vector<float> x_dot = { -sigma * x[0] + sigma * x[1],
 								 rho * x[0] - m * x[1] - x[0] * x[2],
 								 x[0] * x[1] - beta * x[2] };
+	
+	/*constexpr float a = 0.2f;
+	constexpr float b = -0.01f;
+	constexpr float c = 1.0f;
+	constexpr float d = -0.4f;
+	constexpr float e = -1.0f;
+	constexpr float f = -1.0f;
 
+	std::vector<float> x_dot = { a * x[0] + c * x[1] * x[2],
+								 b * x[0] + d * x[1] - x[0] * x[2],
+								 e * x[2] + f * x[0] * x[1]};*/
 	return x_dot;
 }
 
+std::vector<float> rk4_step(std::vector<float> init_values, float dt)
+{
+	std::vector< float > next;
+
+	float x_0 = init_values[0];
+	float x_1 = init_values[1];
+	float x_2 = init_values[2];
+
+	std::vector<float> temp = { 0.0f, 0.0f, 0.0f };
+	std::vector<float> k1, k2, k3, k4;
+
+	k1 = ODE_model(init_values);
+
+	temp = { x_0 + dt * k1[0] / 2.0f,
+			 x_1 + dt * k1[1] / 2.0f,
+			 x_2 + dt * k1[2] / 2.0f };
+	k2 = ODE_model(temp);
+
+	temp = { x_0 + dt * k2[0] / 2.0f,
+			 x_1 + dt * k2[1] / 2.0f,
+			 x_2 + dt * k2[2] / 2.0f };
+	k3 = ODE_model(temp);
+
+	temp = { x_0 + dt * k3[0],
+			 x_1 + dt * k3[1],
+			 x_2 + dt * k3[2] };
+	k4 = ODE_model(temp);
+
+	next = { x_0 + dt * (k1[0] + 2.0f * k2[0] + 2.0f * k3[0] + k4[0]) / 6,
+			 x_1 + dt * (k1[1] + 2.0f * k2[1] + 2.0f * k3[1] + k4[1]) / 6,
+			 x_2 + dt * (k1[2] + 2.0f * k2[2] + 2.0f * k3[2] + k4[2]) / 6 };
+
+	return next;
+
+}
 
 std::vector< std::vector<float> > rk4(std::vector<float> initial_values, float t_0, float t_f, float dt)
 {
 	std::vector< std::vector<float> > res;
 	res.push_back(initial_values);
-	float epsilon = 0.01f;
+	/*float epsilon = 0.01f;*/
 
 	while (t_0 <= t_f)
 	{
@@ -58,7 +103,7 @@ std::vector< std::vector<float> > rk4(std::vector<float> initial_values, float t
 				 x_2 + dt * (k1[2] + 2 * k2[2] + 2 * k3[2] + k4[2]) / 6 };
 		res.push_back(temp);
 
-		if (abs((k2[0] - k3[0]) / (k1[0] - k2[0])) < epsilon &&
+		/*if (abs((k2[0] - k3[0]) / (k1[0] - k2[0])) < epsilon &&
 			abs((k2[1] - k3[1]) / (k1[1] - k2[1])) < epsilon &&
 			abs((k2[2] - k3[2]) / (k1[2] - k2[2])) < epsilon)
 		{
@@ -67,7 +112,7 @@ std::vector< std::vector<float> > rk4(std::vector<float> initial_values, float t
 		else
 		{
 			dt = dt / 2;
-		}
+		}*/
 
 		t_0 = t_0 + dt;
 
@@ -79,14 +124,24 @@ std::vector< std::vector<float> > rk4(std::vector<float> initial_values, float t
 
 std::vector<std::complex<float> > ODE_model_complex(std::vector<std::complex<float> > x)
 {
-	constexpr float sigma = 0.2f;
+	/*constexpr float sigma = 0.2f;
 	constexpr float rho = 0.5f;
 	constexpr float beta = 0.06f;
 	constexpr float m = 0.003f;
 
 	std::vector<std::complex<float> > x_dot = { -sigma * x[0] + sigma * x[1],
 								 rho * x[0] - m * x[1] - x[0] * x[2],
-								 x[0] * x[1] - beta * x[2] };
+								 x[0] * x[1] - beta * x[2] };*/
+	constexpr float a = 0.2f;
+	constexpr float b = -0.01f;
+	constexpr float c = 1.0f;
+	constexpr float d = -0.4f;
+	constexpr float e = -1.0f;
+	constexpr float f = -1.0f;
+
+	std::vector<std::complex<float> > x_dot = { a * x[0] + c * x[1] * x[2],
+								 b * x[0] + d * x[1] - x[0] * x[2],
+								 e * x[2] + f * x[0] * x[1] };
 
 	return x_dot;
 }
@@ -168,7 +223,7 @@ std::vector< std::vector< std::complex<float> > > find_singular_points(std::vect
 	float PI = acos(-1.0f);
 	float phi = 0.0f;
 	std::complex<float> t_0 (0.0f,0.0f);
-	std::complex<float> t_f (1036.0f, 0.0f);
+	std::complex<float> t_f (0.0f, 0.0f);
 	const size_t N = init_values.size();
 	std::complex<float> dt(ds * cos(phi), ds * sin(phi));
 	std::complex<float> dt_1_0 = dt;
@@ -183,11 +238,11 @@ std::vector< std::vector< std::complex<float> > > find_singular_points(std::vect
 
 
 
-	while (t_0.real() < t_f.real())
-	{
-		temp = rk4_step_complex(temp, dt); // в итоге получим начальные условия в точке t = 1000 в temp
-		t_0 += dt;
-	}
+	//while (t_0.real() < t_f.real())
+	//{
+	//	temp = rk4_step_complex(temp, dt); // в итоге получим начальные условия в точке t = 1000 в temp
+	//	t_0 += dt;
+	//}
 	
 
 	std::complex<float> Q(0.0f, 0.0f), F(0.0f, 0.0f);

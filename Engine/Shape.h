@@ -1,42 +1,45 @@
 #pragma once
+
 #include "Vec2D.h"
-#include <cmath>
+
+
 
 
 class Shape
 {
 public:
-	static std::vector<Vec2D> Make(float innerRadius, float outerRadius, int nodes = 5)
+	static std::vector<Vec2D> Circle(Vec2D center, int radius)
 	{
-		std::vector<Vec2D> star;
-		star.reserve(nodes * 2);
-		const float dTheta = 2.0f * 3.14159f / float(nodes * 2);
+		std::vector<Vec2D> model;
+		Vec2D temp;
 
-		for (int i = 0; i < nodes * 2; i++)
+		const float PI = acos(-1.0);
+		const int n = 30;
+
+
+		for (int i = 0; i <= n; i++)
 		{
-			const float rad = (i % 2 == 0) ? innerRadius : outerRadius;
+			temp = { center.get_x() + radius * cos( i * 2 * PI / n ), center.get_y() + radius * sin( i * 2 * PI / n ) };
 
-			star.emplace_back(
-				rad * cos(float(i) * dTheta),
-				rad * sin(float(i) * dTheta)
-			);
+			model.push_back(temp);
 		}
 
-		return star;
-
+		return model;
 	}
-	static std::vector<Vec2D> MakePlot(std::vector<float> x, std::vector<float> y)
+
+	static std::vector<Vec2D> make_plot(std::vector<float> x, std::vector<float> y)
 	{
-		std::vector<Vec2D> plot;
-		plot.reserve(x.size());
+		std::vector<Vec2D> model;
+		Vec2D temp;
 
-		for (size_t i = 0; i < x.size(); i++)
+		for (auto i = 0; i < x.size(); i++)
 		{
-			plot.emplace_back(x[i], y[i]);
+			temp = { x[i], y[i] };
+			model.push_back(temp);
 		}
-		return plot;
+
+		return model;
 	}
+
+
 };
-
-
-
