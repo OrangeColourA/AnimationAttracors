@@ -78,4 +78,7 @@ private:
 	static constexpr wchar_t* wndClassName = L"Chili DirectX Framework Window";
 	HINSTANCE hInst = nullptr;
 	std::wstring args;
+
+	//HCURSOR Cursor;
+
 };

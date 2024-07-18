@@ -24,6 +24,7 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Vec2D.h"
+#include "SpheresRender.h"
 
 //#include "Element.h"
 //
@@ -31,7 +32,7 @@
 
 #include <complex>
 #include <random>
-
+#include <limits>
 
 class Game
 {
@@ -45,6 +46,15 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+
+
+	Vec3D cast_ray( Vec3D& orig, Vec3D& dir, Sphere& sphere);
+	void render_sphere( Sphere& sphere);
+	bool scene_intersect(Vec3D& orig, Vec3D& dir, std::vector<Sphere>& spheres, Vec3D& hit, Vec3D& N, Material& material);
+	
+
+
+
 	
 	/********************************/
 private:
@@ -57,13 +67,11 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_real_distribution<float> yDist;
 	
-	float t = 0.0f;
-	Vec2D pos = { Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2 + 250.0f };
-	std::vector< std::vector<float> > Solution;
-	std::vector<float> current_value = { 1.0f, 0.0f, 1.0f };
-	std::vector<Vec2D> model;
 	
-	bool start = false;
+	std::vector<Vec3D> framebuffer;
+	std::vector<Color> fragmentbuffer;
+	Sphere sphere;
+	float fov = acos(-1) / 2;
 
 	Color c = { 0,255,0 };
 	/********************************/

@@ -22,3 +22,29 @@ public:
 	Vec2D operator+(Vec2D);
 
 };
+
+
+
+class Vec3D
+{
+private:
+	float x;
+	float y;
+	float z;
+public:
+	Vec3D();
+	Vec3D(Vec3D& v);
+	Vec3D(float x_new, float y_new, float z_new);
+	
+	float get_x();
+	float get_y();
+	float get_z();
+
+	float length();
+	Vec3D normalize();
+
+	Vec3D operator-(Vec3D sub);
+	float& operator[](int n);
+	float operator*(Vec3D mult);
+
+};

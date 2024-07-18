@@ -242,22 +242,14 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
-void Graphics::DrawCircle(int x0, int y0, int rad, Color c)
+
+void Graphics::render(std::vector<Color> fragmentb)
 {
-	for (int x = x0 - rad; x <= x0 + rad; x++)
+	for (size_t j = 0; j < Graphics::ScreenHeight; j++)
 	{
-		for (int y = y0 - rad; y <= y0 + rad; y++)
+		for (size_t i = 0; i < Graphics::ScreenWidth; i++)
 		{
-			if ((x - x0) * (x - x0) + (y - y0) * (y - y0) < rad * rad)
-			{
-				if ((x >= 0 &&
-					x < int(Graphics::ScreenWidth) &&
-					y >= 0 &&
-					y < int(Graphics::ScreenHeight)))
-				{
-					PutPixel(x, y, c);
-				}
-			}
+			PutPixel(i, j, fragmentb[i + j * ScreenWidth]);
 		}
 	}
 }
@@ -337,6 +329,50 @@ void Graphics::PutPixel( int x,int y,Color c )
 	assert( y < int( Graphics::ScreenHeight ) );
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
+
+void Graphics::DrawCircle(int x0, int y0, int rad, Color c)
+{
+	for (int x = x0 - rad; x <= x0 + rad; x++)
+	{
+		for (int y = y0 - rad; y <= y0 + rad; y++)
+		{
+			if ((x - x0) * (x - x0) + (y - y0) * (y - y0) < rad * rad)
+			{
+				if ((x >= 0 &&
+					x < int(Graphics::ScreenWidth) &&
+					y >= 0 &&
+					y < int(Graphics::ScreenHeight)))
+				{
+					PutPixel(x, y, c);
+				}
+			}
+		}
+	}
+}
+
+void Graphics::DrawSprite(int x, int y, const Surface& s)
+{
+
+	const int width = s.GetWidth();
+	const int height = s.GetHeight();
+
+	for (int sy = 0; sy < height; sy++)
+	{
+		for (int sx = 0; sx < width; sx++)
+		{
+			/*if ((x + sx >= 0 &&
+				 x + sx <  int(Graphics::ScreenWidth) &&
+				 y + sy >= 0 &&
+				 y + sy <  int(Graphics::ScreenHeight)))
+			{*/
+				PutPixel(x + sx, y + sy, s.GetPixel(sx, sy));
+			//}
+		}
+	}
+
+
+}
+
 
 void Graphics::DrawRectangle(int x0, int y0, int x1, int y1, Color c)
 {
@@ -605,6 +641,20 @@ void Graphics::DrawPolyline(std::vector<Vec2D>& verts, Color c)
 	}
 	DrawLine(verts.front(), verts.back(), c);
 }
+
+void Graphics::DrawPolyline(std::vector<std::vector<float>>& verts, Color c)
+{
+	for (auto i = verts.begin(); i != std::prev(verts.end()); i++)
+	{
+		Vec2D v1( (*i)[0], (*i)[1] );
+		Vec2D v2( (*std::next(i))[0],(*std::next(i))[1] );
+		DrawLine(v1, v2, c);
+	}
+	Vec2D v1( verts.front()[0], verts.front()[1] );
+	Vec2D v2( verts.back()[0],verts.back()[1] );
+	DrawLine(v1, v2, c);
+}
+
 
 void Graphics::DrawThickPolyline(std::vector<Vec2D>& verts,int thicknes, Color c)
 {

@@ -22,7 +22,7 @@
 #include "Game.h"
 #include "RK4Math.h"
 
-
+#include <string>
 #include "Shape.h"
 
 Game::Game(MainWindow& wnd)
@@ -31,24 +31,32 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	rng(rd()),
 	xDist(0, 255),
-	yDist(-300, 300)
-
+	yDist(-300, 300),
+	framebuffer(Graphics::ScreenHeight * Graphics::ScreenWidth),
+	fragmentbuffer(Graphics::ScreenHeight * Graphics::ScreenWidth),
+	sphere(Vec3D(-2.0f,0.0f, -2.0f), 1.0f)
 {
-	
-	//std::vector< std::vector<float> > Solution; //= rk4({ 1.0f, 0.0f,1.0f }, 0.0f, 35.0f, 0.01f);
-	Solution.push_back(current_value);
-	std::vector< float > x;
-	std::vector< float > y;
-
-	//Vec2D pos = { Graphics::ScreenWidth / 2, Graphics::ScreenHeight / 2 + 250.0f};
-
-	for (auto& c : Solution)
+	for (size_t j = 0; j < Graphics::ScreenHeight; j++)
 	{
-		x.push_back(  10.0f *  c[0] + pos.get_x()  );
-		y.push_back( -10.0f *  c[2] + pos.get_y()  );
+		for (size_t i = 0; i < Graphics::ScreenWidth; i++)
+		{
+			framebuffer[i + j * Graphics::ScreenWidth] = Vec3D(j / static_cast<float>(Graphics::ScreenHeight),
+				i / static_cast<float>(Graphics::ScreenWidth), 0.0f);
+		}
 	}
 
-	model = Shape::make_plot(x, y);
+	render_sphere(sphere);
+
+
+
+	for (size_t i = 0; i < Graphics::ScreenHeight * Graphics::ScreenWidth; i++)
+	{
+		fragmentbuffer[i] = Color(
+			static_cast<char>(255 * framebuffer[i][0]),
+			static_cast<char>(255 * framebuffer[i][1]),
+			static_cast<char>(255 * framebuffer[i][2])
+		);
+	}
 
 }
 
@@ -62,50 +70,54 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	if (!start)
+	
+
+}
+
+Vec3D Game::cast_ray( Vec3D& orig, Vec3D& dir, Sphere& sphere)
+{
+	float sphere_dist = std::numeric_limits<float>::max();
+
+	if (!sphere.ray_intersect(orig, dir, sphere_dist))
 	{
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
-		{
-			start = true;
-		}
+		return Vec3D(0.4f, 0.4f, 0.3f);
 	}
 
+	return Vec3D(0.2f,0.7f,0.8f);
+}
 
+void Game::render_sphere( Sphere& sphere )
+{
+	float width = Graphics::ScreenWidth;
+	float height = Graphics::ScreenHeight;
 
-	if (start)
-	{
-		if (t < 10000.0f)
-		{
-			current_value = rk4_step(current_value, 0.01f);
-			Solution.push_back(current_value);
+	for (size_t j = 0; j < height; j++) {
+		for (size_t i = 0; i < width; i++) {
 
-			model.push_back({  10.0f * Solution.back()[0] + pos.get_x(),
-							  -10.0f * Solution.back()[2] + pos.get_y() });
+			float x = (2 * (i + 0.5) / (float)width - 1) * tan(fov / 2.) * width / (float)height;
+			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
+			
+			Vec3D dir = Vec3D(x,y,-1.0f).normalize();
 
-			t += 0.01f;
+			framebuffer[i + j * width] = cast_ray(Vec3D(0.0f, 0.0f, 0.0f), dir, sphere);
 		}
 	}
+}
 
+bool Game::scene_intersect(Vec3D& orig, Vec3D& dir, std::vector<Sphere>& spheres, Vec3D& hit, Vec3D& N, Material& material)
+{
+
+	float a;
+
+
+
+	return false;
 }
 
 void Game::ComposeFrame()
 {
+	gfx.render(fragmentbuffer);
 
-
-
-	
-	Vec2D v = { Graphics::ScreenWidth / 2, 250.0f };
-
-	if (wnd.mouse.LeftIsPressed())
-	{
-		Vec2D temp = (Vec2D)wnd.mouse.GetPos();
-		gfx.DrawThickLine( v , temp, 4,{ 78, 153, 0 } );
-	}
-
-	//int temp = static_cast<int>(Solution.back()[0]) % 255;
-
-	gfx.DrawOpenPolyline(model);
-	
 }
 
 

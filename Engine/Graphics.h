@@ -24,7 +24,7 @@
 #include "ChiliException.h"
 #include "Vec2D.h"
 #include "Colors.h"
-
+#include "Surface.h"
 
 class Graphics
 {
@@ -66,6 +66,9 @@ public:
 	void DrawThickLine(Vec2D& v0, Vec2D& v1, int thicknes, Color c);
 
 	void DrawPolyline(std::vector<Vec2D>& verts, Color c);
+
+	void DrawPolyline(std::vector < std::vector<float> >& verts, Color c);
+
 	void DrawThickPolyline(std::vector<Vec2D>& verts, int thicknes, Color c);
 
 	void DrawOpenPolyline(std::vector<Vec2D>& verts, Color c);
@@ -73,6 +76,14 @@ public:
 	void DrawOpenPolyline(std::vector<Vec2D>& verts);
 
 	void DrawCircle(int x0, int y0, int rad, Color c);
+
+	void DrawSprite(int x, int y, const Surface& s);
+
+
+
+	// raytracing
+
+	void render(std::vector<Color> fragmentb);
 
 
 	~Graphics();

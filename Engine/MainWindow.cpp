@@ -51,6 +51,8 @@ MainWindow::MainWindow( HINSTANCE hInst,wchar_t * pArgs )
 		wr.left,wr.top,wr.right - wr.left,wr.bottom - wr.top,
 		nullptr,nullptr,hInst,this );
 
+	//SetCursor(LoadCursor(hInst, MAKEINTRESOURCE(240)));
+
 	// throw exception if something went terribly wrong
 	if( hWnd == nullptr )
 	{
