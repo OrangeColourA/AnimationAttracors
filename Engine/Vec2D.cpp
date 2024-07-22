@@ -76,11 +76,13 @@ Vec3D::Vec3D() : x(0.0f), y(0.0f), z(0.0f)
 {
 }
 
-Vec3D::Vec3D(Vec3D& v)
+Vec3D::Vec3D(const Vec3D& v)
+	:
+	x(v.get_x()),
+	y( v.get_y()),
+	z(v.get_z())
 {
-	x = v.get_x();
-	y = v.get_y();
-	z = v.get_z();
+	
 }
 
 Vec3D::Vec3D(float x_new, float y_new, float z_new)
@@ -91,19 +93,25 @@ Vec3D::Vec3D(float x_new, float y_new, float z_new)
 {
 }
 
-float Vec3D::get_x()
+float Vec3D::get_x() const
 {
 	return x;
 }
 
-float Vec3D::get_y()
+float Vec3D::get_y() const
 {
 	return y;
 }
 
-float Vec3D::get_z()
+float Vec3D::get_z() const
 {
 	return z;
+}
+
+void Vec3D::z_divide()
+{
+	x /= z;
+	y /= z;
 }
 
 float Vec3D::length()
@@ -130,6 +138,13 @@ Vec3D Vec3D::operator-(Vec3D sub)
 
 }
 
+Vec3D Vec3D::operator+(Vec3D add)
+{
+	return Vec3D(x + add.get_x(),
+		y + add.get_y(),
+		z + add.get_z());
+}
+
 float& Vec3D::operator[](int n)
 {
 	switch (n)
@@ -142,8 +157,7 @@ float& Vec3D::operator[](int n)
 		break;
 	case 2:
 		return z;
-		//break;
-	//deafult:
+		break;
 	}
 }
 
@@ -151,3 +165,82 @@ float Vec3D::operator*(Vec3D mult)
 {
 	return x * mult.get_x() + y * mult.get_y() + z * mult.get_z();
 }
+
+Vec3D Vec3D::operator*(float c)
+{
+	return Vec3D(c*x,c*y,c*z);
+}
+
+
+
+// VEC 4 D
+
+Vec4D::Vec4D()
+	:
+	x(0.f),
+	y(0.f),
+	z(0.f),
+	w(0.f)
+{
+}
+
+Vec4D::Vec4D(const Vec4D& v)
+	:
+	x(v.x),
+	y(v.y),
+	z(v.z),
+	w(v.w)
+{
+}
+
+Vec4D::Vec4D(float x_new, float y_new, float z_new, float w_new)
+	:
+	x(x_new),
+	y(y_new),
+	z(z_new),
+	w(w_new)
+{
+}
+
+void Vec4D::w_divide()
+{
+	if (w != 0.f)
+	{
+		x /= w;
+		y /= w;
+		z /= w;
+	}
+}
+
+float Vec4D::length()
+{
+	return sqrtf(x*x+y*y+z*z+w*w);
+}
+
+Vec4D Vec4D::normalize()
+{
+	float l = length();
+	return Vec4D(x/l, y/ l, z/l, w/l);
+}
+
+Vec4D Vec4D::operator-(Vec4D sub)
+{
+	return Vec4D(x -sub.x, y - sub.y, z - sub.z, w - sub.w);
+}
+
+Vec4D Vec4D::operator+(Vec4D add)
+{
+	return Vec4D(x + add.x, y + add.y, z + add.z, w + add.w);
+}
+
+float Vec4D::operator*(Vec4D mult)
+{
+	return x*mult.x + y * mult.y + z * mult.z + w * mult.w;
+}
+
+Vec4D Vec4D::operator*(float c)
+{
+	return Vec4D(c*x,c*y,c*z,c*w);
+}
+
+

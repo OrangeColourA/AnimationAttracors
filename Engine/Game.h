@@ -24,7 +24,8 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Vec2D.h"
-#include "SpheresRender.h"
+#include "Matrix.h"
+//#include "SpheresRender.h"
 
 //#include "Element.h"
 //
@@ -48,9 +49,6 @@ private:
 	/*  User Functions              */
 
 
-	Vec3D cast_ray( Vec3D& orig, Vec3D& dir, Sphere& sphere);
-	void render_sphere( Sphere& sphere);
-	bool scene_intersect(Vec3D& orig, Vec3D& dir, std::vector<Sphere>& spheres, Vec3D& hit, Vec3D& N, Material& material);
 	
 
 
@@ -67,11 +65,20 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_real_distribution<float> yDist;
 	
-	
-	std::vector<Vec3D> framebuffer;
-	std::vector<Color> fragmentbuffer;
-	Sphere sphere;
-	float fov = acos(-1) / 2;
+	std::vector<Vec3D> cube;
+	std::vector<Vec4D> cube4;
+	std::vector<size_t> index_buffer;
+	//std::vector<Vec2D> screen_model;
+	Mat3 rotate_x;
+	Mat4 proj;
+
+	/*Mat3 rotate_y;
+	Mat3 rotate_z;*/
+	bool moving = false;
+
+	double fov = 0.33f * acos(-1);
+	float angle_z = 0.005f * acosf(-1);
+	float angle = 0.01f * acosf(-1);
 
 	Color c = { 0,255,0 };
 	/********************************/

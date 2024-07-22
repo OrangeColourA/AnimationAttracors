@@ -13,13 +13,13 @@ public:
 		std::vector<Vec2D> model;
 		Vec2D temp;
 
-		const float PI = acos(-1.0);
+		float PI = acosf(-1.0);
 		const int n = 30;
 
 
 		for (int i = 0; i <= n; i++)
 		{
-			temp = { center.get_x() + radius * cos( i * 2 * PI / n ), center.get_y() + radius * sin( i * 2 * PI / n ) };
+			temp = Vec2D(center.get_x() + radius * cos( i * 2 * PI / n ), center.get_y() + radius * sin( i * 2 * PI / n ) );
 
 			model.push_back(temp);
 		}
@@ -32,7 +32,7 @@ public:
 		std::vector<Vec2D> model;
 		Vec2D temp;
 
-		for (auto i = 0; i < x.size(); i++)
+		for (size_t i = 0; i < x.size(); i++)
 		{
 			temp = { x[i], y[i] };
 			model.push_back(temp);

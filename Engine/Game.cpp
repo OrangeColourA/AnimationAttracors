@@ -32,31 +32,70 @@ Game::Game(MainWindow& wnd)
 	rng(rd()),
 	xDist(0, 255),
 	yDist(-300, 300),
-	framebuffer(Graphics::ScreenHeight * Graphics::ScreenWidth),
-	fragmentbuffer(Graphics::ScreenHeight * Graphics::ScreenWidth),
-	sphere(Vec3D(-2.0f,0.0f, -2.0f), 1.0f)
+	rotate_x(
+		Vec3D(1.f,        0.f,          0.f     ),
+		Vec3D(0.f,    cosf(angle),   sinf(angle)),
+		Vec3D(0.f,   -sinf(angle),   cosf(angle))
+		)
 {
-	for (size_t j = 0; j < Graphics::ScreenHeight; j++)
-	{
-		for (size_t i = 0; i < Graphics::ScreenWidth; i++)
-		{
-			framebuffer[i + j * Graphics::ScreenWidth] = Vec3D(j / static_cast<float>(Graphics::ScreenHeight),
-				i / static_cast<float>(Graphics::ScreenWidth), 0.0f);
-		}
-	}
 
-	render_sphere(sphere);
-
-
-
-	for (size_t i = 0; i < Graphics::ScreenHeight * Graphics::ScreenWidth; i++)
-	{
-		fragmentbuffer[i] = Color(
-			static_cast<char>(255 * framebuffer[i][0]),
-			static_cast<char>(255 * framebuffer[i][1]),
-			static_cast<char>(255 * framebuffer[i][2])
+	proj = proj.make_proj_matrix(
+		static_cast<float>(Graphics::ScreenHeight)/ static_cast<float>(Graphics::ScreenHeight),
+		fov,
+		 1.f,
+		 70.f
 		);
-	}
+
+
+	cube =
+	{
+		Vec3D( -50.f, -50.f, -50.f),		// 0
+		Vec3D(  50.f, -50.f, -50.f),		// 1
+		Vec3D(  50.f,  50.f, -50.f),		// 2
+		Vec3D( -50.f,  50.f, -50.f),		// 3
+		Vec3D( -50.f, -50.f,  50.f),		// 4
+		Vec3D(  50.f, -50.f,  50.f),		// 5
+		Vec3D(  50.f,  50.f,  50.f),		// 6
+		Vec3D( -50.f,  50.f,  50.f)		    // 7
+
+	};
+
+	cube4 =
+	{
+		Vec4D( -10.f,  -10.f,   -10.f,   1.f ),		// 0
+		Vec4D(  10.f,  -10.f,   -10.f,   1.f ),		// 1
+		Vec4D(  10.f,   10.f,   -10.f,   1.f ),		// 2
+		Vec4D( -10.f,   10.f,   -10.f,   1.f ),		// 3
+		Vec4D( -10.f,  -10.f,    10.f,   1.f ),		// 4
+		Vec4D(  10.f,  -10.f,    10.f,   1.f ),		// 5
+		Vec4D(  10.f,   10.f,    10.f,   1.f ),		// 6
+		Vec4D( -10.f,   10.f,    10.f,   1.f )		// 7
+
+	};
+
+	//perspective divide
+
+	
+
+	// translate to center
+
+	//Vec3D to_center(static_cast<float>(Graphics::ScreenWidth) / 2,
+	//	static_cast<float>(Graphics::ScreenHeight) / 2, 0.0f);
+
+	/*for (auto& v : cube)
+	{
+		v = v + to_center;
+	}*/
+
+	index_buffer =
+	{
+		0, 1, 2, 3,		// front
+		0, 4, 5, 1,		// top
+		1, 5, 6, 2,		// right
+		2, 6, 7, 3,		// bottom
+		3, 7, 4, 0,		// left
+		4, 7, 6, 5		// back
+	};
 
 }
 
@@ -70,58 +109,187 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	
-
-}
-
-Vec3D Game::cast_ray( Vec3D& orig, Vec3D& dir, Sphere& sphere)
-{
-	float sphere_dist = std::numeric_limits<float>::max();
-
-	if (!sphere.ray_intersect(orig, dir, sphere_dist))
+	/*if (wnd.kbd.KeyIsPressed(VK_UP))
 	{
-		return Vec3D(0.4f, 0.4f, 0.3f);
-	}
+		Mat4 T;
+		T.make_transl_matrix(0.0f, 0.0f, .00005f);
 
-	return Vec3D(0.2f,0.7f,0.8f);
-}
-
-void Game::render_sphere( Sphere& sphere )
-{
-	float width = Graphics::ScreenWidth;
-	float height = Graphics::ScreenHeight;
-
-	for (size_t j = 0; j < height; j++) {
-		for (size_t i = 0; i < width; i++) {
-
-			float x = (2 * (i + 0.5) / (float)width - 1) * tan(fov / 2.) * width / (float)height;
-			float y = -(2 * (j + 0.5) / (float)height - 1) * tan(fov / 2.);
-			
-			Vec3D dir = Vec3D(x,y,-1.0f).normalize();
-
-			framebuffer[i + j * width] = cast_ray(Vec3D(0.0f, 0.0f, 0.0f), dir, sphere);
+		for (auto& v : cube4)
+		{
+			v = T * v;
 		}
+
 	}
-}
 
-bool Game::scene_intersect(Vec3D& orig, Vec3D& dir, std::vector<Sphere>& spheres, Vec3D& hit, Vec3D& N, Material& material)
-{
+	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		Mat4 T;
+		T.make_transl_matrix(0.0f, 0.0f, -.00005f);
 
-	float a;
+		for (auto& v : cube4)
+		{
+			v = T * v;
+		}
 
+	}
 
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		Mat4 T;
+		T.make_transl_matrix(0.00005f, 0.0f, 0.0f);
 
-	return false;
+		for (auto& v : cube4)
+		{
+			v = T * v;
+		}
+
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		for (auto& v : cube)
+		{
+			v = v + Vec3D(2.f, 0.f, 0.f);
+		}*/
+
+	//}
+
+	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		for (auto& v : cube4)
+		{
+			v = Vec4D(
+				v.x,
+				cosf(angle) * v.y - sinf(angle) * v.z,
+				sinf(angle) * v.y + cosf(angle) * v.z,
+				1.f
+			);
+		};
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_UP))
+	{
+		for (auto& v : cube4)
+		{
+			v = Vec4D(
+				v.x,
+				cosf(angle) * v.y + sinf(angle) * v.z,
+				-sinf(angle) * v.y + cosf(angle) * v.z,
+				1.f
+			);
+		};
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		for (auto& v : cube4)
+		{
+			v = Vec4D(
+				cosf(angle) * v.x + sinf(angle) * v.z,
+				v.y,
+				-sinf(angle) * v.x + cosf(angle) * v.z,
+				1.f
+			);
+		};
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		for (auto& v : cube4)
+		{
+			v = Vec4D(
+				cosf(angle) * v.x - sinf(angle) * v.z,
+				v.y,
+				sinf(angle) * v.x + cosf(angle) * v.z,
+				1.f
+			);
+		};
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		for (auto& v : cube4)
+		{
+			v = Vec4D(
+				cosf(angle_z) * v.x - sinf(angle) * v.y,
+				sinf(angle_z) * v.x + cosf(angle) * v.y,
+				v.z,
+				1.f
+			);
+		};
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
+	{
+		for (auto& v : cube4)
+		{
+			v = Vec4D(
+				cosf(angle_z) * v.x + sinf(angle) * v.y,
+			   -sinf(angle_z) * v.x + cosf(angle) * v.y,
+				v.z,
+				1.f
+			);
+		};
+	}
+
 }
 
 void Game::ComposeFrame()
 {
-	gfx.render(fragmentbuffer);
+	// cube drawing
+
+	std::vector<Vec4D> cube_draw = cube4;
+
+	for (auto& v : cube_draw)
+	{
+		v = v + Vec4D(0.f, 0.f, 50.f, 0.f);
+		v = proj * v;
+		v.w_divide();
+	}
+
+	for (size_t i = 1; i < index_buffer.size(); i++)
+	{
+		if (i % 4 == 3)
+		{
+			
+			float x1 = (cube_draw[index_buffer[i]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth);
+			float y1 = (cube_draw[index_buffer[i]].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
+						   
+						   
+			float x2 = (cube_draw[index_buffer[i - 3]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth) ;
+			float y2 = (cube_draw[index_buffer[i - 3]].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
+			
+
+			gfx.DrawLine( Vec2D(x1, y1 ),
+						  Vec2D(x2, y2 ),
+						  Color(255, 255, 255));
+		}
+		else
+		{
+			
+			float x1 = (cube_draw[index_buffer[i]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth);
+			float y1 = (cube_draw[index_buffer[i]].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
+						   
+						   
+			float x2 = (cube_draw[index_buffer[i - 1]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth);
+			float y2 = (cube_draw[index_buffer[i - 1]].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
+			
+
+			gfx.DrawLine(Vec2D(x1 , y1 ),
+						 Vec2D(x2 , y2 ),
+						 Color(255, 255, 255));
+		}
+	}
 
 }
 
 
+
+
 /**************************************************************/
+
+
+
 
 
 

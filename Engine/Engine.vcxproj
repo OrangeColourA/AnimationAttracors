@@ -145,6 +145,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Gravity_Field.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="SpheresRender.h" />
     <ClInclude Include="Surface.h" />
     <ClInclude Include="Keyboard.h" />

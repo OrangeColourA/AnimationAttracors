@@ -13,6 +13,15 @@ public:
 };
 
 
+class Light
+{
+public:
+	Vec3D position;
+	float intensity;
+	Light(Vec3D p, float i) : position(p), intensity(i) {}
+};
+
+
 class Sphere
 {
 public:
