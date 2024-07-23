@@ -31,19 +31,14 @@ Game::Game(MainWindow& wnd)
 	gfx(wnd),
 	rng(rd()),
 	xDist(0, 255),
-	yDist(-300, 300),
-	rotate_x(
-		Vec3D(1.f,        0.f,          0.f     ),
-		Vec3D(0.f,    cosf(angle),   sinf(angle)),
-		Vec3D(0.f,   -sinf(angle),   cosf(angle))
-		)
+	yDist(-300, 300)
 {
 
 	proj = proj.make_proj_matrix(
 		static_cast<float>(Graphics::ScreenHeight)/ static_cast<float>(Graphics::ScreenHeight),
 		fov,
 		 1.f,
-		 70.f
+		 150.f
 		);
 
 
@@ -109,130 +104,59 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	/*if (wnd.kbd.KeyIsPressed(VK_UP))
+	if (wnd.kbd.KeyIsPressed('W') )
 	{
-		Mat4 T;
-		T.make_transl_matrix(0.0f, 0.0f, .00005f);
+		z -= dz;
+	}
 
-		for (auto& v : cube4)
-		{
-			v = T * v;
-		}
+	if (wnd.kbd.KeyIsPressed('S'))
+	{
+		z += dz;
+	}
 
+	if (wnd.kbd.KeyIsPressed('A'))
+	{
+		x += dx;
+	}
+
+	if (wnd.kbd.KeyIsPressed('D'))
+	{
+		x -= dx;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_DOWN))
 	{
-		Mat4 T;
-		T.make_transl_matrix(0.0f, 0.0f, -.00005f);
-
-		for (auto& v : cube4)
-		{
-			v = T * v;
-		}
-
-	}
-
-	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-	{
-		Mat4 T;
-		T.make_transl_matrix(0.00005f, 0.0f, 0.0f);
-
-		for (auto& v : cube4)
-		{
-			v = T * v;
-		}
-
-	}
-
-	if (wnd.kbd.KeyIsPressed(VK_LEFT))
-	{
-		for (auto& v : cube)
-		{
-			v = v + Vec3D(2.f, 0.f, 0.f);
-		}*/
-
-	//}
-
-	if (wnd.kbd.KeyIsPressed(VK_DOWN))
-	{
-		for (auto& v : cube4)
-		{
-			v = Vec4D(
-				v.x,
-				cosf(angle) * v.y - sinf(angle) * v.z,
-				sinf(angle) * v.y + cosf(angle) * v.z,
-				1.f
-			);
-		};
+		angle_x += angle_dx;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_UP))
 	{
-		for (auto& v : cube4)
-		{
-			v = Vec4D(
-				v.x,
-				cosf(angle) * v.y + sinf(angle) * v.z,
-				-sinf(angle) * v.y + cosf(angle) * v.z,
-				1.f
-			);
-		};
+		angle_x -= angle_dx;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_LEFT))
 	{
-		for (auto& v : cube4)
-		{
-			v = Vec4D(
-				cosf(angle) * v.x + sinf(angle) * v.z,
-				v.y,
-				-sinf(angle) * v.x + cosf(angle) * v.z,
-				1.f
-			);
-		};
+		angle_y += angle_dy;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
 	{
-		for (auto& v : cube4)
-		{
-			v = Vec4D(
-				cosf(angle) * v.x - sinf(angle) * v.z,
-				v.y,
-				sinf(angle) * v.x + cosf(angle) * v.z,
-				1.f
-			);
-		};
+		angle_y -= angle_dy;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_SPACE))
 	{
-		for (auto& v : cube4)
-		{
-			v = Vec4D(
-				cosf(angle_z) * v.x - sinf(angle) * v.y,
-				sinf(angle_z) * v.x + cosf(angle) * v.y,
-				v.z,
-				1.f
-			);
-		};
+		angle_z += angle_dz;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
 	{
-		for (auto& v : cube4)
-		{
-			v = Vec4D(
-				cosf(angle_z) * v.x + sinf(angle) * v.y,
-			   -sinf(angle_z) * v.x + cosf(angle) * v.y,
-				v.z,
-				1.f
-			);
-		};
+		angle_z -= angle_dz;
 	}
 
 }
+
+
 
 void Game::ComposeFrame()
 {
@@ -242,7 +166,11 @@ void Game::ComposeFrame()
 
 	for (auto& v : cube_draw)
 	{
-		v = v + Vec4D(0.f, 0.f, 50.f, 0.f);
+		
+		v = v + Vec4D(0.f, 0.f, 60.f, 0.f);
+		v = v + Vec4D(x,y,z,0.f);
+		v = rotate(v, angle_x, angle_y, angle_z);
+
 		v = proj * v;
 		v.w_divide();
 	}
@@ -292,5 +220,21 @@ void Game::ComposeFrame()
 
 
 
+Vec4D Game::rotate(Vec4D v, float angle_x, float angle_y, float angle_z)
+{
+	Mat4 rot_x; rot_x = rot_x.make_rot_x_matrix(angle_x);
+	Mat4 rot_y; rot_y = rot_y.make_rot_y_matrix(angle_y);
+	Mat4 rot_z; rot_z = rot_z.make_rot_z_matrix(angle_z);
 
+	v = rot_x * (rot_y * (rot_z * v));
+
+	return v;
+}
+
+Vec4D Game::translate(Vec4D v, float dx, float dy, float dz)
+{
+	Mat4 T; T = T.make_transl_matrix(dx, dy, dz);
+	v = T * v;
+	return v;
+}
 

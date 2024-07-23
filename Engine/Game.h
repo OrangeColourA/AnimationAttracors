@@ -49,8 +49,8 @@ private:
 	/*  User Functions              */
 
 
-	
-
+	Vec4D rotate(Vec4D v, float angle_x, float angle_y, float angle_z);
+	Vec4D translate(Vec4D v, float dx, float dy, float dz);
 
 
 	
@@ -69,16 +69,31 @@ private:
 	std::vector<Vec4D> cube4;
 	std::vector<size_t> index_buffer;
 	//std::vector<Vec2D> screen_model;
-	Mat3 rotate_x;
+	//Mat3 rotate_x;
 	Mat4 proj;
 
 	/*Mat3 rotate_y;
 	Mat3 rotate_z;*/
 	bool moving = false;
 
-	double fov = 0.33f * acos(-1);
-	float angle_z = 0.005f * acosf(-1);
-	float angle = 0.01f * acosf(-1);
+	const float PI = acosf(-1);
+
+	float fov = 0.33f * PI;
+
+	float angle_x = 0.0f;
+	float angle_y = 0.0f;
+	float angle_z = 0.0f;
+	float angle_dx = 0.005f * PI;
+	float angle_dy = 0.005f * PI;
+	float angle_dz = 0.005f * PI;
+
+	float x = 0.f;
+	float y = 0.f;
+	float z = 0.f;
+	float dx = 0.5f;
+	float dy = 0.5f;
+	float dz = 0.5f;
+
 
 	Color c = { 0,255,0 };
 	/********************************/

@@ -73,6 +73,50 @@ public:
 		return trans;
 	}
 
+	Mat4 make_rot_x_matrix(float angle)
+	{
+		Mat4 rot;
+
+
+		rot.m[0][0] = 1.f;
+		rot.m[1][1] = cosf(angle);
+		rot.m[2][2] = cosf(angle);
+		rot.m[3][3] = 1.f;
+		rot.m[1][2] = -sinf(angle);
+		rot.m[2][1] = sinf(angle);
+
+		return rot;
+	}
+
+	Mat4 make_rot_y_matrix(float angle)
+	{
+		Mat4 rot;
+
+
+		rot.m[0][0] = cosf(angle);
+		rot.m[1][1] = 1.f;
+		rot.m[2][2] = cosf(angle);
+		rot.m[3][3] = 1.f;
+		rot.m[0][2] = sinf(angle);
+		rot.m[2][0] = -sinf(angle);
+
+		return rot;
+	}
+
+	Mat4 make_rot_z_matrix(float angle)
+	{
+		Mat4 rot;
+
+
+		rot.m[0][0] = cosf(angle);
+		rot.m[1][1] = cosf(angle);
+		rot.m[2][2] = 1.f;
+		rot.m[3][3] = 1.f;
+		rot.m[0][1] = -sinf(angle);
+		rot.m[1][0] = sinf(angle);
+
+		return rot;
+	}
 
 
 	Vec4D operator*(Vec4D v)
