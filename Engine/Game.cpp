@@ -68,19 +68,15 @@ Game::Game(MainWindow& wnd)
 
 	};
 
-	//perspective divide
-
 	
+	// lorenz model
 
-	// translate to center
+	std::vector< std::vector<float> > res = rk4({0.f,1.f,0.f},0.f,60.f,0.01f);
 
-	//Vec3D to_center(static_cast<float>(Graphics::ScreenWidth) / 2,
-	//	static_cast<float>(Graphics::ScreenHeight) / 2, 0.0f);
-
-	/*for (auto& v : cube)
+	for (auto& r : res)
 	{
-		v = v + to_center;
-	}*/
+		lorenz_model.push_back(Vec4D(r[0], r[1], r[2], 1.f));
+	}
 
 	index_buffer =
 	{
@@ -106,12 +102,12 @@ void Game::UpdateModel()
 {
 	if (wnd.kbd.KeyIsPressed('W') )
 	{
-		z -= dz;
+		y -= dy;
 	}
 
 	if (wnd.kbd.KeyIsPressed('S'))
 	{
-		z += dz;
+		y += dy;
 	}
 
 	if (wnd.kbd.KeyIsPressed('A'))
@@ -162,37 +158,40 @@ void Game::ComposeFrame()
 {
 	// cube drawing
 
-	std::vector<Vec4D> cube_draw = cube4;
+	std::vector<Vec4D> model_draw = lorenz_model;
 
-	for (auto& v : cube_draw)
+	for (auto& v : model_draw)
 	{
-		
+		v = rotate(v, angle_x, angle_y, angle_z);
 		v = v + Vec4D(0.f, 0.f, 60.f, 0.f);
 		v = v + Vec4D(x,y,z,0.f);
-		v = rotate(v, angle_x, angle_y, angle_z);
+		
 
 		v = proj * v;
 		v.w_divide();
 	}
 
-	for (size_t i = 1; i < index_buffer.size(); i++)
+	for (size_t i = 1; i < lorenz_model.size(); i++)
 	{
-		if (i % 4 == 3)
-		{
+		//if (i % 4 == 3)
+		//{
 			
-			float x1 = (cube_draw[index_buffer[i]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth);
-			float y1 = (cube_draw[index_buffer[i]].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
+			float x1 = (model_draw[i].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth);
+			float y1 = (model_draw[i].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
 						   
 						   
-			float x2 = (cube_draw[index_buffer[i - 3]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth) ;
-			float y2 = (cube_draw[index_buffer[i - 3]].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
+			float x2 = (model_draw[i - 1].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth) ;
+			float y2 = (model_draw[i - 1].y + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenHeight);
 			
 
 			gfx.DrawLine( Vec2D(x1, y1 ),
 						  Vec2D(x2, y2 ),
-						  Color(255, 255, 255));
-		}
-		else
+						  Color(100,
+							    176,
+							    250)
+			);
+		//}
+		/*else
 		{
 			
 			float x1 = (cube_draw[index_buffer[i]].x + 1.f) * 0.5f * static_cast<float>(Graphics::ScreenWidth);
@@ -206,7 +205,7 @@ void Game::ComposeFrame()
 			gfx.DrawLine(Vec2D(x1 , y1 ),
 						 Vec2D(x2 , y2 ),
 						 Color(255, 255, 255));
-		}
+		}*/
 	}
 
 }

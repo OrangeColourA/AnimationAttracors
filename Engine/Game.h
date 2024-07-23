@@ -25,13 +25,14 @@
 #include "Graphics.h"
 #include "Vec2D.h"
 #include "Matrix.h"
+//#include "RK4Math.h"
 //#include "SpheresRender.h"
 
 //#include "Element.h"
 //
 //#include "Circles.h"
 
-#include <complex>
+//#include <complex>
 #include <random>
 #include <limits>
 
@@ -68,6 +69,8 @@ private:
 	std::vector<Vec3D> cube;
 	std::vector<Vec4D> cube4;
 	std::vector<size_t> index_buffer;
+	std::vector<Vec4D> lorenz_model;
+
 	//std::vector<Vec2D> screen_model;
 	//Mat3 rotate_x;
 	Mat4 proj;
