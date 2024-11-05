@@ -3,6 +3,19 @@
 #include "Board.h"
 #include <random>
 
+
+// TO DO:
+// in snake.h
+// Add correct moving checking - DONE
+// 
+// Add borders collision with snake  - DONE
+// 
+// and snake with body - DONE
+
+// in apple.h
+// add feature: apple should not appear inside of snake body
+
+
 class Snake
 {
 private:
@@ -14,7 +27,6 @@ private:
 		Color color = Color(0, green, 0);
 		bool initialised = false;
 		
-
 	};
 
 	Board& brd;
@@ -48,6 +60,36 @@ public:
 
 		snake[0].loc = { snake[0].loc.x + delta_loc.x,  snake[0].loc.y + delta_loc.y };
 
+	}
+
+
+	bool Head_Body_Colision(const Location& dl)
+	{
+		//bool colided = false;
+
+		for (int i = 1; i < current_size; i++)
+		{
+			if (   snake[0].loc.x + dl.x == snake[i].loc.x
+				&& snake[0].loc.y + dl.y == snake[i].loc.y
+				|| snake[0].loc.x		 == snake[i].loc.x
+				&& snake[0].loc.y		 == snake[i].loc.y)
+			{
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+	bool Head_Bordrer_Colision(const Location& dl)
+	{
+		if (snake[0].loc.x + dl.x >= brd.GetWidth()  || snake[0].loc.x + dl.x < 0 ||
+			snake[0].loc.y + dl.y >= brd.GetHeight() || snake[0].loc.y + dl.y < 0)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	Location GetHeadLoc()

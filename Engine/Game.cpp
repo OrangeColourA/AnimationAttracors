@@ -44,36 +44,39 @@ void Game::Go()
 void Game::UpdateModel()
 {
 	
-	if (wnd.kbd.KeyIsPressed(VK_UP))
+	if (!game_is_over)
 	{
-		delta_loc = { 0, -1 };
-	}
-	else if (wnd.kbd.KeyIsPressed(VK_DOWN))
-	{
-		delta_loc = { 0, 1 };
-	}
-	else if (wnd.kbd.KeyIsPressed(VK_LEFT))
-	{
-		delta_loc = { -1, 0 };
-	}
-	else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
-	{
-		delta_loc = { 1, 0 };
-	}
 
-	/*if (wnd.kbd.KeyIsPressed(VK_SPACE))
-	{
-		snake.Grow();
-	}*/
+		if (delta_loc.x != 0 && delta_loc.y != 1 && wnd.kbd.KeyIsPressed(VK_UP))
+		{
+			delta_loc = { 0, -1 };
+		}
+		else if (delta_loc.x != 0 && delta_loc.y != -1 && wnd.kbd.KeyIsPressed(VK_DOWN))
+		{
+			delta_loc = { 0, 1 };
+		}
+		else if (delta_loc.x != 1 && delta_loc.y != 0 && wnd.kbd.KeyIsPressed(VK_LEFT))
+		{
+			delta_loc = { -1, 0 };
+		}
+		else if (delta_loc.x != -1 && delta_loc.y != 0 && wnd.kbd.KeyIsPressed(VK_RIGHT))
+		{
+			delta_loc = { 1, 0 };
+		}
 
-	
+		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		{
+			snake.Grow();
+		}
 
-	if (snake.GetHeadLoc().x == apple.GetLoc().x && snake.GetHeadLoc().y == apple.GetLoc().y)
-	{
-		snake.Grow();
-		apple.Set();
+
+
+		if (snake.GetHeadLoc().x == apple.GetLoc().x && snake.GetHeadLoc().y == apple.GetLoc().y)
+		{
+			snake.Grow();
+			apple.Set();
+		}
 	}
-
 }
 
 void Game::ComposeFrame()
@@ -90,15 +93,33 @@ void Game::ComposeFrame()
 		}
 	}*/
 
+	if (!game_is_over)
+	{
+		
+		if (snake.Head_Body_Colision(delta_loc) || snake.Head_Bordrer_Colision(delta_loc) )
+		{
+			game_is_over = true;
+		}
+	}
+	
+	if (!game_is_over)
+	{
+		snake.Move(delta_loc);
+	}
 
 	apple.Draw();
 
-	snake.Move(delta_loc);
-	snake.Draw();
-	brd.DrawBorder();
-	//
+		
+	
 
-	Sleep(200 - snake.GetCurSize() / 2);
+	snake.Draw();
+
+
+	brd.DrawBorder();
+	
+
+	Sleep(300 - snake.GetCurSize() / 2);
+	
 }
 
 

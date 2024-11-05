@@ -58,6 +58,8 @@ private:
 	Apple apple;
 	Location delta_loc = {1, 0};
 
+	bool game_is_over = false;
+
 	/********************************/
 	
 	
