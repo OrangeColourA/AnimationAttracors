@@ -30,7 +30,7 @@ private:
 	};
 
 	Board& brd;
-	static constexpr size_t MAX_SIZE = 400;
+	static constexpr size_t MAX_SIZE = Board::BoardWidth * Board::BoardHeight;
 	size_t current_size = 3;
 
 	SnakeSegment snake[MAX_SIZE];
@@ -108,6 +108,12 @@ public:
 	{
 		return current_size;
 	}
+
+	Location GetElement(int i)
+	{
+		return snake[i].loc;
+	}
+
 
 	void INIT()
 	{

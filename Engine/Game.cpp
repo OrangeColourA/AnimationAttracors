@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	brd( gfx ),
 	snake( brd ),
-	apple( brd )
+	apple( brd, snake )
 {
 	snake.INIT();
 	//apple.Set();
@@ -118,7 +118,7 @@ void Game::ComposeFrame()
 	brd.DrawBorder();
 	
 
-	Sleep(300 - snake.GetCurSize() / 2);
+	Sleep(200 - snake.GetCurSize() / 2);
 	
 }
 

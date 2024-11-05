@@ -6,8 +6,7 @@
 class Board
 {
 private:
-	static constexpr int BoardWidth  = 25;
-	static constexpr int BoardHeight = 18;
+	
 	static constexpr int x_pos = 25;
 	static constexpr int y_pos = 25;
 
@@ -15,6 +14,9 @@ private:
 	Graphics& gfx;
 
 public:
+
+	static constexpr int BoardWidth = 25;
+	static constexpr int BoardHeight = 18;
 
 	Board(Graphics& gfx) : gfx(gfx) {}
 
