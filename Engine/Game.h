@@ -26,6 +26,7 @@
 
 #include "Board.h"
 #include "Snake.h"
+#include "Apple.h"
 
 #include <random>
 
@@ -54,6 +55,7 @@ private:
 	
 	Board brd;
 	Snake snake;
+	Apple apple;
 	Location delta_loc = {1, 0};
 
 	/********************************/

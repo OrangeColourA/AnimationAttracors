@@ -26,10 +26,11 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	brd( gfx ),
-	snake( brd )
+	snake( brd ),
+	apple( brd )
 {
 	snake.INIT();
-
+	//apple.Set();
 }
 
 void Game::Go()
@@ -60,14 +61,27 @@ void Game::UpdateModel()
 		delta_loc = { 1, 0 };
 	}
 
+	/*if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		snake.Grow();
+	}*/
+
+	
+
+	if (snake.GetHeadLoc().x == apple.GetLoc().x && snake.GetHeadLoc().y == apple.GetLoc().y)
+	{
+		snake.Grow();
+		apple.Set();
+	}
+
 }
 
 void Game::ComposeFrame()
 {
-	std::mt19937 rng;
+	/*std::mt19937 rng;
 	std::uniform_int_distribution<int> rgb(0, 255);
 
-	/*for (int i = 0; i < brd.GetWidth(); i++)
+	for (int i = 0; i < brd.GetWidth(); i++)
 	{
 		for (int j = 0; j < brd.GetHeight(); j++)
 		{
@@ -77,11 +91,14 @@ void Game::ComposeFrame()
 	}*/
 
 
+	apple.Draw();
+
 	snake.Move(delta_loc);
 	snake.Draw();
+	brd.DrawBorder();
 	//
 
-	Sleep(150);
+	Sleep(200 - snake.GetCurSize() / 2);
 }
 
 

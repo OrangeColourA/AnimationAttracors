@@ -10,14 +10,15 @@ private:
 	{
 	public:
 		Location loc;
-		Color color = Colors::Green;
+		int green = 50;
+		Color color = Color(0, green, 0);
 		bool initialised = false;
 		
 
 	};
 
 	Board& brd;
-	static constexpr size_t MAX_SIZE = 100;
+	static constexpr size_t MAX_SIZE = 400;
 	size_t current_size = 3;
 
 	SnakeSegment snake[MAX_SIZE];
@@ -49,6 +50,22 @@ public:
 
 	}
 
+	Location GetHeadLoc()
+	{
+		return snake[0].loc;
+	}
+
+	void Grow()
+	{
+		snake[current_size].loc = snake[current_size - 1].loc;
+		snake[current_size].color = Color(0, (snake[current_size].green + current_size) % 255, 0);
+		current_size++;
+	}
+
+	int GetCurSize()
+	{
+		return current_size;
+	}
 
 	void INIT()
 	{
@@ -64,6 +81,7 @@ public:
 		{
 			snake[i].loc.x = snake[i - 1].loc.x - 1;
 			snake[i].loc.y = snake[i - 1].loc.y;
+			snake[i].color = Color(0, snake[i].green + i, 0);
 		}
 	}
 
