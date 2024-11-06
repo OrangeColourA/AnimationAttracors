@@ -33,13 +33,38 @@ private:
 	static constexpr size_t MAX_SIZE = Board::BoardWidth * Board::BoardHeight;
 	size_t current_size = 3;
 
+	float head_x = 0.f;
+	float head_y = 0.f;
+	float velocity = 0.5f;
+
 	SnakeSegment snake[MAX_SIZE];
 
 public:
 
-	// Draw, Move, Grow
-
 	Snake(Board& brd) : brd(brd) {}
+
+	void INIT(std::mt19937& rng, float v)
+	{
+		
+		std::uniform_int_distribution<int> pos_x(3, brd.GetWidth() - 3);
+		std::uniform_int_distribution<int> pos_y(3, brd.GetHeight() - 3);
+
+		snake[0].loc.x = pos_x(rng);
+		snake[0].loc.y = pos_y(rng);
+		
+		head_x = static_cast<float>(snake[0].loc.x);
+		head_y = static_cast<float>(snake[0].loc.y);
+		velocity = v;
+
+		for (int i = 1; i < current_size; i++)
+		{
+			snake[i].loc.x = snake[i - 1].loc.x - 1;
+			snake[i].loc.y = snake[i - 1].loc.y;
+			snake[i].color = Color(0, snake[i].green + i, 0);
+		}
+	}
+
+	// Draw, Move, Grow
 
 	void Draw()
 	{
@@ -53,12 +78,18 @@ public:
 	{
 		// from tail to head
 
-		for (int segm = current_size - 1; segm > 0; segm--)
-		{ 
-			snake[segm].loc = { snake[segm - 1].loc.x, snake[segm - 1].loc.y };
-		}
+		head_x += delta_loc.x * velocity;
+		head_y += delta_loc.y * velocity;
 
-		snake[0].loc = { snake[0].loc.x + delta_loc.x,  snake[0].loc.y + delta_loc.y };
+		if (static_cast<int>(head_x) != snake[0].loc.x || static_cast<int>(head_y) != snake[0].loc.y)
+		{
+			for (size_t segm = current_size - 1; segm > 0; segm--)
+			{
+				snake[segm].loc = { snake[segm - 1].loc.x, snake[segm - 1].loc.y };
+			}
+
+			snake[0].loc = { static_cast<int>(head_x), static_cast<int>(head_y) };
+		}
 
 	}
 
@@ -104,7 +135,7 @@ public:
 		current_size++;
 	}
 
-	int GetCurSize()
+	size_t GetCurSize()
 	{
 		return current_size;
 	}
@@ -115,23 +146,7 @@ public:
 	}
 
 
-	void INIT()
-	{
-		std::mt19937 rng;
-		std::uniform_int_distribution<int> pos_x(3, brd.GetWidth() - 3);
-		std::uniform_int_distribution<int> pos_y(3, brd.GetHeight() - 3);
-
-		snake[0].loc.x = pos_x(rng);
-		snake[0].loc.y = pos_y(rng);
-		snake[0].initialised = true;
-
-		for (int i = 1; i < current_size; i++)
-		{
-			snake[i].loc.x = snake[i - 1].loc.x - 1;
-			snake[i].loc.y = snake[i - 1].loc.y;
-			snake[i].color = Color(0, snake[i].green + i, 0);
-		}
-	}
+	
 
 
 };

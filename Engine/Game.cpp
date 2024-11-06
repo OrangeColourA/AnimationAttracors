@@ -29,7 +29,7 @@ Game::Game( MainWindow& wnd )
 	snake( brd ),
 	apple( brd, snake )
 {
-	snake.INIT();
+	snake.INIT(rng, 0.1f);
 	//apple.Set();
 }
 
@@ -74,7 +74,7 @@ void Game::UpdateModel()
 		if (snake.GetHeadLoc().x == apple.GetLoc().x && snake.GetHeadLoc().y == apple.GetLoc().y)
 		{
 			snake.Grow();
-			apple.Set();
+			apple.Set(rng);
 		}
 	}
 }
@@ -108,8 +108,6 @@ void Game::ComposeFrame()
 	}
 
 	apple.Draw();
-
-		
 	
 
 	snake.Draw();
@@ -118,7 +116,7 @@ void Game::ComposeFrame()
 	brd.DrawBorder();
 	
 
-	Sleep(200 - snake.GetCurSize() / 2);
+	//Sleep(200 - snake.GetCurSize() / 2);
 	
 }
 

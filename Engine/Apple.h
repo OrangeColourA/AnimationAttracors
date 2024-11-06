@@ -9,14 +9,13 @@ private:
 	Location loc = { 1,1 };
 	Board& brd;
 	Snake& snk;
-	std::mt19937 rng;
 	
 
 public:
 
 	Apple(Board& brd, Snake& snk) : brd(brd), snk(snk) {}
 
-	void Set()
+	void Set(std::mt19937& rng)
 	{
 		std::uniform_int_distribution<int> pos_x(0, brd.GetWidth() - 1);
 		std::uniform_int_distribution<int> pos_y(0, brd.GetHeight() - 1);

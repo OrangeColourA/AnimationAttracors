@@ -53,12 +53,16 @@ private:
 	/********************************/
 	/*  User Variables              */
 	
+	std::mt19937 rng;
+
 	Board brd;
 	Snake snake;
 	Apple apple;
 	Location delta_loc = {1, 0};
 
 	bool game_is_over = false;
+
+
 
 	/********************************/
 	
