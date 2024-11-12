@@ -26,11 +26,12 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	brd( gfx ),
-	snake( brd ),
-	apple( brd, snake )
+	//apple( brd, snake ),
+	rnd( std::random_device()() ),
+	snake({ 3, 3 })
+	
 {
-	snake.INIT();
-	//apple.Set();
+	
 }
 
 void Game::Go()
@@ -47,78 +48,48 @@ void Game::UpdateModel()
 	if (!game_is_over)
 	{
 
-		if (delta_loc.x != 0 && delta_loc.y != 1 && wnd.kbd.KeyIsPressed(VK_UP))
+		if (delta_loc.y != 1 && wnd.kbd.KeyIsPressed(VK_UP))
 		{
 			delta_loc = { 0, -1 };
 		}
-		else if (delta_loc.x != 0 && delta_loc.y != -1 && wnd.kbd.KeyIsPressed(VK_DOWN))
+		else if (delta_loc.y != -1 && wnd.kbd.KeyIsPressed(VK_DOWN))
 		{
 			delta_loc = { 0, 1 };
 		}
-		else if (delta_loc.x != 1 && delta_loc.y != 0 && wnd.kbd.KeyIsPressed(VK_LEFT))
+		else if (delta_loc.x != 1 && wnd.kbd.KeyIsPressed(VK_LEFT))
 		{
 			delta_loc = { -1, 0 };
 		}
-		else if (delta_loc.x != -1 && delta_loc.y != 0 && wnd.kbd.KeyIsPressed(VK_RIGHT))
+		else if (delta_loc.x != -1 && wnd.kbd.KeyIsPressed(VK_RIGHT))
 		{
 			delta_loc = { 1, 0 };
 		}
 
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+		
+
+		if (count_frame == game_rate)
 		{
-			snake.Grow();
+			if (wnd.kbd.KeyIsPressed(VK_SPACE))
+			{
+				snake.Grow();
+			}
+			snake.MoveBy(delta_loc);
+			count_frame = 0;
 		}
-
-
-
-		if (snake.GetHeadLoc().x == apple.GetLoc().x && snake.GetHeadLoc().y == apple.GetLoc().y)
-		{
-			snake.Grow();
-			apple.Set();
-		}
+		count_frame++;
 	}
 }
 
 void Game::ComposeFrame()
 {
-	/*std::mt19937 rng;
-	std::uniform_int_distribution<int> rgb(0, 255);
-
-	for (int i = 0; i < brd.GetWidth(); i++)
-	{
-		for (int j = 0; j < brd.GetHeight(); j++)
-		{
-			Location loc = { i, j };
-			brd.DrawElement(loc, Color(rgb(rng), rgb(rng), rgb(rng)));
-		}
-	}*/
-
-	if (!game_is_over)
-	{
-		
-		if (snake.Head_Body_Colision(delta_loc) || snake.Head_Bordrer_Colision(delta_loc) )
-		{
-			game_is_over = true;
-		}
-	}
 	
-	if (!game_is_over)
-	{
-		snake.Move(delta_loc);
-	}
-
-	apple.Draw();
-
-		
 	
+	//apple.Draw();
 
-	snake.Draw();
+	snake.Draw(brd);
 
 
 	brd.DrawBorder();
-	
-
-	Sleep(200 - snake.GetCurSize() / 2);
 	
 }
 

@@ -11,12 +11,13 @@ private:
 	static constexpr int y_pos = 25;
 
 	static constexpr int ElementSize = 30;
+	static constexpr int BoardWidth = 25;
+	static constexpr int BoardHeight = 18;
 	Graphics& gfx;
 
 public:
 
-	static constexpr int BoardWidth = 25;
-	static constexpr int BoardHeight = 18;
+	
 
 	Board(Graphics& gfx) : gfx(gfx) {}
 
