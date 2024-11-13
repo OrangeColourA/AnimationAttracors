@@ -78,7 +78,7 @@ void Game::UpdateModel()
 			Location next = snake.Get_Next_Head_Location(delta_loc);
 			key_pressed = false;
 
-			if ( !brd.is_inside_board(next) || snake.is_in_segments(next) )
+			if ( !brd.is_inside_board(next) || snake.is_in_segments(next) || ob_1.hit_obstacle( next ))
 			{
 				game_is_over = true;
 			}
@@ -86,12 +86,12 @@ void Game::UpdateModel()
 			{
 				if (wnd.kbd.KeyIsPressed(VK_SPACE))
 				{
-					snake.Grow( Color(0, gr(rnd), 0) );
+					snake.Grow( Color(gr(rnd), gr(rnd), gr(rnd)));
 				}
 
 				if (snake.Get_Head_Location().x == apple.GetLoc().x && snake.Get_Head_Location().y == apple.GetLoc().y)
 				{
-					snake.Grow( Color(0, gr(rnd), 0) );
+					snake.Grow( Color(gr(rnd), gr(rnd), gr(rnd)) );
 					apple.Set(rnd);
 				}
 
@@ -103,19 +103,42 @@ void Game::UpdateModel()
 		}
 
 		count_frame++;
+
+
+
+		
 	}
 }
 
 void Game::ComposeFrame()
 {
-	
-	
+
+
 	apple.Draw();
 
 	snake.Draw(brd);
 
 
 	brd.DrawBorder();
+
+
+	std::pair<int, int> pos = wnd.mouse.GetPos();
+
+	Location l = { pos.first, pos.second };
+	l = brd.GetLocation_mousePos(l);
+	if (brd.is_inside_board(l))
+	{
+		brd.DrawElement(l, Color(127 * (1 + std::sin(t)), 255, 255));
+		if (wnd.mouse.LeftIsPressed())
+		{
+			ob_1.Init(l);
+		}
+	}
+
+	ob_1.Draw(brd);
+
+	t += 0.05f;
+
 	
 }
 

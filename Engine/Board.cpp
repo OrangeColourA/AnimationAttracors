@@ -34,3 +34,16 @@ bool Board::is_inside_board(const Location& loc)
 {
 	return loc.x >= 0 && loc.x < BoardWidth && loc.y >= 0 && loc.y < BoardHeight;
 }
+
+Location Board::GenerateLoc(std::mt19937 rnd)
+{
+	std::uniform_int_distribution<int> pos_x(5, BoardWidth - 5);
+	std::uniform_int_distribution<int> pos_y(5, BoardHeight - 5);
+
+	return { pos_x(rnd), pos_y(rnd) };
+}
+
+Location Board::GetLocation_mousePos(const Location& Mouse_Pos) const
+{
+	return { (Mouse_Pos.x - x_pos) / ElementSize, (Mouse_Pos.y - y_pos) / ElementSize };
+}

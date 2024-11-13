@@ -27,8 +27,10 @@
 #include "Board.h"
 #include "Snake.h"
 #include "Apple.h"
+#include "Obstacle.h"
 
 #include <random>
+#include <cmath>
 
 class Game
 {
@@ -58,6 +60,8 @@ private:
 	Apple apple;
 	Location delta_loc = {1, 0};
 
+	Obstacle ob_1;
+
 	std::mt19937 rnd;
 	std::uniform_int_distribution<int> gr;
 
@@ -66,7 +70,10 @@ private:
 
 	static constexpr int game_rate = 10;
 	int count_frame = 0;
+	float t = 0.0f;
 
+	int x = 100;
+	int y = 100;
 
 	/********************************/
 	

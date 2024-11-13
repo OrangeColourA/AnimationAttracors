@@ -11,9 +11,9 @@ private:
 	static constexpr int x_pos = 25;
 	static constexpr int y_pos = 25;
 
-	static constexpr int ElementSize = 30;
-	static constexpr int BoardWidth = 25;
-	static constexpr int BoardHeight = 18;
+	static constexpr int ElementSize = 25;
+	static constexpr int BoardWidth = 30;
+	static constexpr int BoardHeight = 22;
 	Graphics& gfx;
 
 public:
@@ -24,11 +24,7 @@ public:
 	int GetWidth() const;
 	int GetHeight() const;
 	bool is_inside_board(const Location& loc);
-	Location GenerateLoc(std::mt19937 rnd)
-	{
-		std::uniform_int_distribution<int> pos_x(5, BoardWidth - 5);
-		std::uniform_int_distribution<int> pos_y(5, BoardHeight - 5);
-
-		return { pos_x(rnd), pos_y(rnd) };
-	}
+	Location GenerateLoc(std::mt19937 rnd);
+	Location GetLocation_mousePos(const Location& Mouse_Pos) const;
+	
 };
