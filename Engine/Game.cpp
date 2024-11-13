@@ -28,10 +28,12 @@ Game::Game( MainWindow& wnd )
 	brd( gfx ),
 	//apple( brd, snake ),
 	rnd( std::random_device()() ),
-	snake({ 3, 3 })
+	snake(brd.GenerateLoc(rnd)),
+	apple(brd, snake),
+	gr(100,255)
 	
 {
-	
+	apple.Set(rnd);
 }
 
 void Game::Go()
@@ -47,35 +49,59 @@ void Game::UpdateModel()
 	
 	if (!game_is_over)
 	{
-
-		if (delta_loc.y != 1 && wnd.kbd.KeyIsPressed(VK_UP))
+		if (!key_pressed)
 		{
-			delta_loc = { 0, -1 };
+			if (delta_loc.y != 1 && wnd.kbd.KeyIsPressed(VK_UP))
+			{
+				delta_loc = { 0, -1 };
+				key_pressed = true;
+			}
+			else if (delta_loc.y != -1 && wnd.kbd.KeyIsPressed(VK_DOWN))
+			{
+				delta_loc = { 0, 1 };
+				key_pressed = true;
+			}
+			else if (delta_loc.x != 1 && wnd.kbd.KeyIsPressed(VK_LEFT))
+			{
+				delta_loc = { -1, 0 };
+				key_pressed = true;
+			}
+			else if (delta_loc.x != -1 && wnd.kbd.KeyIsPressed(VK_RIGHT))
+			{
+				delta_loc = { 1, 0 };
+				key_pressed = true;
+			}
 		}
-		else if (delta_loc.y != -1 && wnd.kbd.KeyIsPressed(VK_DOWN))
-		{
-			delta_loc = { 0, 1 };
-		}
-		else if (delta_loc.x != 1 && wnd.kbd.KeyIsPressed(VK_LEFT))
-		{
-			delta_loc = { -1, 0 };
-		}
-		else if (delta_loc.x != -1 && wnd.kbd.KeyIsPressed(VK_RIGHT))
-		{
-			delta_loc = { 1, 0 };
-		}
-
-		
 
 		if (count_frame == game_rate)
 		{
-			if (wnd.kbd.KeyIsPressed(VK_SPACE))
+			Location next = snake.Get_Next_Head_Location(delta_loc);
+			key_pressed = false;
+
+			if ( !brd.is_inside_board(next) || snake.is_in_segments(next) )
 			{
-				snake.Grow();
+				game_is_over = true;
 			}
-			snake.MoveBy(delta_loc);
-			count_frame = 0;
+			else
+			{
+				if (wnd.kbd.KeyIsPressed(VK_SPACE))
+				{
+					snake.Grow( Color(0, gr(rnd), 0) );
+				}
+
+				if (snake.Get_Head_Location().x == apple.GetLoc().x && snake.Get_Head_Location().y == apple.GetLoc().y)
+				{
+					snake.Grow( Color(0, gr(rnd), 0) );
+					apple.Set(rnd);
+				}
+
+				snake.MoveBy(delta_loc);
+				count_frame = 0;
+			}
+
+
 		}
+
 		count_frame++;
 	}
 }
@@ -84,7 +110,7 @@ void Game::ComposeFrame()
 {
 	
 	
-	//apple.Draw();
+	apple.Draw();
 
 	snake.Draw(brd);
 

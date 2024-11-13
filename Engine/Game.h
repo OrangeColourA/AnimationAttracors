@@ -26,7 +26,7 @@
 
 #include "Board.h"
 #include "Snake.h"
-//#include "Apple.h"
+#include "Apple.h"
 
 #include <random>
 
@@ -55,12 +55,14 @@ private:
 	
 	Board brd;
 	Snake snake;
-	//Apple apple;
+	Apple apple;
 	Location delta_loc = {1, 0};
 
 	std::mt19937 rnd;
+	std::uniform_int_distribution<int> gr;
 
 	bool game_is_over = false;
+	bool key_pressed = false;
 
 	static constexpr int game_rate = 10;
 	int count_frame = 0;
