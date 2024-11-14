@@ -26,7 +26,13 @@
 
 #include "Sound.h"
 #include "SoundEffect.h"
+
+#include "FrameTimer.h"
+
+
 #include <random>
+
+
 
 class Game
 {
@@ -56,8 +62,16 @@ private:
 	Sound shit_sound;
 	SoundEffect shit_ansamble;
 	
-	bool pressed = false;
 	
+	float x = 300.f;
+	float y = 300.f;
+	
+	float dx = 50.f;
+	float dy = 50.f;
+	
+	FrameTimer frame_timer;
+	float dt;
+
 	/********************************/
 	
 	

@@ -27,7 +27,8 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	rng(std::random_device()()),
 	shit_sound(L"gameoy.wav"),
-	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" })
+	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
+	frame_timer()
 	
 {
 	
@@ -43,43 +44,34 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	if ( wnd.kbd.KeyIsPressed('W') )
+	{
+		y -= dy * dt;
+	}
 	
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
-		{
-			if (!pressed)
-			{
-				//shit_sound.Play();
-				shit_ansamble.Play(rng);
-				pressed = true;
-			}
-			
-		}
-		else
-		{
-			pressed = false;
-		}
-
-
-		//if (counter >= fart_rate)
-		//{
-		//	if (!played)
-		//	{
-		//		if (pressed)
-		//		{
-		//			shit_sound.Play();
-		//			played = true;
-		//		}
-
-		//	}
-		//	//played = false;
-		//	counter = 0;
-		//}
-
-		//counter++;
+	if (wnd.kbd.KeyIsPressed('A'))
+	{
+		x -= dx * dt;
+	}
+	
+	if (wnd.kbd.KeyIsPressed('S'))
+	{
+		y += dy * dt;
+	}
+	
+	if (wnd.kbd.KeyIsPressed('D'))
+	{
+		x += dx * dt;
+	}
 }
 
 void Game::ComposeFrame()
 {
+
+	dt = frame_timer.Mark();
+
+	gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
+
 	
 }
 
