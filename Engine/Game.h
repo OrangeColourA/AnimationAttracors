@@ -24,10 +24,8 @@
 #include "Mouse.h"
 #include "Graphics.h"
 
-#include "Board.h"
-#include "Snake.h"
-#include "Apple.h"
-
+#include "Sound.h"
+#include "SoundEffect.h"
 #include <random>
 
 class Game
@@ -55,15 +53,11 @@ private:
 	
 	std::mt19937 rng;
 
-	Board brd;
-	Snake snake;
-	Apple apple;
-	Location delta_loc = {1, 0};
-
-	bool game_is_over = false;
-
-
-
+	Sound shit_sound;
+	SoundEffect shit_ansamble;
+	
+	bool pressed = false;
+	
 	/********************************/
 	
 	

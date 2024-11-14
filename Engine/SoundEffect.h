@@ -1,6 +1,6 @@
 /****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
- *	Game.cpp																			  *
+ *	Chili DirectX Framework Sound Pack Version 16.11.11									  *	
+ *	SoundEffect.h																		  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
  *	This file is part of The Chili DirectX Framework.									  *
@@ -16,73 +16,49 @@
  *	GNU General Public License for more details.										  *
  *																						  *
  *	You should have received a copy of the GNU General Public License					  *
- *	along with The Chili DirectX Framework.  If not, see <http://www.gnu.org/licenses/>.  *
+ *	along with this source code.  If not, see <http://www.gnu.org/licenses/>.			  *
  ******************************************************************************************/
-#include "MainWindow.h"
-#include "Game.h"
+#pragma once
+#include "Sound.h"
+#include <random>
+#include <initializer_list>
+#include <memory>
 
-Game::Game( MainWindow& wnd )
-	:
-	wnd( wnd ),
-	gfx( wnd ),
-	rng(std::random_device()()),
-	shit_sound(L"gameoy.wav"),
-	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" })
-	
+class SoundEffect
 {
-	
-}
-
-void Game::Go()
-{
-	gfx.BeginFrame();	
-	UpdateModel();
-	ComposeFrame();
-	gfx.EndFrame();
-}
-
-void Game::UpdateModel()
-{
-	
-		if (wnd.kbd.KeyIsPressed(VK_SPACE))
+public:
+	SoundEffect( const std::initializer_list<std::wstring>& wavFiles,bool soft_fail = false,float freqStdDevFactor = 0.06f )
+		:
+		freqDist( 0.0f,freqStdDevFactor ),
+		soundDist( 0,unsigned int( wavFiles.size() - 1 ) )
+	{
+		sounds.reserve( wavFiles.size() );
+		for( auto& f : wavFiles )
 		{
-			if (!pressed)
+			try
 			{
-				//shit_sound.Play();
-				shit_ansamble.Play(rng);
-				pressed = true;
+				sounds.emplace_back( f );
 			}
-			
+			catch( const SoundSystem::FileException& e )
+			{
+				if( soft_fail )
+				{
+					sounds.emplace_back();
+				}
+				else
+				{
+					throw e;
+				}
+			}
 		}
-		else
-		{
-			pressed = false;
-		}
-
-
-		//if (counter >= fart_rate)
-		//{
-		//	if (!played)
-		//	{
-		//		if (pressed)
-		//		{
-		//			shit_sound.Play();
-		//			played = true;
-		//		}
-
-		//	}
-		//	//played = false;
-		//	counter = 0;
-		//}
-
-		//counter++;
-}
-
-void Game::ComposeFrame()
-{
-	
-}
-
-
-/**************************************************************/
-
+	}
+	template<class T>
+	void Play( T& rng,float vol = 1.0f )
+	{
+		sounds[soundDist( rng )].Play( exp2( freqDist( rng ) ),vol );
+	}
+private:
+	std::uniform_int_distribution<unsigned int> soundDist;
+	std::normal_distribution<float> freqDist;
+	std::vector<Sound> sounds;
+};
