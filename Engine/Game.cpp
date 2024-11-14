@@ -44,6 +44,9 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+
+	dt = frame_timer.Mark();
+
 	if ( wnd.kbd.KeyIsPressed('W') )
 	{
 		y -= dy * dt;
@@ -68,7 +71,7 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
-	dt = frame_timer.Mark();
+	
 
 	gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
 
