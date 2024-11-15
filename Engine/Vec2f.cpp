@@ -64,6 +64,13 @@ float Vec2f::GetLength() const
 
 Vec2f Vec2f::GetNormalized() const
 {
+	float len = GetLength();
+
+	if (len == 0.0f)
+	{
+		return *this;
+	}
+
 	return *this * (1.f / GetLength() );
 }
 
