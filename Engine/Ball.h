@@ -2,7 +2,7 @@
 
 #include "Rectangle_f.h"
 #include "Graphics.h"
-
+#include "Brick.h"
 
 
 class Ball
@@ -23,6 +23,7 @@ public:
 	void Move(float dt);
 
 	bool Do_wall_collide(const Rectangle_f& wall);
+	bool Hit_brick(const Rectangle_f& brick);
 	//bool do_brick_collide(???)
 	void Bounce_x();
 	void Bounce_y();

@@ -26,11 +26,12 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	rng(std::random_device()()),
-	shit_sound(L"gameoy.wav"),
+	shit_sound(L"arkpad.wav"),
 	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
 	frame_timer(),
 	ball(gfx, Vec2f(300.f,300.f)),
-	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f)
+	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
+	br(gfx, 300, 400, Colors::Red)
 	
 {
 	
@@ -70,16 +71,23 @@ void Game::UpdateModel()
 	}*/
 
 	ball.Move(dt);
-	ball.Do_wall_collide(walls);
+	if (ball.Do_wall_collide(walls))
+	{
+		shit_sound.Play();
+	}
 	
-
+	if (ball.Hit_brick(br.GetRect()))
+	{
+		shit_sound.Play();
+		br.Destroy();
+	}
 }
 
 void Game::ComposeFrame()
 {
 
 	ball.Draw();
-	
+	br.Draw();
 }
 
 
