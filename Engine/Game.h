@@ -66,7 +66,8 @@ private:
 	Ball ball;
 	Rectangle_f walls;
 	Brick br;
-
+	Brick br2;
+	Brick br3;
 	FrameTimer frame_timer;
 	float dt;
 

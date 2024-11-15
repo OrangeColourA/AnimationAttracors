@@ -31,7 +31,9 @@ Game::Game( MainWindow& wnd )
 	frame_timer(),
 	ball(gfx, Vec2f(300.f,300.f)),
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
-	br(gfx, 300, 400, Colors::Red)
+	br(gfx, 300, 400, Colors::Red),
+	br2(gfx,100,150, Colors::Yellow),
+	br3(gfx,450, 200, Colors::Green)
 	
 {
 	
@@ -73,10 +75,20 @@ void Game::UpdateModel()
 	ball.Move(dt);
 	if (ball.Do_wall_collide(walls))
 	{
-		shit_sound.Play();
+		//shit_sound.Play();
 	}
 	
 	if (ball.Hit_brick(br.GetRect()))
+	{
+		shit_sound.Play();
+		br.Destroy();
+	}
+	if (ball.Hit_brick(br2.GetRect()))
+	{
+		shit_sound.Play();
+		br.Destroy();
+	}
+	if (ball.Hit_brick(br3.GetRect()))
 	{
 		shit_sound.Play();
 		br.Destroy();
@@ -88,6 +100,8 @@ void Game::ComposeFrame()
 
 	ball.Draw();
 	br.Draw();
+	br2.Draw();
+	br3.Draw();
 }
 
 
