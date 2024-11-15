@@ -28,7 +28,9 @@ Game::Game( MainWindow& wnd )
 	rng(std::random_device()()),
 	shit_sound(L"gameoy.wav"),
 	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
-	frame_timer()
+	frame_timer(),
+	ball(gfx, Vec2f(300.f,300.f)),
+	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f)
 	
 {
 	
@@ -47,7 +49,7 @@ void Game::UpdateModel()
 
 	dt = frame_timer.Mark();
 
-	if ( wnd.kbd.KeyIsPressed('W') )
+	/*if ( wnd.kbd.KeyIsPressed('W') )
 	{
 		y -= dy * dt;
 	}
@@ -65,16 +67,18 @@ void Game::UpdateModel()
 	if (wnd.kbd.KeyIsPressed('D'))
 	{
 		x += dx * dt;
-	}
+	}*/
+
+	ball.Move(dt);
+	ball.Do_wall_collide(walls);
+	
+
 }
 
 void Game::ComposeFrame()
 {
 
-	
-
-	gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
-
+	ball.Draw();
 	
 }
 

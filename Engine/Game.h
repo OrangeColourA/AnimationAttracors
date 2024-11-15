@@ -28,7 +28,7 @@
 #include "SoundEffect.h"
 
 #include "FrameTimer.h"
-
+#include "Ball.h"
 
 #include <random>
 
@@ -62,12 +62,8 @@ private:
 	Sound shit_sound;
 	SoundEffect shit_ansamble;
 	
-	
-	float x = 300.f;
-	float y = 300.f;
-	
-	float dx = 50.f;
-	float dy = 50.f;
+	Ball ball;
+	Rectangle_f walls;
 	
 	FrameTimer frame_timer;
 	float dt;

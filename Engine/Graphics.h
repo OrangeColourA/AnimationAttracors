@@ -24,6 +24,8 @@
 #include "ChiliException.h"
 #include "Colors.h"
 
+#include "Rectangle_f.h"
+
 class Graphics
 {
 public:
@@ -57,8 +59,14 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 
+	void DrawRect(int x0, int y0, int x1, int y1, Color c);
+	void DrawRect(const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawRectDim(const Vec2f& top_left , int Width, int Height, Color c);
 
-	void DrawRectDim(int x, int y, int Width, int Height, Color c);
+	void DrawRect_f(const Rectangle_f& rect, Color c)
+	{
+		DrawRect(static_cast<int>(rect.left), static_cast<int>(rect.top),static_cast<int>(rect.right), static_cast<int>(rect.bottom), c);
+	}
 
 	
 	~Graphics();
