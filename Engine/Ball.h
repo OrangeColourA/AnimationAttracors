@@ -3,7 +3,7 @@
 #include "Rectangle_f.h"
 #include "Graphics.h"
 #include "Brick.h"
-
+#include "Paddle.h"
 
 class Ball
 {
@@ -24,6 +24,7 @@ public:
 
 	bool Do_wall_collide(const Rectangle_f& wall);
 	bool Hit_brick(Brick& br);
+	bool Hit_paddle(Paddle& pad);
 	//bool do_brick_collide(???)
 	void Bounce_x();
 	void Bounce_y();

@@ -30,6 +30,7 @@
 #include "FrameTimer.h"
 #include "Ball.h"
 #include "Brick.h"
+#include "Paddle.h"
 
 #include <random>
 
@@ -65,9 +66,13 @@ private:
 	
 	Ball ball;
 	Rectangle_f walls;
+	Paddle pad;
+
+
 	Brick br;
 	Brick br2;
 	Brick br3;
+
 	FrameTimer frame_timer;
 	float dt;
 

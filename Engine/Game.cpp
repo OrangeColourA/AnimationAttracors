@@ -33,7 +33,8 @@ Game::Game( MainWindow& wnd )
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
 	br(gfx, 300, 400, Colors::Red),
 	br2(gfx,100,150, Colors::Yellow),
-	br3(gfx,450, 200, Colors::Green)
+	br3(gfx,450, 200, Colors::Green),
+	pad(gfx, Vec2f(400.f,550.f))
 	
 {
 	
@@ -72,7 +73,16 @@ void Game::UpdateModel()
 		x += dx * dt;
 	}*/
 
+
 	ball.Move(dt);
+	pad.Move(wnd.kbd, dt);
+	pad.Do_wall_collide(walls);
+
+	if (ball.Hit_paddle(pad))
+	{
+		shit_sound.Play();
+	}
+
 	if (ball.Do_wall_collide(walls))
 	{
 		//shit_sound.Play();
@@ -97,7 +107,7 @@ void Game::UpdateModel()
 
 void Game::ComposeFrame()
 {
-
+	pad.Draw();
 	ball.Draw();
 	br.Draw();
 	br2.Draw();

@@ -81,6 +81,30 @@ bool Ball::Hit_brick(Brick& br)
 	return false;
 }
 
+bool Ball::Hit_paddle(Paddle& p)
+{
+	
+		Rectangle_f rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
+		Rectangle_f pad = p.GetRect();
+
+		if (rect.is_intersect(pad))
+		{
+
+			if (rect.bottom < pad.bottom && rect.top > pad.top)
+			{
+				Bounce_x();
+			}
+			else
+			{
+				Bounce_y();
+			}
+
+			return true;
+		}
+
+	return false;
+}
+
 void Ball::Bounce_x()
 {
 	velocity.x = -velocity.x;
