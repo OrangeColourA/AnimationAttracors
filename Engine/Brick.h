@@ -8,7 +8,7 @@ class Brick
 {
 private:
 	Rectangle_f body;
-	static constexpr int width = 50;
+	static constexpr int width = 80;
 	static constexpr int heigth = 30;
 	Color color;
 	bool destroyed = false;

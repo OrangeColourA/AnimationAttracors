@@ -19,7 +19,8 @@ void Brick::Draw(Graphics& g) const
 
 	if (initialized && !destroyed)
 	{
-		g.DrawRect_f(body, color);
+		g.DrawRect(Vec2f(body.left, body.top) + Vec2f(2.f,2.f),
+			Vec2f(body.right, body.bottom) - Vec2f(2.f, 2.f),	color);
 	}
 }
 

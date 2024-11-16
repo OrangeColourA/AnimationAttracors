@@ -69,9 +69,9 @@ private:
 	Paddle pad;
 
 	
-	static constexpr int grid_width = 5;
+	static constexpr int grid_width = 8;
 	static constexpr int grid_height = 3;
-	static constexpr int num_bricks = 15;
+	static constexpr int num_bricks = 24;
 	Brick arr_br[num_bricks];
 	Color arr_colors[3] = { Colors::Yellow, Colors::Red, Colors::Green };
 	Brick br;

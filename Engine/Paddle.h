@@ -8,7 +8,7 @@ class Paddle
 {
 private:
 	Vec2f center_pos;
-	static constexpr float speed = 4.f * 60.f;
+	static constexpr float speed = 6.f * 60.f;
 	//Rectangle_f body;
 	static constexpr int width = 150;
 	static constexpr int heigth = 30;

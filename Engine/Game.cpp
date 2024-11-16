@@ -31,20 +31,21 @@ Game::Game( MainWindow& wnd )
 	frame_timer(),
 	ball(gfx, Vec2f(300.f,300.f)),
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
-	br(300, 400, Colors::Red),
+	/*br(300, 400, Colors::Red),
 	br2(100,150, Colors::Yellow),
-	br3(450, 200, Colors::Green),
+	br3(450, 200, Colors::Green),*/
 	pad(gfx, Vec2f(400.f,550.f))
 	
 {
-
-
+	br.Init(300, 400, Colors::Red);
+	br2.Init(100, 250, Colors::Yellow);
+	br3.Init(450, 200, Colors::Green);
 
 	for (int i = 0; i < grid_height; i++)
 	{
 		for (int j = 0; j < grid_width; j++)
 		{
-			arr_br[j + i * grid_width].Init( 10 + j * Brick::GetWidth(), 10 + i * Brick::GetHeight(), arr_colors[i]);
+			arr_br[j + i * grid_width].Init( 70 + j * Brick::GetWidth(), 50 + i * Brick::GetHeight(), arr_colors[i]);
 		}
 	}
 
