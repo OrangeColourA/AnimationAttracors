@@ -68,7 +68,12 @@ private:
 	Rectangle_f walls;
 	Paddle pad;
 
-
+	
+	static constexpr int grid_width = 5;
+	static constexpr int grid_height = 3;
+	static constexpr int num_bricks = 15;
+	Brick arr_br[num_bricks];
+	Color arr_colors[3] = { Colors::Yellow, Colors::Red, Colors::Green };
 	Brick br;
 	Brick br2;
 	Brick br3;

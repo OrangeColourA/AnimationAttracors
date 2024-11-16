@@ -8,17 +8,21 @@ class Brick
 {
 private:
 	Rectangle_f body;
-	static constexpr int width = 150;
+	static constexpr int width = 50;
 	static constexpr int heigth = 30;
 	Color color;
 	bool destroyed = false;
-	Graphics& gfx;
+	bool initialized = false;
+	//
 public:
-	
-	Brick(Graphics& g, int x, int y, Color c);
+	Brick() = default;
+	Brick(int x, int y, Color c);
 
-	void Draw();
+	void Init(int x, int y, Color c);
+	void Draw(Graphics& g) const;
 	void Destroy();
 	bool is_destroyed() const;
 	Rectangle_f GetRect() const;
+	static int GetWidth() ;
+	static int GetHeight() ;
 };

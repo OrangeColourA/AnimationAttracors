@@ -19,6 +19,11 @@ Rectangle_f::Rectangle_f(const Vec2f& top_left, float width, float height)
 {
 }
 
+Rectangle_f& Rectangle_f::operator=(const Rectangle_f& rec)
+{
+	return Rectangle_f(rec);
+}
+
 bool Rectangle_f::is_intersect(const Rectangle_f& rect)
 {
 	return right > rect.left &&

@@ -329,12 +329,14 @@ void Graphics::DrawRect(int x0, int y0, int x1, int y1, Color c)
 
 void Graphics::DrawRect(const Vec2f& top_left, const Vec2f& bottom_right, Color c)
 {
-	DrawRect(top_left.x, top_left.y, bottom_right.x, bottom_right.y, c);
+	DrawRect(static_cast<int>(top_left.x), static_cast<int>(top_left.y),
+		static_cast<int>(bottom_right.x), static_cast<int>(bottom_right.y), c);
 }
 
 void Graphics::DrawRectDim(const Vec2f& v, int width, int height, Color c)
 {
-	DrawRect(v.x, v.y, v.x + width, v.y + height, c);
+	DrawRect(static_cast<int>(v.x), static_cast<int>(v.y),
+		static_cast<int>(v.x + width), static_cast<int>(v.y + height), c);
 }
 
 

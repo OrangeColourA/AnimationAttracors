@@ -31,12 +31,23 @@ Game::Game( MainWindow& wnd )
 	frame_timer(),
 	ball(gfx, Vec2f(300.f,300.f)),
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
-	br(gfx, 300, 400, Colors::Red),
-	br2(gfx,100,150, Colors::Yellow),
-	br3(gfx,450, 200, Colors::Green),
+	br(300, 400, Colors::Red),
+	br2(100,150, Colors::Yellow),
+	br3(450, 200, Colors::Green),
 	pad(gfx, Vec2f(400.f,550.f))
 	
 {
+
+
+
+	for (int i = 0; i < grid_height; i++)
+	{
+		for (int j = 0; j < grid_width; j++)
+		{
+			arr_br[j + i * grid_width].Init( 10 + j * Brick::GetWidth(), 10 + i * Brick::GetHeight(), arr_colors[i]);
+		}
+	}
+
 	
 }
 
@@ -88,6 +99,14 @@ void Game::UpdateModel()
 		//shit_sound.Play();
 	}
 	
+	for (int i = 0; i < num_bricks; i++)
+	{
+		if (ball.Hit_brick(arr_br[i]))
+		{
+			shit_sound.Play();
+			//br.Destroy();
+		}
+	}
 	if (ball.Hit_brick(br))
 	{
 		shit_sound.Play();
@@ -109,9 +128,13 @@ void Game::ComposeFrame()
 {
 	pad.Draw();
 	ball.Draw();
-	br.Draw();
-	br2.Draw();
-	br3.Draw();
+	for (int i = 0; i < num_bricks; i++)
+	{
+		arr_br[i].Draw(gfx);
+	}
+	br.Draw(gfx);
+	br2.Draw(gfx);
+	br3.Draw(gfx);
 }
 
 

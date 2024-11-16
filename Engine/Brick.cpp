@@ -1,17 +1,25 @@
 #include "Brick.h"
 
-Brick::Brick(Graphics& g, int x, int y, Color c)
+Brick::Brick(int x, int y, Color c)
 	:
-	gfx(g),
 	body(static_cast<float>(x), static_cast<float>(x + width), static_cast<float>(y), static_cast<float>(y + heigth)),
 	color(c)
 {}
 
-void Brick::Draw()
+void Brick::Init(int x, int y, Color c)
 {
-	if (!destroyed)
+	body = Rectangle_f::GetRect( Vec2f(static_cast<float>(x),		  static_cast<float>(y)		    ),
+								 Vec2f(static_cast<float>(x + width), static_cast<float>(y + heigth)) );
+	color = c;
+	initialized = true;
+}
+
+void Brick::Draw(Graphics& g) const
+{
+
+	if (initialized && !destroyed)
 	{
-		gfx.DrawRect_f(body, color);
+		g.DrawRect_f(body, color);
 	}
 }
 
@@ -28,4 +36,14 @@ bool Brick::is_destroyed() const
 Rectangle_f Brick::GetRect() const
 {
 	return body;
+}
+
+int Brick::GetWidth() 
+{
+	return width;
+}
+
+int Brick::GetHeight() 
+{
+	return heigth;
 }
