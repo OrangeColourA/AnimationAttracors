@@ -9,10 +9,10 @@ Brick::Brick(Graphics& g, int x, int y, Color c)
 
 void Brick::Draw()
 {
-	//if (!destroyed)
-	//{
+	if (!destroyed)
+	{
 		gfx.DrawRect_f(body, color);
-	//}
+	}
 }
 
 void Brick::Destroy()
@@ -20,7 +20,12 @@ void Brick::Destroy()
 	destroyed = true;
 }
 
-Rectangle_f Brick::GetRect()
+bool Brick::is_destroyed() const
+{
+	return destroyed;
+}
+
+Rectangle_f Brick::GetRect() const
 {
 	return body;
 }

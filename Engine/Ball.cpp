@@ -54,17 +54,28 @@ bool Ball::Do_wall_collide(const Rectangle_f& wall)
 	return colided;
 }
 
-bool Ball::Hit_brick(const Rectangle_f& brick)
+bool Ball::Hit_brick(Brick& br)
 {
-	Rectangle_f rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
-
-	if (rect.is_intersect(brick))
+	if (!br.is_destroyed())
 	{
+		Rectangle_f rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
+		Rectangle_f brick = br.GetRect();
 
-		Bounce_y();
-		return true;
+		if (rect.is_intersect(brick))
+		{
 
+			if (rect.bottom < brick.bottom && rect.top > brick.top)
+			{
+				Bounce_x();
+			}
+			else
+			{
+				Bounce_y();
+			}
 
+			br.Destroy();
+			return true;
+		}
 	}
 
 	return false;

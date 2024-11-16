@@ -19,5 +19,6 @@ public:
 
 	void Draw();
 	void Destroy();
-	Rectangle_f GetRect();
+	bool is_destroyed() const;
+	Rectangle_f GetRect() const;
 };

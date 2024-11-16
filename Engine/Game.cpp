@@ -78,20 +78,20 @@ void Game::UpdateModel()
 		//shit_sound.Play();
 	}
 	
-	if (ball.Hit_brick(br.GetRect()))
+	if (ball.Hit_brick(br))
 	{
 		shit_sound.Play();
-		br.Destroy();
+		//br.Destroy();
 	}
-	if (ball.Hit_brick(br2.GetRect()))
+	if (ball.Hit_brick(br2))
 	{
 		shit_sound.Play();
-		br.Destroy();
+		//br.Destroy();
 	}
-	if (ball.Hit_brick(br3.GetRect()))
+	if (ball.Hit_brick(br3))
 	{
 		shit_sound.Play();
-		br.Destroy();
+		//br.Destroy();
 	}
 }
 

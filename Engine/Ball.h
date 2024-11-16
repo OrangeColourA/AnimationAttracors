@@ -23,7 +23,7 @@ public:
 	void Move(float dt);
 
 	bool Do_wall_collide(const Rectangle_f& wall);
-	bool Hit_brick(const Rectangle_f& brick);
+	bool Hit_brick(Brick& br);
 	//bool do_brick_collide(???)
 	void Bounce_x();
 	void Bounce_y();
