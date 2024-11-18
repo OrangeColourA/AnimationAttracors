@@ -62,29 +62,7 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-
 	dt = frame_timer.Mark();
-
-	/*if ( wnd.kbd.KeyIsPressed('W') )
-	{
-		y -= dy * dt;
-	}
-	
-	if (wnd.kbd.KeyIsPressed('A'))
-	{
-		x -= dx * dt;
-	}
-	
-	if (wnd.kbd.KeyIsPressed('S'))
-	{
-		y += dy * dt;
-	}
-	
-	if (wnd.kbd.KeyIsPressed('D'))
-	{
-		x += dx * dt;
-	}*/
-
 
 	ball.Move(dt);
 	pad.Move(wnd.kbd, dt);
@@ -94,34 +72,30 @@ void Game::UpdateModel()
 	{
 		shit_sound.Play();
 	}
-
-	if (ball.Do_wall_collide(walls))
-	{
-		//shit_sound.Play();
-	}
+	
+	ball.Do_wall_collide(walls);
+	
 	
 	for (int i = 0; i < num_bricks; i++)
 	{
 		if (ball.Hit_brick(arr_br[i]))
 		{
 			shit_sound.Play();
-			//br.Destroy();
+			
 		}
 	}
+
 	if (ball.Hit_brick(br))
 	{
 		shit_sound.Play();
-		//br.Destroy();
 	}
 	if (ball.Hit_brick(br2))
 	{
-		shit_sound.Play();
-		//br.Destroy();
+		shit_sound.Play();	
 	}
 	if (ball.Hit_brick(br3))
 	{
 		shit_sound.Play();
-		//br.Destroy();
 	}
 }
 

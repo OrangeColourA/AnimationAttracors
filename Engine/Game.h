@@ -70,10 +70,10 @@ private:
 
 	
 	static constexpr int grid_width = 8;
-	static constexpr int grid_height = 3;
-	static constexpr int num_bricks = 24;
+	static constexpr int grid_height = 4;
+	static constexpr int num_bricks = 32;
 	Brick arr_br[num_bricks];
-	Color arr_colors[3] = { Colors::Yellow, Colors::Red, Colors::Green };
+	Color arr_colors[4] = { Colors::Yellow,Colors::Cyan, Colors::Red, Colors::Green };
 	Brick br;
 	Brick br2;
 	Brick br3;

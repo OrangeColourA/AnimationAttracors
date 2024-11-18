@@ -58,13 +58,12 @@ bool Ball::Hit_brick(Brick& br)
 {
 	if (!br.is_destroyed())
 	{
-		Rectangle_f rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
+		Rectangle_f ball_rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
 		Rectangle_f brick = br.GetRect();
 
-		if (rect.is_intersect(brick))
+		if (ball_rect.is_intersect(brick))
 		{
-
-			if (rect.bottom < brick.bottom && rect.top > brick.top)
+			if (center_pos.x < brick.left || center_pos.x > brick.right)
 			{
 				Bounce_x();
 			}
