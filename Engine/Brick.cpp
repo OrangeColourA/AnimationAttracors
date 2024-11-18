@@ -48,3 +48,8 @@ int Brick::GetHeight()
 {
 	return heigth;
 }
+
+Vec2f Brick::GetCenter() const
+{
+	return Vec2f((body.right - body.left) / 2, (body.top - body.bottom) / 2);
+}

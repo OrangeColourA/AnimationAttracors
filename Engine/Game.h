@@ -74,9 +74,7 @@ private:
 	static constexpr int num_bricks = 32;
 	Brick arr_br[num_bricks];
 	Color arr_colors[4] = { Colors::Yellow,Colors::Cyan, Colors::Red, Colors::Green };
-	Brick br;
-	Brick br2;
-	Brick br3;
+	
 
 	FrameTimer frame_timer;
 	float dt;

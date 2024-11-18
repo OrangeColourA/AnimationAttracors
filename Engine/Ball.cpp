@@ -54,30 +54,28 @@ bool Ball::Do_wall_collide(const Rectangle_f& wall)
 	return colided;
 }
 
-bool Ball::Hit_brick(Brick& br)
+bool Ball::Detect_brick_collioson(Brick& br)
 {
-	if (!br.is_destroyed())
+	Rectangle_f ball_rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
+	return !br.is_destroyed() && ball_rect.is_intersect(br.GetRect());
+}
+
+void Ball::Handle_brick_collision(Brick& br)
+{
+	// calling only if collision detected Detect_brick_collioson function
+
+	Rectangle_f brick = br.GetRect();
+
+	if (center_pos.x < brick.left || center_pos.x > brick.right)
 	{
-		Rectangle_f ball_rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
-		Rectangle_f brick = br.GetRect();
-
-		if (ball_rect.is_intersect(brick))
-		{
-			if (center_pos.x < brick.left || center_pos.x > brick.right)
-			{
-				Bounce_x();
-			}
-			else
-			{
-				Bounce_y();
-			}
-
-			br.Destroy();
-			return true;
-		}
+		Bounce_x();
+	}
+	else
+	{
+		Bounce_y();
 	}
 
-	return false;
+	br.Destroy();
 }
 
 bool Ball::Hit_paddle(Paddle& p)
@@ -112,4 +110,9 @@ void Ball::Bounce_x()
 void Ball::Bounce_y()
 {
 	velocity.y = -velocity.y;
+}
+
+Vec2f Ball::Get_pos() const
+{
+	return center_pos;
 }

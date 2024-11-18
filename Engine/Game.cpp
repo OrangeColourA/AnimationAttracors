@@ -31,16 +31,9 @@ Game::Game( MainWindow& wnd )
 	frame_timer(),
 	ball(gfx, Vec2f(300.f,300.f)),
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
-	/*br(300, 400, Colors::Red),
-	br2(100,150, Colors::Yellow),
-	br3(450, 200, Colors::Green),*/
 	pad(gfx, Vec2f(400.f,550.f))
 	
 {
-	br.Init(300, 400, Colors::Red);
-	br2.Init(100, 250, Colors::Yellow);
-	br3.Init(450, 200, Colors::Green);
-
 	for (int i = 0; i < grid_height; i++)
 	{
 		for (int j = 0; j < grid_width; j++)
@@ -48,8 +41,6 @@ Game::Game( MainWindow& wnd )
 			arr_br[j + i * grid_width].Init( 70 + j * Brick::GetWidth(), 50 + i * Brick::GetHeight(), arr_colors[i]);
 		}
 	}
-
-	
 }
 
 void Game::Go()
@@ -75,26 +66,38 @@ void Game::UpdateModel()
 	
 	ball.Do_wall_collide(walls);
 	
-	
+	bool collision_happened = false;
+	int collision_index;
+	//int new_collision_index;
+	float cur_lowest_distance;
+	float new_distance;
 	for (int i = 0; i < num_bricks; i++)
 	{
-		if (ball.Hit_brick(arr_br[i]))
+		if (ball.Detect_brick_collioson(arr_br[i]))
 		{
-			shit_sound.Play();
-			
+			if (collision_happened)
+			{
+
+				new_distance = (arr_br[i].GetCenter() - ball.Get_pos()).GetLengthSq();
+				if (new_distance < cur_lowest_distance)
+				{
+					cur_lowest_distance = new_distance;
+					collision_index = i;
+				}
+
+			}
+			else
+			{
+				cur_lowest_distance = (arr_br[i].GetCenter() - ball.Get_pos()).GetLengthSq();
+				collision_index = i;
+				collision_happened = true;
+			}
 		}
 	}
 
-	if (ball.Hit_brick(br))
+	if (collision_happened)
 	{
-		shit_sound.Play();
-	}
-	if (ball.Hit_brick(br2))
-	{
-		shit_sound.Play();	
-	}
-	if (ball.Hit_brick(br3))
-	{
+		ball.Handle_brick_collision(arr_br[collision_index]);
 		shit_sound.Play();
 	}
 }
@@ -107,9 +110,6 @@ void Game::ComposeFrame()
 	{
 		arr_br[i].Draw(gfx);
 	}
-	br.Draw(gfx);
-	br2.Draw(gfx);
-	br3.Draw(gfx);
 }
 
 

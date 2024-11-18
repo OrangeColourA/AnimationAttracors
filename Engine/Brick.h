@@ -25,4 +25,5 @@ public:
 	Rectangle_f GetRect() const;
 	static int GetWidth() ;
 	static int GetHeight() ;
+	Vec2f GetCenter() const;
 };

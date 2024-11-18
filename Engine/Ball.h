@@ -23,10 +23,16 @@ public:
 	void Move(float dt);
 
 	bool Do_wall_collide(const Rectangle_f& wall);
-	bool Hit_brick(Brick& br);
+
+	bool Detect_brick_collioson(Brick& br);
+	void Handle_brick_collision(Brick& br);
+	
+	
 	bool Hit_paddle(Paddle& pad);
 	//bool do_brick_collide(???)
 	void Bounce_x();
 	void Bounce_y();
+
+	Vec2f Get_pos() const;
 
 };
