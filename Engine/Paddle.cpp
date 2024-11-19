@@ -26,7 +26,7 @@ bool Paddle::Do_wall_collide(const Rectangle_f& walls)
 
 	if (pad.left < walls.left)
 	{
-		center_pos.x = width / 2;
+		center_pos.x = width / 2 + 1.f;
 		return true;
 	}
 
@@ -50,6 +50,11 @@ Rectangle_f Paddle::GetRect() const
 {
 	Vec2f v(width / 2, heigth / 2);
 	return Rectangle_f(center_pos - v, center_pos + v);
+}
+
+int Paddle::GetWidth() const
+{
+	return width;
 }
 
 void Paddle::ResetCooldown()

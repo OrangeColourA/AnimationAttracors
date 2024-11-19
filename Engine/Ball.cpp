@@ -93,7 +93,8 @@ bool Ball::Hit_paddle(Paddle& p)
 		{
 			if (std::signbit(velocity.x) == std::signbit((center_pos - pad.GetCenter()).x))
 			{
-				Bounce_y();
+				Bounce_y_paddle(pad.GetCenter(), p.GetWidth());
+				//Bounce_y();
 			}
 			else if (center_pos.x < pad.left || center_pos.x > pad.right)
 			{
@@ -101,7 +102,8 @@ bool Ball::Hit_paddle(Paddle& p)
 			}
 			else
 			{
-				Bounce_y();
+				Bounce_y_paddle(pad.GetCenter(), p.GetWidth());
+				//Bounce_y();
 			}
 
 			p.SetOnCooldown();
@@ -121,6 +123,30 @@ void Ball::Bounce_y()
 {
 	velocity.y = -velocity.y;
 }
+
+void Ball::Bounce_y_paddle(const Vec2f& center_pad, int width_pad)
+{
+	// now we now pos of ball center and paddle center
+
+	//calculating diff vector
+	/*Vec2f pad_to_ball = center_pad - center_pos;
+
+	velocity.x = initial_velocity.x * 2.f * pad_to_ball.x / width_pad;
+	velocity.y = initial_velocity.y * (1.f - 2.f * pad_to_ball.x / width_pad);*/
+
+	velocity.y = -dv;
+
+	if (center_pos.x > center_pad.x)
+	{
+		velocity.x = dv;
+	}
+	else
+	{
+		velocity.x = -dv;
+	}
+
+}
+
 
 Vec2f Ball::Get_pos() const
 {

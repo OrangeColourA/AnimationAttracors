@@ -46,15 +46,21 @@ Game::Game( MainWindow& wnd )
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
-	UpdateModel();
+	gfx.BeginFrame();
+	float elapsedTime = frame_timer.Mark();
+	while (elapsedTime > 0.0f)
+	{
+		float temp_time = std::min(0.0025f, elapsedTime);
+		UpdateModel(temp_time);
+		elapsedTime -= 0.0025f;
+	}
 	ComposeFrame();
 	gfx.EndFrame();
 }
 
-void Game::UpdateModel()
+void Game::UpdateModel(float dt)
 {
-	dt = frame_timer.Mark();
+	
 
 	ball.Move(dt);
 	pad.Move(wnd.kbd, dt);

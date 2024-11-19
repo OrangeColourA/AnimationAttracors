@@ -24,6 +24,7 @@ public:
 	void Draw() const;
 	Rectangle_f GetRect() const;
 
+	int GetWidth() const;
 	void ResetCooldown();
 	void SetOnCooldown();
 	bool isCooldown() const;

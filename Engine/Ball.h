@@ -10,7 +10,9 @@ class Ball
 
 private:
 	Vec2f center_pos;
-	Vec2f velocity = Vec2f(8.f * 60.f,-8.f * 60.f);
+	Vec2f velocity = Vec2f(6.f * 60.f,-6.f * 60.f);
+	const Vec2f initial_velocity = Vec2f(6.f * 60.f, -6.f * 60.f);
+	static constexpr float dv = 360.f;
 	static constexpr float radius = 7.f;
 	Color color = Colors::Cyan;
 	Graphics& gfx;
@@ -32,7 +34,7 @@ public:
 	//bool do_brick_collide(???)
 	void Bounce_x();
 	void Bounce_y();
-
+	void Bounce_y_paddle(const Vec2f& center_pad, int width_pad);
 	Vec2f Get_pos() const;
 
 };

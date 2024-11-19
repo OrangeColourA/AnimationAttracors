@@ -45,7 +45,7 @@ public:
 	void Go();
 private:
 	void ComposeFrame();
-	void UpdateModel();
+	void UpdateModel(float dt);
 	/********************************/
 	/*  User Functions              */
 	
@@ -77,7 +77,7 @@ private:
 	
 	Brick test_br;
 	FrameTimer frame_timer;
-	float dt;
+	//float dt;
 
 	/********************************/
 	
