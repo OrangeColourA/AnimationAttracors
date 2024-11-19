@@ -26,7 +26,7 @@ bool Paddle::Do_wall_collide(const Rectangle_f& walls)
 
 	if (pad.left < walls.left)
 	{
-		center_pos.x = width / 2 + 1.f;
+		center_pos.x = walls.left + width / 2 + 1.f;
 		return true;
 	}
 

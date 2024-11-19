@@ -32,7 +32,8 @@ Game::Game( MainWindow& wnd )
 	ball(gfx, Vec2f(190.f,400.f)),
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
 	pad(gfx, Vec2f(400.f,550.f)),
-	test_br(255,215, Colors::Magenta)
+	test_br(255,215, Colors::Magenta),
+	wall(50.f, static_cast<float>(Graphics::ScreenWidth) - 50.f, 25.f, static_cast<float>(Graphics::ScreenHeight) - 25.f)
 	
 {
 	for (int i = 0; i < grid_height; i++)
@@ -64,8 +65,8 @@ void Game::UpdateModel(float dt)
 
 	ball.Move(dt);
 	pad.Move(wnd.kbd, dt);
-	pad.Do_wall_collide(walls);
-
+	//pad.Do_wall_collide(walls);
+	pad.Do_wall_collide(wall.GetRect());
 	if (ball.Hit_paddle(pad))
 	{
 		shit_sound.Play();
@@ -80,11 +81,14 @@ void Game::UpdateModel(float dt)
 	}
 
 
-
-	if (ball.Do_wall_collide(walls))
+	if (ball.Do_wall_collide(wall.GetRect()))
 	{
 		pad.ResetCooldown();
 	}
+	/*if (ball.Do_wall_collide(walls))
+	{
+		pad.ResetCooldown();
+	}*/
 	
 	bool collision_happened = false;
 	int collision_index;
@@ -133,6 +137,8 @@ void Game::ComposeFrame()
 		arr_br[i].Draw(gfx);
 	}
 	test_br.Draw(gfx);
+
+	wall.Draw(gfx);
 }
 
 

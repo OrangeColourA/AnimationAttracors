@@ -31,6 +31,7 @@
 #include "Ball.h"
 #include "Brick.h"
 #include "Paddle.h"
+#include "Boarder.h"
 
 #include <random>
 
@@ -67,7 +68,7 @@ private:
 	Ball ball;
 	Rectangle_f walls;
 	Paddle pad;
-
+	Boarder wall;
 	
 	static constexpr int grid_width = 8;
 	static constexpr int grid_height = 4;
