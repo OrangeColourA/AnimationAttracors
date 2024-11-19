@@ -69,12 +69,16 @@ void Game::UpdateModel()
 	if (ball.Detect_brick_collioson(test_br))
 	{
 		ball.Handle_brick_collision(test_br);
+		pad.ResetCooldown();
 		shit_sound.Play();
 	}
 
 
 
-	ball.Do_wall_collide(walls);
+	if (ball.Do_wall_collide(walls))
+	{
+		pad.ResetCooldown();
+	}
 	
 	bool collision_happened = false;
 	int collision_index;
@@ -108,14 +112,16 @@ void Game::UpdateModel()
 	if (collision_happened)
 	{
 		ball.Handle_brick_collision(arr_br[collision_index]);
+		pad.ResetCooldown();
 		shit_sound.Play();
 	}
 }
 
 void Game::ComposeFrame()
 {
-	pad.Draw();
+	
 	ball.Draw();
+	pad.Draw();
 	for (int i = 0; i < num_bricks; i++)
 	{
 		arr_br[i].Draw(gfx);

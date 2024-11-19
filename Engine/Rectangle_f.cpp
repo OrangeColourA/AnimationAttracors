@@ -36,6 +36,11 @@ bool Rectangle_f::is_intersect(const Rectangle_f& rect)
 			bottom > rect.top;
 }
 
+Vec2f Rectangle_f::GetCenter() const
+{
+	return Vec2f((left + right) / 2, (top + bottom) / 2);
+}
+
 Rectangle_f Rectangle_f::GetRect(const Vec2f& top_left, const Vec2f& bottom_right)
 {
 	return Rectangle_f(top_left, bottom_right);

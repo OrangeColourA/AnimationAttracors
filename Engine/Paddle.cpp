@@ -51,3 +51,18 @@ Rectangle_f Paddle::GetRect() const
 	Vec2f v(width / 2, heigth / 2);
 	return Rectangle_f(center_pos - v, center_pos + v);
 }
+
+void Paddle::ResetCooldown()
+{
+	isOnCooldown = false;
+}
+
+void Paddle::SetOnCooldown()
+{
+	isOnCooldown = true;
+}
+
+bool Paddle::isCooldown() const
+{
+	return isOnCooldown;
+}

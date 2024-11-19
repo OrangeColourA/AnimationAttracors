@@ -85,14 +85,17 @@ void Ball::Handle_brick_collision(Brick& br)
 
 bool Ball::Hit_paddle(Paddle& p)
 {
-	
-		Rectangle_f rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
+	if (!p.isCooldown())
+	{
+		Rectangle_f ball_rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
 		Rectangle_f pad = p.GetRect();
-
-		if (rect.is_intersect(pad))
+		if (ball_rect.is_intersect(pad))
 		{
-
-			if (rect.bottom < pad.bottom && rect.top > pad.top)
+			if (std::signbit(velocity.x) == std::signbit((center_pos - pad.GetCenter()).x))
+			{
+				Bounce_y();
+			}
+			else if (center_pos.x < pad.left || center_pos.x > pad.right)
 			{
 				Bounce_x();
 			}
@@ -101,9 +104,11 @@ bool Ball::Hit_paddle(Paddle& p)
 				Bounce_y();
 			}
 
+			p.SetOnCooldown();
+
 			return true;
 		}
-
+	}
 	return false;
 }
 

@@ -21,6 +21,7 @@ public:
 	Rectangle_f& operator=(const Rectangle_f& rec);
 
 	bool is_intersect(const Rectangle_f& rect);
+	Vec2f GetCenter() const;
 
 	static Rectangle_f GetRect(const Vec2f& top_left, const Vec2f& bottom_right);
 
