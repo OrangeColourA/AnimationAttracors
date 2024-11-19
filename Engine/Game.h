@@ -70,6 +70,8 @@ private:
 	Paddle pad;
 	Boarder wall;
 	
+	bool game_is_over = false;
+
 	static constexpr int grid_width = 8;
 	static constexpr int grid_height = 4;
 	static constexpr int num_bricks = 32;

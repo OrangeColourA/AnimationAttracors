@@ -240,6 +240,30 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawEndTitle(const Vec2f& center)
+{
+
+	float half_width = 20.f;
+	Vec2f temp = center;
+
+	DrawRect(center - Vec2f(half_width, half_width), center + Vec2f(half_width, half_width), Colors::Red);
+	
+	DrawRect(center - Vec2f(3.f*half_width, 3.f*half_width), center - Vec2f(half_width, half_width), Colors::Red);
+
+	DrawRect(center - Vec2f(5.f*half_width, 5.f*half_width), center - Vec2f(3.f*half_width, 3.f*half_width), Colors::Red);
+
+	DrawRect(center + Vec2f(half_width, half_width), center + Vec2f(3.f*half_width, 3.f*half_width), Colors::Red);
+	DrawRect(center + Vec2f(half_width, half_width)*3.f, center + Vec2f(half_width, half_width)*5.f, Colors::Red);
+
+
+	DrawRect(center + Vec2f(half_width, -3.f* half_width), center + Vec2f(3.f*half_width, -half_width), Colors::Red);
+	DrawRect(center + Vec2f(3.f*half_width, -5.f*half_width), center + Vec2f(5.f*half_width, -3.f*half_width), Colors::Red);
+	
+	DrawRect(center + Vec2f(-3.f*half_width, half_width), center + Vec2f(-half_width, 3.f*half_width), Colors::Red);
+	DrawRect(center + Vec2f(-5.f * half_width, 3.f * half_width), center + Vec2f(-3.f * half_width, 5.f * half_width), Colors::Red);
+
+}
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)

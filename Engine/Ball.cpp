@@ -17,7 +17,7 @@ void Ball::Move(float dt)
 	center_pos += velocity * dt;
 }
 
-bool Ball::Do_wall_collide(const Rectangle_f& wall)
+bool Ball::Do_wall_collide(const Rectangle_f& wall, bool& game_over)
 {
 	Rectangle_f rect = Rectangle_f::GetRect(center_pos - Vec2f(radius, radius), center_pos + Vec2f(radius, radius));
 	bool colided = false;
@@ -46,7 +46,8 @@ bool Ball::Do_wall_collide(const Rectangle_f& wall)
 	}
 	else if (rect.bottom > wall.bottom)
 	{
-		Bounce_y();
+		//Bounce_y();
+		game_over = true;
 		center_pos.y -= rect.bottom - wall.bottom;
 		//center_pos.y = wall.bottom - 1.f;
 		colided = true;

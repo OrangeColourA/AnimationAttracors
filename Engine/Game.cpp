@@ -40,7 +40,7 @@ Game::Game( MainWindow& wnd )
 	{
 		for (int j = 0; j < grid_width; j++)
 		{
-			arr_br[j + i * grid_width].Init( 70 + j * Brick::GetWidth(), 50 + i * Brick::GetHeight(), arr_colors[i]);
+			arr_br[j + i * grid_width].Init( 80 + j * Brick::GetWidth(), 50 + i * Brick::GetHeight(), arr_colors[i]);
 		}
 	}
 }
@@ -48,12 +48,15 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();
-	float elapsedTime = frame_timer.Mark();
-	while (elapsedTime > 0.0f)
+	if (!game_is_over)
 	{
-		float temp_time = std::min(0.0025f, elapsedTime);
-		UpdateModel(temp_time);
-		elapsedTime -= 0.0025f;
+		float elapsedTime = frame_timer.Mark();
+		while (elapsedTime > 0.0f)
+		{
+			float temp_time = std::min(0.0025f, elapsedTime);
+			UpdateModel(temp_time);
+			elapsedTime -= 0.0025f;
+		}
 	}
 	ComposeFrame();
 	gfx.EndFrame();
@@ -81,7 +84,7 @@ void Game::UpdateModel(float dt)
 	}
 
 
-	if (ball.Do_wall_collide(wall.GetRect()))
+	if (ball.Do_wall_collide(wall.GetRect(), game_is_over))
 	{
 		pad.ResetCooldown();
 	}
@@ -139,6 +142,12 @@ void Game::ComposeFrame()
 	test_br.Draw(gfx);
 
 	wall.Draw(gfx);
+
+	if (game_is_over)
+	{
+		gfx.DrawEndTitle(wall.GetRect().GetCenter());
+	}
+
 }
 
 

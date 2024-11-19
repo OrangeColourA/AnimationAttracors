@@ -24,7 +24,7 @@ public:
 	void Draw() const;
 	void Move(float dt);
 
-	bool Do_wall_collide(const Rectangle_f& wall);
+	bool Do_wall_collide(const Rectangle_f& wall, bool& game_over);
 
 	bool Detect_brick_collioson(Brick& br);
 	void Handle_brick_collision(Brick& br);
