@@ -10,7 +10,7 @@ class Ball
 
 private:
 	Vec2f center_pos;
-	Vec2f velocity = Vec2f(5.f * 60.f,5.f * 60.f);
+	Vec2f velocity = Vec2f(5.f * 60.f,-5.f * 60.f);
 	static constexpr float radius = 7.f;
 	Color color = Colors::Cyan;
 	Graphics& gfx;

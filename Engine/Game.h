@@ -75,7 +75,7 @@ private:
 	Brick arr_br[num_bricks];
 	Color arr_colors[4] = { Colors::Yellow,Colors::Cyan, Colors::Red, Colors::Green };
 	
-
+	Brick test_br;
 	FrameTimer frame_timer;
 	float dt;
 

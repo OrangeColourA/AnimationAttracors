@@ -29,9 +29,10 @@ Game::Game( MainWindow& wnd )
 	shit_sound(L"arkpad.wav"),
 	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
 	frame_timer(),
-	ball(gfx, Vec2f(300.f,300.f)),
+	ball(gfx, Vec2f(190.f,400.f)),
 	walls(2.5f, static_cast<float>(Graphics::ScreenWidth) -2.5f,2.5f, static_cast<float>(Graphics::ScreenHeight) - 2.5f),
-	pad(gfx, Vec2f(400.f,550.f))
+	pad(gfx, Vec2f(400.f,550.f)),
+	test_br(255,215, Colors::Magenta)
 	
 {
 	for (int i = 0; i < grid_height; i++)
@@ -64,6 +65,15 @@ void Game::UpdateModel()
 		shit_sound.Play();
 	}
 	
+
+	if (ball.Detect_brick_collioson(test_br))
+	{
+		ball.Handle_brick_collision(test_br);
+		shit_sound.Play();
+	}
+
+
+
 	ball.Do_wall_collide(walls);
 	
 	bool collision_happened = false;
@@ -110,6 +120,7 @@ void Game::ComposeFrame()
 	{
 		arr_br[i].Draw(gfx);
 	}
+	test_br.Draw(gfx);
 }
 
 

@@ -1,4 +1,5 @@
 #include "Ball.h"
+#include <cmath>
 
 Ball::Ball(Graphics& g, const Vec2f& p)
 	:
@@ -66,7 +67,11 @@ void Ball::Handle_brick_collision(Brick& br)
 
 	Rectangle_f brick = br.GetRect();
 
-	if (center_pos.x < brick.left || center_pos.x > brick.right)
+	if (std::signbit(velocity.x) == std::signbit((center_pos - br.GetCenter()).x))
+	{
+		Bounce_y();
+	}
+	else if (center_pos.x < brick.left || center_pos.x > brick.right)
 	{
 		Bounce_x();
 	}

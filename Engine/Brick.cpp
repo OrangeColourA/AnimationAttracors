@@ -4,7 +4,9 @@ Brick::Brick(int x, int y, Color c)
 	:
 	body(static_cast<float>(x), static_cast<float>(x + width), static_cast<float>(y), static_cast<float>(y + heigth)),
 	color(c)
-{}
+{
+	initialized = true;
+}
 
 void Brick::Init(int x, int y, Color c)
 {
@@ -51,5 +53,5 @@ int Brick::GetHeight()
 
 Vec2f Brick::GetCenter() const
 {
-	return Vec2f((body.right - body.left) / 2, (body.top - body.bottom) / 2);
+	return Vec2f((body.right + body.left) / 2, (body.top + body.bottom) / 2);
 }
