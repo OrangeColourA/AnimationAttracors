@@ -70,7 +70,12 @@ private:
 	Paddle pad;
 	Boarder wall;
 	
-	bool game_is_over = false;
+	enum game_state {running = 0, wait_space_key, game_over};
+
+	game_state state;
+
+	bool damageDealt = false;
+	int life_counter = 3;
 
 	static constexpr int grid_width = 8;
 	static constexpr int grid_height = 4;

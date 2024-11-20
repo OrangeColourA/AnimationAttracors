@@ -84,6 +84,11 @@ void Ball::Handle_brick_collision(Brick& br)
 	br.Destroy();
 }
 
+void Ball::ResetPos(const Rectangle_f& walls)
+{
+	center_pos = walls.GetCenter();
+}
+
 bool Ball::Hit_paddle(Paddle& p)
 {
 	if (!p.isCooldown())

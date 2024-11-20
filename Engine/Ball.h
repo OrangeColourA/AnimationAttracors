@@ -28,7 +28,7 @@ public:
 
 	bool Detect_brick_collioson(Brick& br);
 	void Handle_brick_collision(Brick& br);
-	
+	void ResetPos(const Rectangle_f& walls);
 	
 	bool Hit_paddle(Paddle& pad);
 	//bool do_brick_collide(???)
