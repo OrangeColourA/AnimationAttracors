@@ -50,16 +50,15 @@ Game::Game( MainWindow& wnd )
 void Game::Go()
 {
 	gfx.BeginFrame();
-	//if (!game_is_over)
-	//{
-		float elapsedTime = frame_timer.Mark();
-		while (elapsedTime > 0.0f)
-		{
-			float temp_time = std::min(0.0025f, elapsedTime);
-			UpdateModel(temp_time);
-			elapsedTime -= 0.0025f;
-		}
-	//}
+	
+	float elapsedTime = frame_timer.Mark();
+	while (elapsedTime > 0.0f)
+	{
+		float temp_time = std::min(0.0025f, elapsedTime);
+		UpdateModel(temp_time);
+		elapsedTime -= 0.0025f;
+	}
+	
 	ComposeFrame();
 	gfx.EndFrame();
 }
@@ -91,7 +90,15 @@ void Game::UpdateModel(float dt)
 		{
 			if (damageDealt)
 			{
-				state = wait_space_key;
+				life.DealDamage();
+				if (life.NoMoreLifes())
+				{
+					state = game_over;
+				}
+				else
+				{
+					state = wait_space_key;
+				}
 			}
 			
 			pad.ResetCooldown();
@@ -147,15 +154,19 @@ void Game::UpdateModel(float dt)
 			damageDealt = false;
 		}
 	}
+	else if (state == game_over)
+	{
+
+	}
 }
 
 void Game::ComposeFrame()
 {
-	//if (state == running)
-	//{
+	if (state == running)
+	{
 		ball.Draw();
-	//}
-
+	}
+	life.DrawTable(Vec2f(wall.GetRect().left - wall.GetWidth(), wall.GetRect().bottom), gfx);
 	pad.Draw();
 	for (int i = 0; i < num_bricks; i++)
 	{
@@ -165,7 +176,7 @@ void Game::ComposeFrame()
 
 	wall.Draw(gfx);
 
-	if (damageDealt)
+	if (state == game_over)
 	{
 		gfx.DrawEndTitle(wall.GetRect().GetCenter());
 	}

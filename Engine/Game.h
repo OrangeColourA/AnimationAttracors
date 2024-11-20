@@ -32,6 +32,7 @@
 #include "Brick.h"
 #include "Paddle.h"
 #include "Boarder.h"
+#include "Life.h"
 
 #include <random>
 
@@ -69,11 +70,13 @@ private:
 	Rectangle_f walls;
 	Paddle pad;
 	Boarder wall;
-	
+	Life life;
+
 	enum game_state {running = 0, wait_space_key, game_over};
 
 	game_state state;
 
+	//bool game_is_over = false;
 	bool damageDealt = false;
 	int life_counter = 3;
 

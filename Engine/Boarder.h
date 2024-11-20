@@ -41,9 +41,16 @@ public:
 			static_cast<int>(inner_walls.bottom), color);
 	}
 
+	
+
 	Rectangle_f GetRect() const
 	{
 		return inner_walls;
+	}
+
+	int GetWidth() const
+	{
+		return width;
 	}
 
 };
