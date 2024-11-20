@@ -240,6 +240,55 @@ Graphics::Graphics( HWNDKey& key )
 		_aligned_malloc( sizeof( Color ) * Graphics::ScreenWidth * Graphics::ScreenHeight,16u ) );
 }
 
+void Graphics::DrawCoolBackground(const Rectangle_f& wall)
+{
+	
+	Color light_green(110, 38, 15);
+	Color dark_green(70, 18, 8);
+
+
+	for (int i = wall.left; i <= wall.right; i++)
+	{
+		for (int j = wall.top; j <= wall.bottom; j++)
+		{
+			if (i > j - 380 && i <= j - 300)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else if (i > j - 220 && i <= j - 140)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else if (i > j - 60 && i <= j + 20)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else if (i > j + 100 && i <= j + 180)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else if (i > j + 260 && i <= j + 340)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else if (i > j + 420 && i <= j + 500)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else if (i > j + 580 && i <= j + 660)
+			{
+				PutPixel(i, j, light_green);
+			}
+			else
+			{
+				PutPixel(i, j, dark_green);
+			}
+		}
+	}
+
+
+}
+
 void Graphics::DrawEndTitle(const Vec2f& center)
 {
 

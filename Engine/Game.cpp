@@ -162,6 +162,7 @@ void Game::UpdateModel(float dt)
 
 void Game::ComposeFrame()
 {
+	gfx.DrawCoolBackground(wall.GetRect());
 	if (state == running)
 	{
 		ball.Draw();

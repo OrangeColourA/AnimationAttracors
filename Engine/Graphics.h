@@ -68,6 +68,8 @@ public:
 		DrawRect(static_cast<int>(rect.left), static_cast<int>(rect.top),static_cast<int>(rect.right), static_cast<int>(rect.bottom), c);
 	}
 
+	void DrawCoolBackground(const Rectangle_f& wall);
+
 	void DrawEndTitle(const Vec2f& center);
 	
 	~Graphics();
