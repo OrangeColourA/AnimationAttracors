@@ -330,6 +330,75 @@ void Graphics::DrawRectDim(int x1, int y1, int width, int height, Color c)
 
 }
 
+void Graphics::DrawLine(const Vec2f& v0, const Vec2f& v1, Color c)
+{
+
+	int delta_x = (static_cast<int>(v1.x) - static_cast<int>(v0.x));
+	int delta_y = (static_cast<int>(v1.y) - static_cast<int>(v0.y));
+
+	int dx = 1;
+	int dy = 1;
+
+	if (delta_y < 0)
+	{
+		dy = -1;
+	}
+	if (delta_x < 0)
+	{
+		dx = -1;
+	}
+
+	float sloap = static_cast<float>(delta_y) / static_cast<float>(delta_x);
+
+	int x_pos = static_cast<int>(v0.x);
+	int y_pos = static_cast<int>(v0.y);
+
+
+	if (abs(sloap) < 1.0f)
+	{
+		int p_k = 2 * delta_y - delta_x;
+
+
+		while (x_pos != static_cast<int>(v1.x))
+		{
+			PutPixel(x_pos, y_pos, c);
+
+			if (p_k < 0)
+			{
+				p_k = p_k + 2 * delta_y * dy;
+			}
+			else
+			{
+				p_k = p_k + 2 * delta_y * dy - 2 * delta_x * dx;
+				y_pos += dy;
+			}
+			x_pos += dx;
+		}
+	}
+	else
+	{
+		int p_k = 2 * delta_x - delta_y;
+
+
+		while (y_pos != static_cast<int>(v1.y))
+		{
+			PutPixel(x_pos, y_pos, c);
+
+			if (p_k < 0)
+			{
+				p_k = p_k + 2 * delta_x * dx;
+			}
+			else
+			{
+				p_k = p_k + 2 * delta_x * dx - 2 * delta_y * dy;
+				x_pos += dx;
+			}
+			y_pos += dy;
+		}
+
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception

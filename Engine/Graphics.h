@@ -23,6 +23,7 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Vec2f.h"
 
 class Graphics
 {
@@ -59,7 +60,7 @@ public:
 
 
 	void DrawRectDim(int x, int y, int Width, int Height, Color c);
-
+	void DrawLine(const Vec2f& v0, const Vec2f& v1, Color c);
 	
 	~Graphics();
 private:
