@@ -316,6 +316,29 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawModel(Vec4f* VertexB, size_t sizeOfVB, size_t* IndexB, size_t sizeOfIB)
+{
+
+	Mat4f proj;
+
+	proj = Mat4f::make_proj_matrix();
+
+	for (int i = 0; i < sizeOfIB; i += 3)
+	{
+		Vec4f first  = VertexB[i];
+		Vec4f second = VertexB[i + 1];
+		Vec4f third  = VertexB[i + 2];
+
+		DrawLine(first.to_screen_space(proj), second.to_screen_space(proj), Colors::Yellow);
+		DrawLine(second.to_screen_space(proj), third.to_screen_space(proj), Colors::Yellow);
+		DrawLine(first.to_screen_space(proj), third.to_screen_space(proj), Colors::Yellow);
+	}
+
+}
+
+
+
+
 void Graphics::DrawRectDim(int x1, int y1, int width, int height, Color c)
 {
 

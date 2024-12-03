@@ -28,7 +28,7 @@
 #include "SoundEffect.h"
 
 #include "FrameTimer.h"
-
+#include "Vec4f.h"
 
 #include <random>
 
@@ -63,11 +63,20 @@ private:
 	SoundEffect shit_ansamble;
 	
 	
-	float x = 300.f;
-	float y = 300.f;
-	
-	float dx = 50.f;
-	float dy = 50.f;
+	Vec4f  VertexBuffer[8];
+	size_t IndexBuffer[30] = {
+		0, 1, 3,
+		3, 1, 2,
+		2, 6, 3,
+		3, 6, 7,
+		7, 4, 0,
+		0, 3, 7,
+		7, 4, 5,
+		5, 6, 7,
+		0, 5, 1,
+		0, 4, 5
+	};
+
 	
 	FrameTimer frame_timer;
 	float dt;

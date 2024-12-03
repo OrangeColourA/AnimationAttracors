@@ -31,7 +31,15 @@ Game::Game( MainWindow& wnd )
 	frame_timer()
 	
 {
-	
+	VertexBuffer[0] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[1] = Vec4f(-0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[2] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[3] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[4] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[5] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[6] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+	VertexBuffer[7] = Vec4f( 0.5f, -0.5f, 0.5f, 1.f);
+
 }
 
 void Game::Go()
@@ -47,33 +55,15 @@ void Game::UpdateModel()
 
 	dt = frame_timer.Mark();
 
-	if ( wnd.kbd.KeyIsPressed('W') )
-	{
-		y -= dy * dt;
-	}
 	
-	if (wnd.kbd.KeyIsPressed('A'))
-	{
-		x -= dx * dt;
-	}
-	
-	if (wnd.kbd.KeyIsPressed('S'))
-	{
-		y += dy * dt;
-	}
-	
-	if (wnd.kbd.KeyIsPressed('D'))
-	{
-		x += dx * dt;
-	}
 }
 
 void Game::ComposeFrame()
 {
 
-	
+	gfx.DrawModel(VertexBuffer, 8, IndexBuffer, 30);
 
-	gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
+	
 
 	
 }

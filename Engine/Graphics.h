@@ -24,6 +24,8 @@
 #include "ChiliException.h"
 #include "Colors.h"
 #include "Vec2f.h"
+#include "Vec4f.h"
+
 
 class Graphics
 {
@@ -58,7 +60,7 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 
-
+	void DrawModel(Vec4f* VertexB,size_t sizeOfVB, size_t* IndexB, size_t sizeOfIB);
 	void DrawRectDim(int x, int y, int Width, int Height, Color c);
 	void DrawLine(const Vec2f& v0, const Vec2f& v1, Color c);
 	
