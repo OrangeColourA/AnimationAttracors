@@ -72,8 +72,11 @@ void Game::ComposeFrame()
 
 	gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
 
-	gfx.DrawZero(Vec2f(20.f, 20.f),20.f, Colors::Red);
-	gfx.DrawOne(Vec2f(90.f, 20.f), 20.f, Colors::Red);
+	gfx.Draw_0(Vec2f(20.f , 20.f), 10.f, Colors::Red);
+	gfx.Draw_1(Vec2f(55.f , 20.f), 10.f, Colors::Red);
+	gfx.Draw_2(Vec2f(90.f , 20.f), 10.f, Colors::Red);
+	gfx.Draw_3(Vec2f(125.f, 20.f), 10.f, Colors::Red);
+	gfx.Draw_4(Vec2f(160.f, 20.f), 10.f, Colors::Red);
 }
 
 

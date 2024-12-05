@@ -74,11 +74,11 @@ public:
 	*/
 
 
-	void DrawZero (const Vec2f& top_left, float size_of_point, Color c);
-	void DrawOne  (const Vec2f& top_left, float size_of_point, Color c);
-	void DrawTwo  (const Vec2f& top_left, float size_of_point, Color c);
-	void DrawThree(const Vec2f& top_left, const Vec2f& bottom_right, Color c);
-	void DrawFour (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void Draw_0(const Vec2f& top_left, float size_of_point, Color c);
+	void Draw_1(const Vec2f& top_left, float size_of_point, Color c);
+	void Draw_2(const Vec2f& top_left, float size_of_point, Color c);
+	void Draw_3(const Vec2f& top_left, float size_of_point, Color c);
+	void Draw_4(const Vec2f& top_left, float size_of_point, Color c);
 	void DrawFive (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
 	void DrawSix  (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
 	void DrawSeven(const Vec2f& top_left, const Vec2f& bottom_right, Color c);

@@ -388,7 +388,7 @@ std::wstring Graphics::Exception::GetExceptionType() const
 
 // Мои пользовательские функции
 
-void Graphics::DrawZero(const Vec2f& top_left, float size_of_point, Color c)
+void Graphics::Draw_0(const Vec2f& top_left, float size_of_point, Color c)
 {
 
 	//const float width = static_cast<float>(-top_left.x + bottom_right.x) / 3.f;
@@ -401,14 +401,51 @@ void Graphics::DrawZero(const Vec2f& top_left, float size_of_point, Color c)
 	DrawRect(top_left + Vec2f(2.f*size_of_point, size_of_point), top_left + Vec2f(3.f*size_of_point, 5.f*size_of_point), c);
 }
 
-void Graphics::DrawOne(const Vec2f& top_left, float size_of_point, Color c)
+void Graphics::Draw_1(const Vec2f& top_left, float size_of_point, Color c)
 {
 
 	DrawRect(top_left + Vec2f(2.f * size_of_point, 0.f), top_left + Vec2f(3.f * size_of_point, 5.f * size_of_point),c);
 
 }
 
-void Graphics::DrawTwo(const Vec2f& top_left, float size_of_point, Color c)
+void Graphics::Draw_2(const Vec2f& top_left, float size_of_point, Color c)
 {
-	DrawRect()
+
+	// Drawing Horizontal Ones
+
+	DrawRect(top_left, top_left + Vec2f(3.f * size_of_point, size_of_point), c);
+	DrawRect(top_left + Vec2f(0.f, 2.f*size_of_point), top_left + Vec2f(3.f * size_of_point, 3.f*size_of_point), c);
+	DrawRect(top_left + Vec2f(0.f, 4.f * size_of_point), top_left + Vec2f(3.f * size_of_point, 5.f*size_of_point), c);
+
+	// Drawing Conections
+
+	DrawRect(top_left + Vec2f(2.f * size_of_point, size_of_point), top_left + Vec2f(3.f * size_of_point, 2.f * size_of_point), c);
+	DrawRect(top_left + Vec2f(0.f, 3.f *size_of_point), top_left + Vec2f(size_of_point, 4.f * size_of_point), c);
+}
+
+void Graphics::Draw_3(const Vec2f& top_left, float size_of_point, Color c)
+{
+	// Drawing Horizontal Ones
+
+	DrawRect(top_left, top_left + Vec2f(3.f * size_of_point, size_of_point), c);
+	DrawRect(top_left + Vec2f(0.f, 2.f * size_of_point), top_left + Vec2f(3.f * size_of_point, 3.f * size_of_point), c);
+	DrawRect(top_left + Vec2f(0.f, 4.f * size_of_point), top_left + Vec2f(3.f * size_of_point, 5.f * size_of_point), c);
+
+	// Drawing Conections
+
+	DrawRect(top_left + Vec2f(2.f * size_of_point, size_of_point), top_left + Vec2f(3.f * size_of_point, 2.f * size_of_point), c);
+	DrawRect(top_left + Vec2f(2.f * size_of_point, 3.f*size_of_point), top_left + Vec2f(3.f * size_of_point, 4.f * size_of_point), c);
+}
+
+void Graphics::Draw_4(const Vec2f& top_left, float size_of_point, Color c)
+{
+
+	// Drawing vertical lines
+
+	DrawRect(top_left, top_left + Vec2f(size_of_point, 3.f * size_of_point), c);
+	DrawRect(top_left + Vec2f(2.f*size_of_point, 0.f), top_left + Vec2f(3.f*size_of_point, 5.f * size_of_point), c);
+
+	// Last one
+
+	DrawRect(top_left + Vec2f(size_of_point, 2.f * size_of_point), top_left + Vec2f(2.f * size_of_point, 3.f * size_of_point), c);
 }
