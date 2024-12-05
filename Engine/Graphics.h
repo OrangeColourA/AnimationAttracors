@@ -23,6 +23,8 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Vec2f.h"
+
 
 class Graphics
 {
@@ -57,9 +59,33 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 
+	void DrawRect		(int x0, int y0, int x1, int y1, Color c);
+	void DrawRectDim	(int x, int y, int Width, int Height, Color c);
+	void DrawRect	(const Vec2f& top_left, const Vec2f& bottom_right, Color c)
+	{
+		DrawRect(static_cast<int>(top_left.x), static_cast<int>(top_left.y),
+			static_cast<int>(bottom_right.x), static_cast<int>(bottom_right.y), c);
+	}
 
-	void DrawRectDim(int x, int y, int Width, int Height, Color c);
+	/***************************************/
 
+	/*
+		DRAWING DIGITS FUNCTIONS
+	*/
+
+
+	void DrawZero (const Vec2f& top_left, float size_of_point, Color c);
+	void DrawOne  (const Vec2f& top_left, float size_of_point, Color c);
+	void DrawTwo  (const Vec2f& top_left, float size_of_point, Color c);
+	void DrawThree(const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawFour (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawFive (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawSix  (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawSeven(const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawEight(const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+	void DrawNine (const Vec2f& top_left, const Vec2f& bottom_right, Color c);
+
+	/***************************************/
 	
 	~Graphics();
 private:

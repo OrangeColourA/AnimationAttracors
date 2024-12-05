@@ -316,6 +316,17 @@ void Graphics::PutPixel( int x,int y,Color c )
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+void Graphics::DrawRect(int x0, int y0, int x1, int y1, Color c)
+{
+	for (int x = x0; x <= x1; x++)
+	{
+		for (int y = y0; y <= y1; y++)
+		{
+			PutPixel(x, y, c);
+		}
+	}
+}
+
 void Graphics::DrawRectDim(int x1, int y1, int width, int height, Color c)
 {
 
@@ -377,3 +388,27 @@ std::wstring Graphics::Exception::GetExceptionType() const
 
 // Мои пользовательские функции
 
+void Graphics::DrawZero(const Vec2f& top_left, float size_of_point, Color c)
+{
+
+	//const float width = static_cast<float>(-top_left.x + bottom_right.x) / 3.f;
+
+
+	DrawRect(top_left, top_left + Vec2f(3.f * size_of_point, size_of_point), c);
+	DrawRect(top_left + Vec2f(0.f, size_of_point), top_left +Vec2f(size_of_point, 4.f *size_of_point), c);
+
+	DrawRect(top_left + Vec2f(0.f, 4.f*size_of_point), top_left + Vec2f(3.f*size_of_point, 5.f*size_of_point), c);
+	DrawRect(top_left + Vec2f(2.f*size_of_point, size_of_point), top_left + Vec2f(3.f*size_of_point, 5.f*size_of_point), c);
+}
+
+void Graphics::DrawOne(const Vec2f& top_left, float size_of_point, Color c)
+{
+
+	DrawRect(top_left + Vec2f(2.f * size_of_point, 0.f), top_left + Vec2f(3.f * size_of_point, 5.f * size_of_point),c);
+
+}
+
+void Graphics::DrawTwo(const Vec2f& top_left, float size_of_point, Color c)
+{
+	DrawRect()
+}
