@@ -63,9 +63,10 @@ private:
 	Sound shit_sound;
 	SoundEffect shit_ansamble;
 	
-	Surface surf;
+	Surface mice;
+	/*Surface surf;
 	Surface dic;
-	Surface smile;
+	Surface smile;*/
 	float x = 300.f;
 	float y = 300.f;
 	

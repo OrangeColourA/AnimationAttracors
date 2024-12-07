@@ -29,9 +29,7 @@ Game::Game( MainWindow& wnd )
 	shit_sound(L"gameoy.wav"),
 	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
 	frame_timer(),
-	surf("Orc.bmp"),
-	dic("picture.bmp"),
-	smile("Smile.bmp")
+	mice("mouse.bmp")
 	
 {
 	
@@ -64,7 +62,7 @@ void Game::Go()
 void Game::UpdateModel()
 {
 
-	dt = frame_timer.Mark();
+	dt = 2*frame_timer.Mark();
 
 	if ( wnd.kbd.KeyIsPressed('W') )
 	{
@@ -90,10 +88,11 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
-	gfx.DrawSurfaceSprite(x, y, surf);
+	gfx.DrawSurfaceSprite(x, y, mice);
+	/*gfx.DrawSurfaceSprite(x, y, surf);
 	gfx.DrawSurfaceSprite(x - 300, y, dic);
-	gfx.DrawSurfaceSprite(x, y - 200, smile);
-	gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
+	gfx.DrawSurfaceSprite(x, y - 200, smile);*/
+	//gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
 
 	
 }

@@ -336,8 +336,16 @@ void Graphics::DrawSurfaceSprite(int x, int y, const Surface& s)
 	{
 		for (int i = x; i < x + s.GetWidth(); i++)
 		{
-			if (i >= 0 && i < ScreenWidth && j >= 0 && j < ScreenWidth)
+			if (i >= 0 && i < ScreenWidth && j >= 0 && j < ScreenHeight)
+			{
+				if (s.GetPixel(i - x, j - y) == Color(200, 41, 200))
+				{
+
+				}
+				else
 				PutPixel(i, j, s.GetPixel(i - x, j - y));
+			}
+
 		}
 	}
 }
