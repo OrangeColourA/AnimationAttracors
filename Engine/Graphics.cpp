@@ -330,6 +330,18 @@ void Graphics::DrawRectDim(int x1, int y1, int width, int height, Color c)
 
 }
 
+void Graphics::DrawSurfaceSprite(int x, int y, const Surface& s)
+{
+	for (int j = y; j < y + s.GetHeight(); j++)
+	{
+		for (int i = x; i < x + s.GetWidth(); i++)
+		{
+			if (i >= 0 && i < ScreenWidth && j >= 0 && j < ScreenWidth)
+				PutPixel(i, j, s.GetPixel(i - x, j - y));
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception

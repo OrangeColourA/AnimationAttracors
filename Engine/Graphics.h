@@ -23,6 +23,7 @@
 #include <wrl.h>
 #include "ChiliException.h"
 #include "Colors.h"
+#include "Surface.h"
 
 class Graphics
 {
@@ -59,7 +60,7 @@ public:
 
 
 	void DrawRectDim(int x, int y, int Width, int Height, Color c);
-
+	void DrawSurfaceSprite(int x, int y, const Surface& s);
 	
 	~Graphics();
 private:
