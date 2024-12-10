@@ -9,7 +9,7 @@ private:
 	int height;
 	Color* pPixel = nullptr;
 public:
-	Surface() = delete;
+	Surface() = default;
 	Surface(int w, int h);
 		/*:
 		width(w),
@@ -21,7 +21,10 @@ public:
 	Surface& operator=(const Surface& s);
 	Surface(const char* filename);
 	~Surface();
-
+	
+	Surface ApplyMeanFilter() const;
+	Surface ApplyHorizontalFilter() const;
+	Surface ApplyVerticalFilter() const;
 	void PutPixel(int x, int y, Color c);
 	Color GetPixel(int x, int y) const;
 	int GetWidth() const;

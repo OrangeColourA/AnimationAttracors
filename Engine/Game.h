@@ -60,15 +60,19 @@ private:
 	
 	std::mt19937 rng;
 
-	Sound shit_sound;
-	SoundEffect shit_ansamble;
+	//Sound shit_sound;
+	//SoundEffect shit_ansamble;
 	
-	Surface mice;
+	//Surface mice;
+	Surface flower;
+	Surface blury_image;
+	Surface horizontal_image;
+	Surface vertical_image;
 	/*Surface surf;
 	Surface dic;
 	Surface smile;*/
-	float x = 300.f;
-	float y = 300.f;
+	float x = 100.f;
+	float y = 0.f;
 	
 	float dx = 50.f;
 	float dy = 50.f;

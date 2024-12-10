@@ -26,28 +26,14 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	rng(std::random_device()()),
-	shit_sound(L"gameoy.wav"),
-	shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
+	//shit_sound(L"gameoy.wav"),
+	//shit_ansamble({L"fart0.wav", L"fart1.wav", L"fart2.wav" }),
 	frame_timer(),
-	mice("mouse.bmp")
-	
+	flower("flower.bmp")
 {
-	
-	//Color main_color = Color(220, 50, 50);
-	/*float red   = 220;
-	float green =  50;
-	float blue  =  50;
-
-	for (int y = 0; y < 200; y++)s
-	{
-		for (int x = 0; x < 200; x++)
-		{
-			surf.PutPixel(x, y, Color(red * (static_cast<float>(x + y)/ 400.f),
-				green * (static_cast<float>(x + y) / 400.f), blue * (static_cast<float>(x + y) / 400.f)));
-		}
-	}*/
-
-
+	blury_image = flower.ApplyMeanFilter();
+	horizontal_image = flower.ApplyHorizontalFilter();
+	vertical_image = flower.ApplyVerticalFilter();
 
 }
 
@@ -88,13 +74,19 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
-	gfx.DrawSurfaceSprite(x, y, mice);
-	/*gfx.DrawSurfaceSprite(x, y, surf);
-	gfx.DrawSurfaceSprite(x - 300, y, dic);
-	gfx.DrawSurfaceSprite(x, y - 200, smile);*/
-	//gfx.DrawRectDim(x, y, 10, 10, Colors::Cyan);
-
-	
+	gfx.DrawSurfaceSprite(x, y, flower);
+	if (wnd.kbd.KeyIsPressed(VK_SPACE))
+	{
+		gfx.DrawSurfaceSprite(x + 620, y, horizontal_image);
+	}
+	else if (wnd.kbd.KeyIsPressed('F'))
+	{
+		gfx.DrawSurfaceSprite(x + 620, y, vertical_image);
+	}
+	else
+	{
+		gfx.DrawSurfaceSprite(x + 620, y, blury_image);
+	}
 }
 
 

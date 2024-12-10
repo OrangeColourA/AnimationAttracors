@@ -107,6 +107,181 @@ Surface::~Surface()
 	pPixel = nullptr;
 }
 
+Surface Surface::ApplyMeanFilter() const
+{
+	Surface changed(*this);
+
+
+	int kernel_dim = 3;
+
+	int* mean_kernel = new int[kernel_dim * kernel_dim];
+
+	for (int i = 0; i < kernel_dim * kernel_dim; i++)
+	{
+		*(mean_kernel + i) = 1;
+	}
+
+	
+
+	for (int y = 0; y < height - kernel_dim + 1; y++)
+	{
+		for (int x = 0; x < width - kernel_dim + 1; x++)
+		{
+			int red_average = 0;
+			int green_average = 0;
+			int blue_average = 0;
+
+			for (int j = 0; j < kernel_dim; j++)
+			{
+				for (int i = 0; i < kernel_dim; i++)
+				{
+					Color temp = this->GetPixel(x + i, y + j);
+
+					red_average   += mean_kernel[j + i * kernel_dim] * temp.GetR();
+					green_average += mean_kernel[j + i * kernel_dim] * temp.GetG();
+					blue_average  += mean_kernel[j + i * kernel_dim] * temp.GetB();
+				}
+			}
+
+			red_average   /= kernel_dim * kernel_dim;
+			green_average /= kernel_dim * kernel_dim;
+			blue_average  /= kernel_dim * kernel_dim;
+
+			for (int j = 0; j < kernel_dim; j++)
+			{
+				for (int i = 0; i < kernel_dim; i++)
+				{
+					changed.PutPixel(x + i, y + j, Color(red_average, green_average, blue_average));
+				}
+			}
+
+		}
+	}
+
+	return changed;
+
+}
+
+Surface Surface::ApplyHorizontalFilter() const
+{
+	Surface changed(*this);
+
+
+	int kernel_dim = 3;
+
+	int* mean_kernel = new int[kernel_dim * kernel_dim];
+
+	for (int i = 0; i < kernel_dim * kernel_dim; i++)
+	{
+		*(mean_kernel + i) = -(i + 1);
+	}
+
+	for (int i = 3; i < 6; i++)
+	{
+		*(mean_kernel + i) = 0;
+	}
+
+	for (int i = 6; i < 9; i++)
+	{
+		*(mean_kernel + i) = i - 5;
+	}
+
+	for (int y = 0; y < height - kernel_dim + 1; y++)
+	{
+		for (int x = 0; x < width - kernel_dim + 1; x++)
+		{
+			int red_average = 0;
+			int green_average = 0;
+			int blue_average = 0;
+
+			for (int j = 0; j < kernel_dim; j++)
+			{
+				for (int i = 0; i < kernel_dim; i++)
+				{
+					Color temp = this->GetPixel(x + i, y + j);
+
+					red_average += mean_kernel[i + j * kernel_dim] * temp.GetR();
+					green_average += mean_kernel[i + j * kernel_dim] * temp.GetG();
+					blue_average += mean_kernel[i + j * kernel_dim] * temp.GetB();
+				}
+			}
+
+			red_average /= kernel_dim * kernel_dim;
+			green_average /= kernel_dim * kernel_dim;
+			blue_average /= kernel_dim * kernel_dim;
+
+			for (int j = 0; j < kernel_dim; j++)
+			{
+				for (int i = 0; i < kernel_dim; i++)
+				{
+					changed.PutPixel(x + i, y + j, Color(red_average, green_average, blue_average));
+				}
+			}
+
+		}
+	}
+
+	return changed;
+	
+}
+
+Surface Surface::ApplyVerticalFilter() const
+{
+	Surface changed(*this);
+
+
+	int kernel_dim = 3;
+
+	int* mean_kernel = new int[kernel_dim * kernel_dim];
+
+	for (int i = 0; i < kernel_dim * kernel_dim; i++)
+	{
+		mean_kernel[i*kernel_dim] = -(i + 1);
+		mean_kernel[1 + i * kernel_dim] = 0;
+		mean_kernel[2 + i * kernel_dim] = i + 1;
+	}
+
+	
+
+	for (int y = 0; y < height - kernel_dim + 1; y++)
+	{
+		for (int x = 0; x < width - kernel_dim + 1; x++)
+		{
+			int red_average = 0;
+			int green_average = 0;
+			int blue_average = 0;
+
+			for (int j = 0; j < kernel_dim; j++)
+			{
+				for (int i = 0; i < kernel_dim; i++)
+				{
+					Color temp = this->GetPixel(x + i, y + j);
+
+					red_average += mean_kernel[i + j * kernel_dim] * temp.GetR();
+					green_average += mean_kernel[i + j * kernel_dim] * temp.GetG();
+					blue_average += mean_kernel[i + j * kernel_dim] * temp.GetB();
+				}
+			}
+
+			red_average /= kernel_dim * kernel_dim;
+			green_average /= kernel_dim * kernel_dim;
+			blue_average /= kernel_dim * kernel_dim;
+
+			for (int j = 0; j < kernel_dim; j++)
+			{
+				for (int i = 0; i < kernel_dim; i++)
+				{
+					changed.PutPixel(x + i, y + j, Color(red_average, green_average, blue_average));
+				}
+			}
+
+		}
+	}
+
+	return changed;
+
+}
+
 void Surface::PutPixel(int x, int y, Color c)
 {
 	assert(x >= 0);
