@@ -31,6 +31,8 @@
 
 #include "Surface.h"
 
+
+
 #include <random>
 
 
@@ -64,10 +66,13 @@ private:
 	//SoundEffect shit_ansamble;
 	
 	//Surface mice;
-	Surface flower;
+	/*Surface flower;
+	Surface red_flower;
+	Surface green_flower;
+	Surface blue_flower;
 	Surface blury_image;
 	Surface horizontal_image;
-	Surface vertical_image;
+	Surface vertical_image;*/
 	/*Surface surf;
 	Surface dic;
 	Surface smile;*/
@@ -78,7 +83,17 @@ private:
 	float dy = 50.f;
 	
 	FrameTimer frame_timer;
+	FrameTimer calc_timer;
 	float dt;
+
+
+	Vec4f v0;
+	Vec4f v1;
+	Vec4f v2;
+	float angle_y = 0.f;
+	float angle_z = 0.f;
+	static constexpr float PI = 3.14f;
+
 
 	/********************************/
 	

@@ -346,6 +346,98 @@ void Graphics::DrawSurfaceSprite(int x, int y, const Surface& s)
 }
 
 
+
+
+void Graphics::DrawLine(const Vec2f& v0, const Vec2f& v1, Color c)
+{
+
+	int delta_x = (static_cast<int>(v1.x) - static_cast<int>(v0.x));
+	int delta_y = (static_cast<int>(v1.y) - static_cast<int>(v0.y));
+
+	int dx = 1;
+	int dy = 1;
+
+	if (delta_y < 0)
+	{
+		dy = -1;
+	}
+	if (delta_x < 0)
+	{
+		dx = -1;
+	}
+
+	float sloap = (float)delta_y / (float)delta_x;
+
+	int x_pos = static_cast<int>(v0.x);
+	int y_pos = static_cast<int>(v0.y);
+
+
+	if (abs(sloap) < 1.0f)
+	{
+		int p_k = 2 * delta_y * dy - delta_x * dx;
+
+
+		while (x_pos != static_cast<int>(v1.x))
+		{
+
+			if (x_pos >= 0 &&
+				x_pos < int(Graphics::ScreenWidth) &&
+				y_pos >= 0 &&
+				y_pos < int(Graphics::ScreenHeight))
+			{
+				PutPixel(x_pos, y_pos, c);
+			}
+
+			if (p_k < 0)
+			{
+				p_k = p_k + 2 * delta_y * dy;
+			}
+			else
+			{
+				p_k = p_k + 2 * delta_y * dy - 2 * delta_x * dx;
+				y_pos += dy;
+			}
+			x_pos += dx;
+		}
+	}
+	else
+	{
+		int p_k = 2 * delta_x * dx - delta_y * dy;
+
+
+		while (y_pos != static_cast<int>(v1.y))
+		{
+
+			if (x_pos >= 0 &&
+				x_pos < int(Graphics::ScreenWidth) &&
+				y_pos >= 0 &&
+				y_pos < int(Graphics::ScreenHeight))
+			{
+				PutPixel(x_pos, y_pos, c);
+			}
+
+			if (p_k < 0)
+			{
+				p_k = p_k + 2 * delta_x * dx;
+			}
+			else
+			{
+				p_k = p_k + 2 * delta_x * dx - 2 * delta_y * dy;
+				x_pos += dx;
+			}
+			y_pos += dy;
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
 //////////////////////////////////////////////////
 //           Graphics Exception
 Graphics::Exception::Exception( HRESULT hr,const std::wstring& note,const wchar_t* file,unsigned int line )

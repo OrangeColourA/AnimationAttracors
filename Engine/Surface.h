@@ -25,6 +25,9 @@ public:
 	Surface ApplyMeanFilter() const;
 	Surface ApplyHorizontalFilter() const;
 	Surface ApplyVerticalFilter() const;
+	Surface ApplyRedFilter() const;
+	Surface ApplyGreenFilter() const;
+	Surface ApplyBlueFilter() const;
 	void PutPixel(int x, int y, Color c);
 	Color GetPixel(int x, int y) const;
 	int GetWidth() const;

@@ -282,6 +282,50 @@ Surface Surface::ApplyVerticalFilter() const
 
 }
 
+Surface Surface::ApplyRedFilter() const
+{
+	Surface changed(*this);
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			changed.PutPixel(x, y, Color(GetPixel(x, y).GetR(), 0, 0));
+		}
+	}
+	return changed;
+}
+
+Surface Surface::ApplyGreenFilter() const
+{
+	Surface changed(*this);
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			changed.PutPixel(x, y, Color(0, GetPixel(x, y).GetG(), 0));
+		}
+	}
+	return changed;
+}
+
+Surface Surface::ApplyBlueFilter() const
+{
+
+	Surface changed(*this);
+
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			changed.PutPixel(x, y, Color(0, 0, GetPixel(x, y).GetB()));
+		}
+	}
+	return changed;
+}
+
+
 void Surface::PutPixel(int x, int y, Color c)
 {
 	assert(x >= 0);

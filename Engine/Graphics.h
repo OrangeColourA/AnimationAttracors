@@ -25,6 +25,9 @@
 #include "Colors.h"
 #include "Surface.h"
 
+#include "GameMathLib.h"
+
+
 class Graphics
 {
 public:
@@ -58,6 +61,8 @@ public:
 	}
 	void PutPixel( int x,int y,Color c );
 
+
+	void Graphics::DrawLine(const Vec2f& v0, const Vec2f& v1, Color c);
 
 	void DrawRectDim(int x, int y, int Width, int Height, Color c);
 	void DrawSurfaceSprite(int x, int y, const Surface& s);
